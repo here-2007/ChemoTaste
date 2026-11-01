@@ -10,4 +10,7 @@ env/
 venv/
 dist/
 build/
+.next/
+*.tsbuildinfo
 .pytest_cache/
+

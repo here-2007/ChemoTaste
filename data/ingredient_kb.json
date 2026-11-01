@@ -1,0 +1,1790 @@
+{
+  "moong dal": {
+    "name": "moong dal",
+    "aliases": [
+      "split yellow mung beans",
+      "yellow lentils",
+      "moong dahl",
+      "mung dal"
+    ],
+    "tags": [
+      "soft_texture",
+      "umami_rich",
+      "mild_flavor",
+      "zinc_rich",
+      "high_protein"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 1,
+      "sour": 0,
+      "umami": 2,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0.8,
+    "protein_per_100g": 24
+  },
+  "rice": {
+    "name": "rice",
+    "aliases": [
+      "white rice",
+      "basmati rice",
+      "polished rice",
+      "cooked rice",
+      "sushi rice"
+    ],
+    "tags": [
+      "soft_texture",
+      "mild_flavor",
+      "neutral_base"
+    ],
+    "vegetarian": true,
+    "neutral_base": true,
+    "tastants": {
+      "sweet": 1,
+      "sour": 0,
+      "umami": 0,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0.6,
+    "protein_per_100g": 2.7
+  },
+  "curd": {
+    "name": "curd",
+    "aliases": [
+      "yogurt",
+      "plain yogurt",
+      "dahi",
+      "greek yogurt"
+    ],
+    "tags": [
+      "soft_texture",
+      "mild_flavor",
+      "zinc_rich",
+      "probiotic",
+      "lactic_acid"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 1,
+      "sour": 1,
+      "umami": 1,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0.85,
+    "protein_per_100g": 10
+  },
+  "paneer": {
+    "name": "paneer",
+    "aliases": [
+      "chhena",
+      "fresh cottage cheese",
+      "fresh paneer",
+      "indian cottage cheese"
+    ],
+    "tags": [
+      "soft_texture",
+      "mild_flavor",
+      "high_protein",
+      "zinc_rich"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 1,
+      "sour": 0,
+      "umami": 2,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0.6,
+    "protein_per_100g": 18
+  },
+  "lauki": {
+    "name": "lauki",
+    "aliases": [
+      "bottle gourd",
+      "doodhi",
+      "calabash",
+      "ghiya"
+    ],
+    "tags": [
+      "soft_texture",
+      "mild_flavor",
+      "high_moisture"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 1,
+      "sour": 0,
+      "umami": 0,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0.95,
+    "protein_per_100g": 0.6
+  },
+  "turai": {
+    "name": "turai",
+    "aliases": [
+      "ridge gourd",
+      "tori",
+      "luffa"
+    ],
+    "tags": [
+      "soft_texture",
+      "mild_flavor",
+      "high_moisture"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 1,
+      "sour": 0,
+      "umami": 0,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0.94,
+    "protein_per_100g": 0.7
+  },
+  "cumin": {
+    "name": "cumin",
+    "aliases": [
+      "jeera",
+      "cumin seeds",
+      "ground cumin"
+    ],
+    "tags": [
+      "mild_carminative",
+      "flavor_enhancer"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 0,
+      "sour": 0,
+      "umami": 1,
+      "bitter": 1,
+      "salty": 0
+    },
+    "moisture_contribution": 0,
+    "protein_per_100g": 18
+  },
+  "ginger": {
+    "name": "ginger",
+    "aliases": [
+      "fresh ginger",
+      "ginger root",
+      "grated ginger"
+    ],
+    "tags": [
+      "antiemetic",
+      "mild_flavor"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 1,
+      "sour": 0,
+      "umami": 0,
+      "bitter": 1,
+      "salty": 0
+    },
+    "moisture_contribution": 0.3,
+    "protein_per_100g": 1.8
+  },
+  "turmeric": {
+    "name": "turmeric",
+    "aliases": [
+      "haldi",
+      "ground turmeric",
+      "turmeric powder"
+    ],
+    "tags": [
+      "polyphenol_rich",
+      "antioxidant",
+      "mild_flavor"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 0,
+      "sour": 0,
+      "umami": 0,
+      "bitter": 1,
+      "salty": 0
+    },
+    "moisture_contribution": 0,
+    "protein_per_100g": 7.8
+  },
+  "ghee": {
+    "name": "ghee",
+    "aliases": [
+      "clarified butter",
+      "desi ghee"
+    ],
+    "tags": [
+      "mild_flavor",
+      "caloric_dense"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 0,
+      "sour": 0,
+      "umami": 1,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0,
+    "protein_per_100g": 0
+  },
+  "silken tofu": {
+    "name": "silken tofu",
+    "aliases": [
+      "soft tofu",
+      "tofu",
+      "soybean curd"
+    ],
+    "tags": [
+      "soft_texture",
+      "mild_flavor",
+      "high_protein",
+      "umami_rich"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 0,
+      "sour": 0,
+      "umami": 2,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0.85,
+    "protein_per_100g": 8
+  },
+  "miso": {
+    "name": "miso",
+    "aliases": [
+      "white miso",
+      "miso paste",
+      "shiro miso"
+    ],
+    "tags": [
+      "umami_rich",
+      "taste_enhancer"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 1,
+      "sour": 0,
+      "umami": 3,
+      "bitter": 0,
+      "salty": 3
+    },
+    "moisture_contribution": 0.45,
+    "protein_per_100g": 12
+  },
+  "shiitake mushroom": {
+    "name": "shiitake mushroom",
+    "aliases": [
+      "mushrooms",
+      "shiitake",
+      "mushroom broth",
+      "button mushrooms"
+    ],
+    "tags": [
+      "umami_rich",
+      "soft_texture"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 0,
+      "sour": 0,
+      "umami": 3,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0.88,
+    "protein_per_100g": 3.1
+  },
+  "tomato": {
+    "name": "tomato",
+    "aliases": [
+      "ripe tomato",
+      "tomato purée",
+      "crushed tomatoes",
+      "tomato sauce"
+    ],
+    "tags": [
+      "acidic",
+      "umami_rich",
+      "glutamate_rich"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 1,
+      "sour": 2,
+      "umami": 3,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0.94,
+    "protein_per_100g": 0.9
+  },
+  "lemon juice": {
+    "name": "lemon juice",
+    "aliases": [
+      "lemon",
+      "fresh lemon",
+      "lemon zest"
+    ],
+    "tags": [
+      "acidic",
+      "citrus",
+      "metal_chelator"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 0,
+      "sour": 3,
+      "umami": 0,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0.9,
+    "protein_per_100g": 0.4
+  },
+  "lime juice": {
+    "name": "lime juice",
+    "aliases": [
+      "lime",
+      "fresh lime"
+    ],
+    "tags": [
+      "acidic",
+      "citrus",
+      "metal_chelator"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 0,
+      "sour": 3,
+      "umami": 0,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0.9,
+    "protein_per_100g": 0.4
+  },
+  "apple cider vinegar": {
+    "name": "apple cider vinegar",
+    "aliases": [
+      "vinegar",
+      "cider vinegar",
+      "white vinegar"
+    ],
+    "tags": [
+      "acidic",
+      "vinegar",
+      "metal_chelator"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 0,
+      "sour": 3,
+      "umami": 0,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0.95,
+    "protein_per_100g": 0
+  },
+  "tamarind": {
+    "name": "tamarind",
+    "aliases": [
+      "tamarind paste",
+      "tamarind pulp"
+    ],
+    "tags": [
+      "acidic",
+      "metal_chelator"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 2,
+      "sour": 3,
+      "umami": 0,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0.6,
+    "protein_per_100g": 2.8
+  },
+  "chicken breast": {
+    "name": "chicken breast",
+    "aliases": [
+      "shredded chicken",
+      "poached chicken",
+      "chicken tenderloin"
+    ],
+    "tags": [
+      "high_protein",
+      "mild_flavor",
+      "low_fat"
+    ],
+    "vegetarian": false,
+    "tastants": {
+      "sweet": 0,
+      "sour": 0,
+      "umami": 2,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0.65,
+    "protein_per_100g": 31
+  },
+  "egg white": {
+    "name": "egg white",
+    "aliases": [
+      "cooked egg whites",
+      "poached egg whites",
+      "egg whites"
+    ],
+    "tags": [
+      "high_protein",
+      "soft_texture",
+      "mild_flavor"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 0,
+      "sour": 0,
+      "umami": 1,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0.87,
+    "protein_per_100g": 11
+  },
+  "pumpkin seeds": {
+    "name": "pumpkin seeds",
+    "aliases": [
+      "pepitas",
+      "hulled pumpkin seeds"
+    ],
+    "tags": [
+      "zinc_rich",
+      "high_protein"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 1,
+      "sour": 0,
+      "umami": 1,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0.05,
+    "protein_per_100g": 30
+  },
+  "oats": {
+    "name": "oats",
+    "aliases": [
+      "rolled oats",
+      "oatmeal",
+      "steel cut oats",
+      "porridge"
+    ],
+    "tags": [
+      "soft_texture",
+      "mild_flavor",
+      "high_moisture"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 1,
+      "sour": 0,
+      "umami": 0,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0.8,
+    "protein_per_100g": 13
+  },
+  "sweet potato": {
+    "name": "sweet potato",
+    "aliases": [
+      "mashed sweet potato",
+      "steamed sweet potato",
+      "yam"
+    ],
+    "tags": [
+      "soft_texture",
+      "sweet_boost",
+      "mild_flavor"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 3,
+      "sour": 0,
+      "umami": 0,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0.77,
+    "protein_per_100g": 1.6
+  },
+  "carrot": {
+    "name": "carrot",
+    "aliases": [
+      "steamed carrots",
+      "carrot purée",
+      "carrots"
+    ],
+    "tags": [
+      "soft_texture",
+      "sweet_boost",
+      "mild_flavor"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 2,
+      "sour": 0,
+      "umami": 0,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0.88,
+    "protein_per_100g": 0.9
+  },
+  "banana": {
+    "name": "banana",
+    "aliases": [
+      "ripe banana",
+      "mashed banana"
+    ],
+    "tags": [
+      "soft_texture",
+      "sweet_boost",
+      "mild_flavor"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 3,
+      "sour": 0,
+      "umami": 0,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0.75,
+    "protein_per_100g": 1.1
+  },
+  "avocado": {
+    "name": "avocado",
+    "aliases": [
+      "mashed avocado",
+      "fresh avocado"
+    ],
+    "tags": [
+      "soft_texture",
+      "mild_flavor",
+      "fatty"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 0,
+      "sour": 0,
+      "umami": 1,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0.73,
+    "protein_per_100g": 2
+  },
+  "vegetable broth": {
+    "name": "vegetable broth",
+    "aliases": [
+      "vegetable stock",
+      "veggie broth"
+    ],
+    "tags": [
+      "high_moisture",
+      "umami_rich",
+      "mild_flavor"
+    ],
+    "vegetarian": true,
+    "neutral_base": true,
+    "tastants": {
+      "sweet": 0,
+      "sour": 0,
+      "umami": 2,
+      "bitter": 0,
+      "salty": 1
+    },
+    "moisture_contribution": 1,
+    "protein_per_100g": 0.5
+  },
+  "beef": {
+    "name": "beef",
+    "aliases": [
+      "steak",
+      "ground beef",
+      "roast beef",
+      "beef broth"
+    ],
+    "tags": [
+      "red_meat",
+      "heme_iron",
+      "high_fat"
+    ],
+    "vegetarian": false,
+    "tastants": {
+      "sweet": 0,
+      "sour": 0,
+      "umami": 2,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0.55,
+    "protein_per_100g": 26
+  },
+  "mutton": {
+    "name": "mutton",
+    "aliases": [
+      "lamb",
+      "goat meat",
+      "lamb chop"
+    ],
+    "tags": [
+      "red_meat",
+      "heme_iron",
+      "high_fat",
+      "high_aroma"
+    ],
+    "vegetarian": false,
+    "tastants": {
+      "sweet": 0,
+      "sour": 0,
+      "umami": 2,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0.55,
+    "protein_per_100g": 25
+  },
+  "onion": {
+    "name": "onion",
+    "aliases": [
+      "raw onion",
+      "red onion",
+      "yellow onion"
+    ],
+    "tags": [
+      "high_aroma",
+      "sulfur_rich"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 1,
+      "sour": 0,
+      "umami": 1,
+      "bitter": 1,
+      "salty": 0
+    },
+    "moisture_contribution": 0.89,
+    "protein_per_100g": 1.1
+  },
+  "garlic": {
+    "name": "garlic",
+    "aliases": [
+      "garlic cloves",
+      "crushed garlic",
+      "minced garlic"
+    ],
+    "tags": [
+      "high_aroma",
+      "sulfur_rich",
+      "pungent"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 1,
+      "sour": 0,
+      "umami": 1,
+      "bitter": 1,
+      "salty": 0
+    },
+    "moisture_contribution": 0.59,
+    "protein_per_100g": 6.4
+  },
+  "coffee": {
+    "name": "coffee",
+    "aliases": [
+      "espresso",
+      "brewed coffee"
+    ],
+    "tags": [
+      "bitter",
+      "high_aroma"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 0,
+      "sour": 1,
+      "umami": 0,
+      "bitter": 3,
+      "salty": 0
+    },
+    "moisture_contribution": 0.99,
+    "protein_per_100g": 0.1
+  },
+  "grapefruit": {
+    "name": "grapefruit",
+    "aliases": [
+      "grapefruit juice",
+      "ruby red grapefruit"
+    ],
+    "tags": [
+      "cyp3a4_inhibitor",
+      "acidic",
+      "citrus"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 1,
+      "sour": 3,
+      "umami": 0,
+      "bitter": 2,
+      "salty": 0
+    },
+    "moisture_contribution": 0.9,
+    "protein_per_100g": 0.8
+  },
+  "pomelo": {
+    "name": "pomelo",
+    "aliases": [
+      "pummelo",
+      "shaddock"
+    ],
+    "tags": [
+      "cyp3a4_inhibitor",
+      "acidic",
+      "citrus"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 1,
+      "sour": 2,
+      "umami": 0,
+      "bitter": 1,
+      "salty": 0
+    },
+    "moisture_contribution": 0.89,
+    "protein_per_100g": 0.76
+  },
+  "seville orange": {
+    "name": "seville orange",
+    "aliases": [
+      "bitter orange",
+      "marmalade orange"
+    ],
+    "tags": [
+      "cyp3a4_inhibitor",
+      "acidic",
+      "citrus"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 1,
+      "sour": 3,
+      "umami": 0,
+      "bitter": 2,
+      "salty": 0
+    },
+    "moisture_contribution": 0.87,
+    "protein_per_100g": 0.9
+  },
+  "starfruit": {
+    "name": "starfruit",
+    "aliases": [
+      "carambola",
+      "star fruit"
+    ],
+    "tags": [
+      "nephrotoxic",
+      "acidic"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 1,
+      "sour": 2,
+      "umami": 0,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0.91,
+    "protein_per_100g": 1
+  },
+  "sushi": {
+    "name": "sushi",
+    "aliases": [
+      "raw fish",
+      "sashimi",
+      "raw salmon",
+      "raw tuna"
+    ],
+    "tags": [
+      "raw_risk",
+      "cold_serve"
+    ],
+    "vegetarian": false,
+    "tastants": {
+      "sweet": 0,
+      "sour": 0,
+      "umami": 2,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0.6,
+    "protein_per_100g": 20
+  },
+  "unpasteurized cheese": {
+    "name": "unpasteurized cheese",
+    "aliases": [
+      "raw milk cheese",
+      "brie raw",
+      "raw camembert"
+    ],
+    "tags": [
+      "unpasteurized",
+      "raw_risk"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 0,
+      "sour": 0,
+      "umami": 2,
+      "bitter": 0,
+      "salty": 2
+    },
+    "moisture_contribution": 0.45,
+    "protein_per_100g": 21
+  },
+  "alcohol": {
+    "name": "alcohol",
+    "aliases": [
+      "wine",
+      "beer",
+      "vodka",
+      "whiskey",
+      "rum",
+      "red wine",
+      "white wine"
+    ],
+    "tags": [
+      "alcohol"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 1,
+      "sour": 1,
+      "umami": 0,
+      "bitter": 1,
+      "salty": 0
+    },
+    "moisture_contribution": 0.9,
+    "protein_per_100g": 0
+  },
+  "chili": {
+    "name": "chili",
+    "aliases": [
+      "red chili",
+      "green chili",
+      "hot pepper",
+      "cayenne",
+      "chili powder"
+    ],
+    "tags": [
+      "spicy",
+      "capsaicin"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 0,
+      "sour": 0,
+      "umami": 0,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0.88,
+    "protein_per_100g": 1.9
+  },
+  "water": {
+    "name": "water",
+    "aliases": [
+      "warm water",
+      "tap water",
+      "spring water"
+    ],
+    "tags": [
+      "neutral_base",
+      "high_moisture"
+    ],
+    "vegetarian": true,
+    "neutral_base": true,
+    "tastants": {
+      "sweet": 0,
+      "sour": 0,
+      "umami": 0,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 1,
+    "protein_per_100g": 0
+  },
+  "salt": {
+    "name": "salt",
+    "aliases": [
+      "sea salt",
+      "kosher salt",
+      "table salt"
+    ],
+    "tags": [
+      "neutral_base"
+    ],
+    "vegetarian": true,
+    "neutral_base": true,
+    "tastants": {
+      "sweet": 0,
+      "sour": 0,
+      "umami": 0,
+      "bitter": 0,
+      "salty": 3
+    },
+    "moisture_contribution": 0,
+    "protein_per_100g": 0
+  },
+  "black pepper": {
+    "name": "black pepper",
+    "aliases": [
+      "ground black pepper",
+      "peppercorns"
+    ],
+    "tags": [
+      "neutral_base"
+    ],
+    "vegetarian": true,
+    "neutral_base": true,
+    "tastants": {
+      "sweet": 0,
+      "sour": 0,
+      "umami": 0,
+      "bitter": 1,
+      "salty": 0
+    },
+    "moisture_contribution": 0,
+    "protein_per_100g": 10
+  },
+  "olive oil": {
+    "name": "olive oil",
+    "aliases": [
+      "extra virgin olive oil",
+      "evoo"
+    ],
+    "tags": [
+      "neutral_base"
+    ],
+    "vegetarian": true,
+    "neutral_base": true,
+    "tastants": {
+      "sweet": 0,
+      "sour": 0,
+      "umami": 0,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0,
+    "protein_per_100g": 0
+  },
+  "masoor dal": {
+    "name": "masoor dal",
+    "aliases": [
+      "red lentils",
+      "split red lentils"
+    ],
+    "tags": [
+      "soft_texture",
+      "high_protein",
+      "zinc_rich",
+      "mild_flavor"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 1,
+      "sour": 0,
+      "umami": 2,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0.8,
+    "protein_per_100g": 25
+  },
+  "toor dal": {
+    "name": "toor dal",
+    "aliases": [
+      "arhar dal",
+      "split pigeon peas"
+    ],
+    "tags": [
+      "soft_texture",
+      "high_protein",
+      "mild_flavor"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 1,
+      "sour": 0,
+      "umami": 2,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0.75,
+    "protein_per_100g": 22
+  },
+  "chana dal": {
+    "name": "chana dal",
+    "aliases": [
+      "split bengal gram",
+      "bengal gram dal"
+    ],
+    "tags": [
+      "high_protein",
+      "zinc_rich",
+      "mild_flavor"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 1,
+      "sour": 0,
+      "umami": 2,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0.7,
+    "protein_per_100g": 21
+  },
+  "spinach": {
+    "name": "spinach",
+    "aliases": [
+      "palak",
+      "baby spinach",
+      "spinach leaves"
+    ],
+    "tags": [
+      "zinc_rich",
+      "soft_texture",
+      "mild_flavor"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 0,
+      "sour": 0,
+      "umami": 1,
+      "bitter": 1,
+      "salty": 0
+    },
+    "moisture_contribution": 0.9,
+    "protein_per_100g": 2.9
+  },
+  "coriander seeds": {
+    "name": "coriander seeds",
+    "aliases": [
+      "dhania",
+      "ground coriander"
+    ],
+    "tags": [
+      "mild_carminative",
+      "flavor_enhancer"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 1,
+      "sour": 0,
+      "umami": 0,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0.1,
+    "protein_per_100g": 12
+  },
+  "fennel seeds": {
+    "name": "fennel seeds",
+    "aliases": [
+      "saunf",
+      "fennel"
+    ],
+    "tags": [
+      "anti_nausea",
+      "mild_flavor",
+      "sweet_enhancer"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 2,
+      "sour": 0,
+      "umami": 0,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0.1,
+    "protein_per_100g": 15.8
+  },
+  "cardamom": {
+    "name": "cardamom",
+    "aliases": [
+      "elaichi",
+      "green cardamom"
+    ],
+    "tags": [
+      "anti_nausea",
+      "mild_flavor"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 2,
+      "sour": 0,
+      "umami": 0,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0.1,
+    "protein_per_100g": 10.8
+  },
+  "cinnamon": {
+    "name": "cinnamon",
+    "aliases": [
+      "dalchini",
+      "ground cinnamon"
+    ],
+    "tags": [
+      "sweet_enhancer",
+      "mild_flavor"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 2,
+      "sour": 0,
+      "umami": 0,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0.1,
+    "protein_per_100g": 4
+  },
+  "mint": {
+    "name": "mint",
+    "aliases": [
+      "pudina",
+      "fresh mint"
+    ],
+    "tags": [
+      "cooling",
+      "anti_nausea"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 0,
+      "sour": 0,
+      "umami": 0,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0.85,
+    "protein_per_100g": 3.8
+  },
+  "basil": {
+    "name": "basil",
+    "aliases": [
+      "tulsi",
+      "fresh basil"
+    ],
+    "tags": [
+      "mild_flavor",
+      "antioxidant"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 0,
+      "sour": 0,
+      "umami": 0,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0.9,
+    "protein_per_100g": 3.2
+  },
+  "coconut milk": {
+    "name": "coconut milk",
+    "aliases": [
+      "canned coconut milk",
+      "fresh coconut milk"
+    ],
+    "tags": [
+      "soft_texture",
+      "high_moisture",
+      "high_fat"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 2,
+      "sour": 0,
+      "umami": 0,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0.9,
+    "protein_per_100g": 2.3
+  },
+  "coconut water": {
+    "name": "coconut water",
+    "aliases": [
+      "fresh coconut water",
+      "tender coconut water"
+    ],
+    "tags": [
+      "high_moisture",
+      "mild_flavor",
+      "soothing"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 1,
+      "sour": 0,
+      "umami": 0,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0.98,
+    "protein_per_100g": 0.7
+  },
+  "almond butter": {
+    "name": "almond butter",
+    "aliases": [
+      "almond paste",
+      "blanched almond butter"
+    ],
+    "tags": [
+      "soft_texture",
+      "high_protein",
+      "zinc_rich"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 1,
+      "sour": 0,
+      "umami": 1,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0.2,
+    "protein_per_100g": 21
+  },
+  "sesame seeds": {
+    "name": "sesame seeds",
+    "aliases": [
+      "til",
+      "white sesame seeds"
+    ],
+    "tags": [
+      "zinc_rich",
+      "calcium_rich"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 0,
+      "sour": 0,
+      "umami": 1,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0.05,
+    "protein_per_100g": 18
+  },
+  "chia seeds": {
+    "name": "chia seeds",
+    "aliases": [
+      "soaked chia seeds"
+    ],
+    "tags": [
+      "high_moisture",
+      "soft_texture",
+      "lubricating"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 0,
+      "sour": 0,
+      "umami": 0,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0.8,
+    "protein_per_100g": 16.5
+  },
+  "pear": {
+    "name": "pear",
+    "aliases": [
+      "bosc pear",
+      "stewed pear"
+    ],
+    "tags": [
+      "soft_texture",
+      "mild_flavor",
+      "low_acid"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 2,
+      "sour": 0,
+      "umami": 0,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0.84,
+    "protein_per_100g": 0.4
+  },
+  "apple": {
+    "name": "apple",
+    "aliases": [
+      "stewed apple",
+      "applesauce"
+    ],
+    "tags": [
+      "soft_texture",
+      "mild_flavor"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 2,
+      "sour": 1,
+      "umami": 0,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0.85,
+    "protein_per_100g": 0.3
+  },
+  "watermelon": {
+    "name": "watermelon",
+    "aliases": [
+      "fresh watermelon",
+      "tarbooj"
+    ],
+    "tags": [
+      "high_moisture",
+      "mild_flavor"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 2,
+      "sour": 0,
+      "umami": 0,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0.92,
+    "protein_per_100g": 0.6
+  },
+  "papaya": {
+    "name": "papaya",
+    "aliases": [
+      "ripe papaya",
+      "papita"
+    ],
+    "tags": [
+      "soft_texture",
+      "mild_flavor",
+      "digestive"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 2,
+      "sour": 0,
+      "umami": 0,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0.88,
+    "protein_per_100g": 0.5
+  },
+  "beetroot": {
+    "name": "beetroot",
+    "aliases": [
+      "steamed beetroot",
+      "chukandar"
+    ],
+    "tags": [
+      "soft_texture",
+      "sweet_enhancer"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 2,
+      "sour": 0,
+      "umami": 0,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0.87,
+    "protein_per_100g": 1.6
+  },
+  "zucchini": {
+    "name": "zucchini",
+    "aliases": [
+      "courgette",
+      "steamed zucchini"
+    ],
+    "tags": [
+      "soft_texture",
+      "high_moisture",
+      "mild_flavor"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 1,
+      "sour": 0,
+      "umami": 0,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0.94,
+    "protein_per_100g": 1.2
+  },
+  "cauliflower": {
+    "name": "cauliflower",
+    "aliases": [
+      "gobi",
+      "cauliflower florets",
+      "steamed cauliflower"
+    ],
+    "tags": [
+      "soft_texture",
+      "mild_flavor"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 1,
+      "sour": 0,
+      "umami": 0,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0.92,
+    "protein_per_100g": 1.9
+  },
+  "potato": {
+    "name": "potato",
+    "aliases": [
+      "boiled potato",
+      "mashed potato",
+      "aloo"
+    ],
+    "tags": [
+      "soft_texture",
+      "mild_flavor",
+      "neutral_base"
+    ],
+    "vegetarian": true,
+    "neutral_base": true,
+    "tastants": {
+      "sweet": 1,
+      "sour": 0,
+      "umami": 0,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0.79,
+    "protein_per_100g": 2
+  },
+  "barley": {
+    "name": "barley",
+    "aliases": [
+      "barley water",
+      "cooked barley",
+      "jau"
+    ],
+    "tags": [
+      "high_moisture",
+      "soft_texture",
+      "soothing"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 1,
+      "sour": 0,
+      "umami": 0,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0.8,
+    "protein_per_100g": 3.5
+  },
+  "quinoa": {
+    "name": "quinoa",
+    "aliases": [
+      "cooked quinoa"
+    ],
+    "tags": [
+      "high_protein",
+      "zinc_rich",
+      "soft_texture"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 0,
+      "sour": 0,
+      "umami": 1,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0.72,
+    "protein_per_100g": 4.4
+  },
+  "semolina": {
+    "name": "semolina",
+    "aliases": [
+      "suji",
+      "sooji",
+      "rava"
+    ],
+    "tags": [
+      "soft_texture",
+      "mild_flavor",
+      "neutral_base"
+    ],
+    "vegetarian": true,
+    "neutral_base": true,
+    "tastants": {
+      "sweet": 1,
+      "sour": 0,
+      "umami": 0,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0.7,
+    "protein_per_100g": 12
+  },
+  "sago": {
+    "name": "sago",
+    "aliases": [
+      "sabudana",
+      "tapioca pearls"
+    ],
+    "tags": [
+      "soft_texture",
+      "soothing",
+      "neutral_base"
+    ],
+    "vegetarian": true,
+    "neutral_base": true,
+    "tastants": {
+      "sweet": 1,
+      "sour": 0,
+      "umami": 0,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0.75,
+    "protein_per_100g": 0.2
+  },
+  "jaggery": {
+    "name": "jaggery",
+    "aliases": [
+      "gur",
+      "unrefined cane sugar"
+    ],
+    "tags": [
+      "sweet_enhancer",
+      "mineral_rich"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 3,
+      "sour": 0,
+      "umami": 0,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0.1,
+    "protein_per_100g": 0.1
+  },
+  "honey": {
+    "name": "honey",
+    "aliases": [
+      "raw honey",
+      "pure honey"
+    ],
+    "tags": [
+      "sweet_enhancer",
+      "throat_soothing"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 3,
+      "sour": 0,
+      "umami": 0,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0.18,
+    "protein_per_100g": 0.3
+  },
+  "soy milk": {
+    "name": "soy milk",
+    "aliases": [
+      "plain soymilk",
+      "unflavored soy milk"
+    ],
+    "tags": [
+      "soft_texture",
+      "high_protein",
+      "mild_flavor"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 1,
+      "sour": 0,
+      "umami": 1,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0.9,
+    "protein_per_100g": 3.3
+  },
+  "nutritional yeast": {
+    "name": "nutritional yeast",
+    "aliases": [
+      "nooch",
+      "savory yeast flakes"
+    ],
+    "tags": [
+      "umami_rich",
+      "high_protein",
+      "b_vitamin"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 0,
+      "sour": 0,
+      "umami": 3,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0.05,
+    "protein_per_100g": 50
+  },
+  "pork": {
+    "name": "pork",
+    "aliases": [
+      "pork chop",
+      "pork loin",
+      "ham"
+    ],
+    "tags": [
+      "red_meat",
+      "high_protein"
+    ],
+    "vegetarian": false,
+    "tastants": {
+      "sweet": 0,
+      "sour": 0,
+      "umami": 2,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0.6,
+    "protein_per_100g": 27
+  },
+  "shrimp": {
+    "name": "shrimp",
+    "aliases": [
+      "prawns",
+      "prawn",
+      "raw shrimp"
+    ],
+    "tags": [
+      "raw_risk",
+      "seafood",
+      "high_protein"
+    ],
+    "vegetarian": false,
+    "tastants": {
+      "sweet": 1,
+      "sour": 0,
+      "umami": 2,
+      "bitter": 0,
+      "salty": 1
+    },
+    "moisture_contribution": 0.75,
+    "protein_per_100g": 24
+  },
+  "raw sprouts": {
+    "name": "raw sprouts",
+    "aliases": [
+      "alfalfa sprouts",
+      "raw bean sprouts"
+    ],
+    "tags": [
+      "raw_risk"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 0,
+      "sour": 0,
+      "umami": 0,
+      "bitter": 1,
+      "salty": 0
+    },
+    "moisture_contribution": 0.9,
+    "protein_per_100g": 3
+  },
+  "unpasteurized milk": {
+    "name": "unpasteurized milk",
+    "aliases": [
+      "raw milk"
+    ],
+    "tags": [
+      "unpasteurized",
+      "raw_risk"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 1,
+      "sour": 0,
+      "umami": 0,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0.88,
+    "protein_per_100g": 3.4
+  },
+  "white wine": {
+    "name": "white wine",
+    "aliases": [
+      "cooking wine",
+      "dry white wine"
+    ],
+    "tags": [
+      "alcohol"
+    ],
+    "vegetarian": true,
+    "tastants": {
+      "sweet": 1,
+      "sour": 2,
+      "umami": 0,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0.9,
+    "protein_per_100g": 0.1
+  }
+}

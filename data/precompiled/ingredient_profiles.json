@@ -1,0 +1,1143 @@
+{
+  "moong dal": {
+    "name": "moong dal",
+    "tags": [
+      "soft_texture",
+      "umami_rich",
+      "mild_flavor",
+      "zinc_rich",
+      "high_protein"
+    ],
+    "tastants": {
+      "sweet": 1,
+      "sour": 0,
+      "umami": 2,
+      "bitter": 0,
+      "salty": 0
+    },
+    "molecular": {
+      "n_total": 24,
+      "pct": {
+        "sour": 0.1,
+        "sweet": 0.45,
+        "umami": 0.75,
+        "bitter": 0.1,
+        "nausea_aroma": 0.05
+      },
+      "confidence": "ok",
+      "key_molecules": [
+        {
+          "name": "glutamic acid",
+          "pubchem_id": 33032,
+          "descriptors": [
+            "savory",
+            "umami"
+          ],
+          "role": "T1R1/T1R3 intact pathway agonist"
+        },
+        {
+          "name": "maltose",
+          "pubchem_id": 5352425,
+          "descriptors": [
+            "sweet"
+          ],
+          "role": "Mild carbohydrate perception"
+        }
+      ]
+    },
+    "protein_per_100g": 24,
+    "moisture": 0.8
+  },
+  "curd": {
+    "name": "curd",
+    "tags": [
+      "soft_texture",
+      "mild_flavor",
+      "zinc_rich",
+      "probiotic",
+      "lactic_acid"
+    ],
+    "tastants": {
+      "sweet": 1,
+      "sour": 1,
+      "umami": 1,
+      "bitter": 0,
+      "salty": 0
+    },
+    "molecular": {
+      "n_total": 42,
+      "pct": {
+        "sour": 0.65,
+        "sweet": 0.35,
+        "umami": 0.6,
+        "bitter": 0.05,
+        "nausea_aroma": 0.1
+      },
+      "confidence": "ok",
+      "key_molecules": [
+        {
+          "name": "lactic acid",
+          "pubchem_id": 10768,
+          "descriptors": [
+            "sour",
+            "acidic",
+            "creamy"
+          ],
+          "role": "Mild non-volatile mucosal soothing tastant"
+        },
+        {
+          "name": "acetoin",
+          "pubchem_id": 179,
+          "descriptors": [
+            "buttery",
+            "creamy"
+          ],
+          "role": "Pleasant low-volatility aroma"
+        }
+      ]
+    },
+    "protein_per_100g": 10,
+    "moisture": 0.85
+  },
+  "paneer": {
+    "name": "paneer",
+    "tags": [
+      "soft_texture",
+      "mild_flavor",
+      "high_protein",
+      "zinc_rich"
+    ],
+    "tastants": {
+      "sweet": 1,
+      "sour": 0,
+      "umami": 2,
+      "bitter": 0,
+      "salty": 0
+    },
+    "molecular": {
+      "n_total": 31,
+      "pct": {
+        "sour": 0.05,
+        "sweet": 0.3,
+        "umami": 0.7,
+        "bitter": 0.05,
+        "nausea_aroma": 0.05
+      },
+      "confidence": "ok",
+      "key_molecules": [
+        {
+          "name": "glutamic acid",
+          "pubchem_id": 33032,
+          "descriptors": [
+            "savory",
+            "umami"
+          ],
+          "role": "Anabolic amino acid tastant"
+        },
+        {
+          "name": "leucine",
+          "pubchem_id": 6106,
+          "descriptors": [
+            "neutral"
+          ],
+          "role": "Essential branched-chain muscle builder"
+        }
+      ]
+    },
+    "protein_per_100g": 18,
+    "moisture": 0.6
+  },
+  "lauki": {
+    "name": "lauki",
+    "tags": [
+      "soft_texture",
+      "mild_flavor",
+      "high_moisture"
+    ],
+    "tastants": {
+      "sweet": 1,
+      "sour": 0,
+      "umami": 0,
+      "bitter": 0,
+      "salty": 0
+    },
+    "molecular": {
+      "n_total": 18,
+      "pct": {
+        "sour": 0.05,
+        "sweet": 0.4,
+        "umami": 0.2,
+        "bitter": 0.05,
+        "nausea_aroma": 0.02
+      },
+      "confidence": "ok",
+      "key_molecules": [
+        {
+          "name": "cucurbitacin B (trace)",
+          "pubchem_id": 5281316,
+          "descriptors": [
+            "mildly sweet"
+          ],
+          "role": "Hydrating mucilaginous matrix"
+        }
+      ]
+    },
+    "protein_per_100g": 0.6,
+    "moisture": 0.95
+  },
+  "turai": {
+    "name": "turai",
+    "tags": [
+      "soft_texture",
+      "mild_flavor",
+      "high_moisture"
+    ],
+    "tastants": {
+      "sweet": 1,
+      "sour": 0,
+      "umami": 0,
+      "bitter": 0,
+      "salty": 0
+    },
+    "molecular": {
+      "n_total": 14,
+      "pct": {
+        "sour": 0.05,
+        "sweet": 0.35,
+        "umami": 0.2,
+        "bitter": 0.05,
+        "nausea_aroma": 0.02
+      },
+      "confidence": "ok",
+      "key_molecules": []
+    },
+    "protein_per_100g": 0.7,
+    "moisture": 0.94
+  },
+  "miso": {
+    "name": "miso",
+    "tags": [
+      "umami_rich",
+      "taste_enhancer"
+    ],
+    "tastants": {
+      "sweet": 1,
+      "sour": 0,
+      "umami": 3,
+      "bitter": 0,
+      "salty": 3
+    },
+    "molecular": {
+      "n_total": 68,
+      "pct": {
+        "sour": 0.2,
+        "sweet": 0.4,
+        "umami": 0.95,
+        "bitter": 0.15,
+        "nausea_aroma": 0.1
+      },
+      "confidence": "ok",
+      "key_molecules": [
+        {
+          "name": "monosodium glutamate",
+          "pubchem_id": 23612306,
+          "descriptors": [
+            "umami",
+            "savory"
+          ],
+          "role": "Robust T1R1/T1R3 stimulation"
+        },
+        {
+          "name": "succinic acid",
+          "pubchem_id": 1110,
+          "descriptors": [
+            "savory",
+            "sourish"
+          ],
+          "role": "Salivary stimulation acid"
+        }
+      ]
+    },
+    "protein_per_100g": 12,
+    "moisture": 0.45
+  },
+  "shiitake mushroom": {
+    "name": "shiitake mushroom",
+    "tags": [
+      "umami_rich",
+      "soft_texture"
+    ],
+    "tastants": {
+      "sweet": 0,
+      "sour": 0,
+      "umami": 3,
+      "bitter": 0,
+      "salty": 0
+    },
+    "molecular": {
+      "n_total": 76,
+      "pct": {
+        "sour": 0.1,
+        "sweet": 0.25,
+        "umami": 0.92,
+        "bitter": 0.1,
+        "nausea_aroma": 0.12
+      },
+      "confidence": "ok",
+      "key_molecules": [
+        {
+          "name": "guanosine monophosphate",
+          "pubchem_id": 135398642,
+          "descriptors": [
+            "umami synergy"
+          ],
+          "role": "Synergistic umami multiplier with glutamate"
+        },
+        {
+          "name": "lentinacin",
+          "pubchem_id": 9904,
+          "descriptors": [
+            "earthy"
+          ],
+          "role": "Intact savory signal"
+        }
+      ]
+    },
+    "protein_per_100g": 3.1,
+    "moisture": 0.88
+  },
+  "silken tofu": {
+    "name": "silken tofu",
+    "tags": [
+      "soft_texture",
+      "mild_flavor",
+      "high_protein",
+      "umami_rich"
+    ],
+    "tastants": {
+      "sweet": 0,
+      "sour": 0,
+      "umami": 2,
+      "bitter": 0,
+      "salty": 0
+    },
+    "molecular": {
+      "n_total": 29,
+      "pct": {
+        "sour": 0.05,
+        "sweet": 0.2,
+        "umami": 0.75,
+        "bitter": 0.05,
+        "nausea_aroma": 0.04
+      },
+      "confidence": "ok",
+      "key_molecules": [
+        {
+          "name": "isoflavones (daidzein, genistein)",
+          "pubchem_id": 5281708,
+          "descriptors": [
+            "neutral"
+          ],
+          "role": "Soothing mucosal protein carrier"
+        }
+      ]
+    },
+    "protein_per_100g": 8,
+    "moisture": 0.85
+  },
+  "lemon juice": {
+    "name": "lemon juice",
+    "tags": [
+      "acidic",
+      "citrus",
+      "metal_chelator"
+    ],
+    "tastants": {
+      "sweet": 0,
+      "sour": 3,
+      "umami": 0,
+      "bitter": 0,
+      "salty": 0
+    },
+    "molecular": {
+      "n_total": 84,
+      "pct": {
+        "sour": 0.98,
+        "sweet": 0.15,
+        "umami": 0.05,
+        "bitter": 0.1,
+        "nausea_aroma": 0.18
+      },
+      "confidence": "ok",
+      "key_molecules": [
+        {
+          "name": "citric acid",
+          "pubchem_id": 311,
+          "descriptors": [
+            "sour",
+            "tart"
+          ],
+          "role": "Natural bidentate chelator of salivary platinum/iron ions"
+        },
+        {
+          "name": "limonene",
+          "pubchem_id": 22311,
+          "descriptors": [
+            "citrus",
+            "fresh"
+          ],
+          "role": "Masks lipid peroxidation aldehydes"
+        }
+      ]
+    },
+    "protein_per_100g": 0.4,
+    "moisture": 0.9
+  },
+  "apple cider vinegar": {
+    "name": "apple cider vinegar",
+    "tags": [
+      "acidic",
+      "vinegar",
+      "metal_chelator"
+    ],
+    "tastants": {
+      "sweet": 0,
+      "sour": 3,
+      "umami": 0,
+      "bitter": 0,
+      "salty": 0
+    },
+    "molecular": {
+      "n_total": 52,
+      "pct": {
+        "sour": 0.95,
+        "sweet": 0.2,
+        "umami": 0.05,
+        "bitter": 0.05,
+        "nausea_aroma": 0.15
+      },
+      "confidence": "ok",
+      "key_molecules": [
+        {
+          "name": "acetic acid",
+          "pubchem_id": 176,
+          "descriptors": [
+            "sour",
+            "sharp"
+          ],
+          "role": "Rapidly displaces metallic ions at receptor interface"
+        },
+        {
+          "name": "malic acid",
+          "pubchem_id": 525,
+          "descriptors": [
+            "tart",
+            "apple"
+          ],
+          "role": "Dicarboxylic acid metal binder"
+        }
+      ]
+    },
+    "protein_per_100g": 0,
+    "moisture": 0.95
+  },
+  "chicken breast": {
+    "name": "chicken breast",
+    "tags": [
+      "high_protein",
+      "mild_flavor",
+      "low_fat"
+    ],
+    "tastants": {
+      "sweet": 0,
+      "sour": 0,
+      "umami": 2,
+      "bitter": 0,
+      "salty": 0
+    },
+    "molecular": {
+      "n_total": 45,
+      "pct": {
+        "sour": 0.05,
+        "sweet": 0.1,
+        "umami": 0.8,
+        "bitter": 0.05,
+        "nausea_aroma": 0.08
+      },
+      "confidence": "ok",
+      "key_molecules": [
+        {
+          "name": "carnosine",
+          "pubchem_id": 9314,
+          "descriptors": [
+            "savory"
+          ],
+          "role": "Natural dipeptide buffer against salivary acidity"
+        },
+        {
+          "name": "inosine monophosphate",
+          "pubchem_id": 135398638,
+          "descriptors": [
+            "umami"
+          ],
+          "role": "Savory palatability stimulant"
+        }
+      ]
+    },
+    "protein_per_100g": 31,
+    "moisture": 0.65
+  },
+  "pumpkin seeds": {
+    "name": "pumpkin seeds",
+    "tags": [
+      "zinc_rich",
+      "high_protein"
+    ],
+    "tastants": {
+      "sweet": 1,
+      "sour": 0,
+      "umami": 1,
+      "bitter": 0,
+      "salty": 0
+    },
+    "molecular": {
+      "n_total": 38,
+      "pct": {
+        "sour": 0.05,
+        "sweet": 0.35,
+        "umami": 0.65,
+        "bitter": 0.1,
+        "nausea_aroma": 0.05
+      },
+      "confidence": "ok",
+      "key_molecules": [
+        {
+          "name": "zinc chelate",
+          "pubchem_id": 23994,
+          "descriptors": [
+            "neutral"
+          ],
+          "role": "Cofactor for carbonic anhydrase VI (gustin) TRC renewal"
+        }
+      ]
+    },
+    "protein_per_100g": 30,
+    "moisture": 0.05
+  },
+  "sweet potato": {
+    "name": "sweet potato",
+    "tags": [
+      "soft_texture",
+      "sweet_boost",
+      "mild_flavor"
+    ],
+    "tastants": {
+      "sweet": 3,
+      "sour": 0,
+      "umami": 0,
+      "bitter": 0,
+      "salty": 0
+    },
+    "molecular": {
+      "n_total": 48,
+      "pct": {
+        "sour": 0.05,
+        "sweet": 0.88,
+        "umami": 0.3,
+        "bitter": 0.05,
+        "nausea_aroma": 0.04
+      },
+      "confidence": "ok",
+      "key_molecules": [
+        {
+          "name": "sucrose & maltose",
+          "pubchem_id": 5988,
+          "descriptors": [
+            "sweet"
+          ],
+          "role": "Overcomes +45% elevated sweet threshold naturally"
+        }
+      ]
+    },
+    "protein_per_100g": 1.6,
+    "moisture": 0.77
+  },
+  "tomato": {
+    "name": "tomato",
+    "tags": [
+      "acidic",
+      "umami_rich",
+      "glutamate_rich"
+    ],
+    "tastants": {
+      "sweet": 1,
+      "sour": 2,
+      "umami": 3,
+      "bitter": 0,
+      "salty": 0
+    },
+    "molecular": {
+      "n_total": 120,
+      "pct": {
+        "sour": 0.7,
+        "sweet": 0.5,
+        "umami": 0.9,
+        "bitter": 0.1,
+        "nausea_aroma": 0.2
+      },
+      "confidence": "ok",
+      "key_molecules": [
+        {
+          "name": "free glutamic acid",
+          "pubchem_id": 33032,
+          "descriptors": [
+            "umami",
+            "brothy"
+          ],
+          "role": "Potent non-volatile tastant agonist"
+        },
+        {
+          "name": "citric acid",
+          "pubchem_id": 311,
+          "descriptors": [
+            "tart",
+            "sour"
+          ],
+          "role": "Chelating sour stimulant"
+        }
+      ]
+    },
+    "protein_per_100g": 0.9,
+    "moisture": 0.94
+  },
+  "beef": {
+    "name": "beef",
+    "tags": [
+      "red_meat",
+      "heme_iron",
+      "high_fat"
+    ],
+    "tastants": {
+      "sweet": 0,
+      "sour": 0,
+      "umami": 2,
+      "bitter": 0,
+      "salty": 0
+    },
+    "molecular": {
+      "n_total": 85,
+      "pct": {
+        "sour": 0.05,
+        "sweet": 0.05,
+        "umami": 0.75,
+        "bitter": 0.15,
+        "nausea_aroma": 0.65
+      },
+      "confidence": "ok",
+      "key_molecules": [
+        {
+          "name": "1-octen-3-one",
+          "pubchem_id": 61346,
+          "descriptors": [
+            "metallic",
+            "mushroom",
+            "blood"
+          ],
+          "role": "Major volatile aldehyde amplifying metallic phantom"
+        },
+        {
+          "name": "hexanal",
+          "pubchem_id": 6184,
+          "descriptors": [
+            "fatty",
+            "grassy",
+            "oxidized"
+          ],
+          "role": "Lipid peroxidation byproduct causing olfactory aversion"
+        }
+      ]
+    },
+    "protein_per_100g": 26,
+    "moisture": 0.55
+  },
+  "cumin": {
+    "name": "cumin",
+    "tags": [
+      "mild_carminative",
+      "flavor_enhancer"
+    ],
+    "tastants": {
+      "sweet": 1,
+      "sour": 0,
+      "umami": 0,
+      "bitter": 0,
+      "salty": 0
+    },
+    "molecular": {
+      "n_total": 38,
+      "pct": {
+        "sour": 0.05,
+        "sweet": 0.35,
+        "umami": 0.15,
+        "bitter": 0.05,
+        "nausea_aroma": 0.08
+      },
+      "confidence": "ok",
+      "key_molecules": [
+        {
+          "name": "cuminaldehyde",
+          "pubchem_id": 326,
+          "descriptors": [
+            "spicy",
+            "warm",
+            "herbal"
+          ],
+          "role": "Mild carminative volatile stimulating salivary flow"
+        },
+        {
+          "name": "cymene",
+          "pubchem_id": 7463,
+          "descriptors": [
+            "woody",
+            "citrus"
+          ],
+          "role": "Gentle gastric soothing terpenoid"
+        }
+      ]
+    },
+    "protein_per_100g": 18,
+    "moisture": 0.1
+  },
+  "ginger": {
+    "name": "ginger",
+    "tags": [
+      "anti_nausea",
+      "salivary_stimulant",
+      "mild_carminative"
+    ],
+    "tastants": {
+      "sweet": 1,
+      "sour": 0,
+      "umami": 0,
+      "bitter": 1,
+      "salty": 0
+    },
+    "molecular": {
+      "n_total": 52,
+      "pct": {
+        "sour": 0.08,
+        "sweet": 0.25,
+        "umami": 0.1,
+        "bitter": 0.15,
+        "nausea_aroma": 0.06
+      },
+      "confidence": "ok",
+      "key_molecules": [
+        {
+          "name": "6-gingerol",
+          "pubchem_id": 442793,
+          "descriptors": [
+            "pungent",
+            "warm"
+          ],
+          "role": "Potent 5-HT3 receptor antagonist suppressing chemotherapy nausea"
+        },
+        {
+          "name": "zingiberene",
+          "pubchem_id": 92776,
+          "descriptors": [
+            "spicy",
+            "woody"
+          ],
+          "role": "Salivary gland stimulant combating xerostomia"
+        }
+      ]
+    },
+    "protein_per_100g": 1.8,
+    "moisture": 0.8
+  },
+  "turmeric": {
+    "name": "turmeric",
+    "tags": [
+      "antioxidant",
+      "anti_inflammatory",
+      "mild_flavor"
+    ],
+    "tastants": {
+      "sweet": 0,
+      "sour": 0,
+      "umami": 0,
+      "bitter": 1,
+      "salty": 0
+    },
+    "molecular": {
+      "n_total": 45,
+      "pct": {
+        "sour": 0.02,
+        "sweet": 0.15,
+        "umami": 0.1,
+        "bitter": 0.2,
+        "nausea_aroma": 0.04
+      },
+      "confidence": "ok",
+      "key_molecules": [
+        {
+          "name": "curcumin",
+          "pubchem_id": 969516,
+          "descriptors": [
+            "peppery",
+            "earthy"
+          ],
+          "role": "Inhibits mucosal NF-kB and scavenges reactive oxygen species in saliva"
+        },
+        {
+          "name": "turmerone",
+          "pubchem_id": 5464010,
+          "descriptors": [
+            "woody",
+            "warm"
+          ],
+          "role": "Epithelial cytoprotective volatile"
+        }
+      ]
+    },
+    "protein_per_100g": 7.8,
+    "moisture": 0.12
+  },
+  "masoor dal": {
+    "name": "masoor dal",
+    "tags": [
+      "soft_texture",
+      "high_protein",
+      "zinc_rich",
+      "mild_flavor"
+    ],
+    "tastants": {
+      "sweet": 1,
+      "sour": 0,
+      "umami": 2,
+      "bitter": 0,
+      "salty": 0
+    },
+    "molecular": {
+      "n_total": 28,
+      "pct": {
+        "sour": 0.05,
+        "sweet": 0.4,
+        "umami": 0.7,
+        "bitter": 0.05,
+        "nausea_aroma": 0.04
+      },
+      "confidence": "ok",
+      "key_molecules": [
+        {
+          "name": "glutamate",
+          "pubchem_id": 33032,
+          "descriptors": [
+            "umami",
+            "savory"
+          ],
+          "role": "T1R1/T1R3 receptor renewal agonist"
+        },
+        {
+          "name": "arginine",
+          "pubchem_id": 6322,
+          "descriptors": [
+            "neutral"
+          ],
+          "role": "Nitric oxide precursor supporting mucosal microvascular healing"
+        }
+      ]
+    },
+    "protein_per_100g": 25,
+    "moisture": 0.8
+  },
+  "spinach": {
+    "name": "spinach",
+    "tags": [
+      "zinc_rich",
+      "soft_texture",
+      "mild_flavor"
+    ],
+    "tastants": {
+      "sweet": 0,
+      "sour": 0,
+      "umami": 1,
+      "bitter": 1,
+      "salty": 0
+    },
+    "molecular": {
+      "n_total": 35,
+      "pct": {
+        "sour": 0.05,
+        "sweet": 0.15,
+        "umami": 0.5,
+        "bitter": 0.25,
+        "nausea_aroma": 0.05
+      },
+      "confidence": "ok",
+      "key_molecules": [
+        {
+          "name": "lutein",
+          "pubchem_id": 5281243,
+          "descriptors": [
+            "mild",
+            "earthy"
+          ],
+          "role": "Lipophilic antioxidant preventing epithelial lipid peroxidation"
+        },
+        {
+          "name": "folic acid",
+          "pubchem_id": 135398658,
+          "descriptors": [
+            "neutral"
+          ],
+          "role": "Essential cofactor for progenitor cell DNA renewal"
+        }
+      ]
+    },
+    "protein_per_100g": 2.9,
+    "moisture": 0.9
+  },
+  "fennel seeds": {
+    "name": "fennel seeds",
+    "tags": [
+      "anti_nausea",
+      "mild_flavor",
+      "sweet_enhancer"
+    ],
+    "tastants": {
+      "sweet": 2,
+      "sour": 0,
+      "umami": 0,
+      "bitter": 0,
+      "salty": 0
+    },
+    "molecular": {
+      "n_total": 41,
+      "pct": {
+        "sour": 0.02,
+        "sweet": 0.65,
+        "umami": 0.1,
+        "bitter": 0.05,
+        "nausea_aroma": 0.05
+      },
+      "confidence": "ok",
+      "key_molecules": [
+        {
+          "name": "trans-anethole",
+          "pubchem_id": 637563,
+          "descriptors": [
+            "anise",
+            "sweet",
+            "licorice"
+          ],
+          "role": "Natural sweet tastant agonist crossing elevated sweet detection floor"
+        },
+        {
+          "name": "fenchone",
+          "pubchem_id": 14525,
+          "descriptors": [
+            "camphoreous",
+            "clean"
+          ],
+          "role": "Suppresses gastric reverse peristalsis"
+        }
+      ]
+    },
+    "protein_per_100g": 15.8,
+    "moisture": 0.1
+  },
+  "cardamom": {
+    "name": "cardamom",
+    "tags": [
+      "anti_nausea",
+      "mild_flavor"
+    ],
+    "tastants": {
+      "sweet": 2,
+      "sour": 0,
+      "umami": 0,
+      "bitter": 0,
+      "salty": 0
+    },
+    "molecular": {
+      "n_total": 39,
+      "pct": {
+        "sour": 0.05,
+        "sweet": 0.55,
+        "umami": 0.05,
+        "bitter": 0.05,
+        "nausea_aroma": 0.04
+      },
+      "confidence": "ok",
+      "key_molecules": [
+        {
+          "name": "1,8-cineole",
+          "pubchem_id": 2758,
+          "descriptors": [
+            "minty",
+            "fresh",
+            "eucalyptus"
+          ],
+          "role": "Clears unpleasant metallic oral phantom sensation"
+        },
+        {
+          "name": "alpha-terpinyl acetate",
+          "pubchem_id": 11145,
+          "descriptors": [
+            "sweet",
+            "floral",
+            "spicy"
+          ],
+          "role": "Pleasant low-volatility aroma mask"
+        }
+      ]
+    },
+    "protein_per_100g": 10.8,
+    "moisture": 0.1
+  },
+  "coconut water": {
+    "name": "coconut water",
+    "tags": [
+      "high_moisture",
+      "mild_flavor",
+      "soothing"
+    ],
+    "tastants": {
+      "sweet": 1,
+      "sour": 0,
+      "umami": 0,
+      "bitter": 0,
+      "salty": 0
+    },
+    "molecular": {
+      "n_total": 22,
+      "pct": {
+        "sour": 0.05,
+        "sweet": 0.5,
+        "umami": 0.1,
+        "bitter": 0.02,
+        "nausea_aroma": 0.02
+      },
+      "confidence": "ok",
+      "key_molecules": [
+        {
+          "name": "potassium citrate",
+          "pubchem_id": 13344,
+          "descriptors": [
+            "mildly salty",
+            "cooling"
+          ],
+          "role": "Restores oral electrolyte balance and hydrates mucosa"
+        },
+        {
+          "name": "cytokinins",
+          "pubchem_id": 444390,
+          "descriptors": [
+            "neutral"
+          ],
+          "role": "Supports mucosal barrier protection"
+        }
+      ]
+    },
+    "protein_per_100g": 0.7,
+    "moisture": 0.98
+  },
+  "pear": {
+    "name": "pear",
+    "tags": [
+      "soft_texture",
+      "mild_flavor",
+      "low_acid"
+    ],
+    "tastants": {
+      "sweet": 2,
+      "sour": 0,
+      "umami": 0,
+      "bitter": 0,
+      "salty": 0
+    },
+    "molecular": {
+      "n_total": 33,
+      "pct": {
+        "sour": 0.1,
+        "sweet": 0.7,
+        "umami": 0.05,
+        "bitter": 0.02,
+        "nausea_aroma": 0.03
+      },
+      "confidence": "ok",
+      "key_molecules": [
+        {
+          "name": "sorbitol",
+          "pubchem_id": 5780,
+          "descriptors": [
+            "sweet",
+            "cooling"
+          ],
+          "role": "Gentle mucosal-safe carbohydrate crossing sweet perception threshold"
+        },
+        {
+          "name": "ethyl (2E,4Z)-deca-2,4-dienoate",
+          "pubchem_id": 5363402,
+          "descriptors": [
+            "pear",
+            "fruity"
+          ],
+          "role": "Pleasant sub-emetic threshold aroma"
+        }
+      ]
+    },
+    "protein_per_100g": 0.4,
+    "moisture": 0.84
+  },
+  "nutritional yeast": {
+    "name": "nutritional yeast",
+    "tags": [
+      "umami_rich",
+      "high_protein",
+      "b_vitamin"
+    ],
+    "tastants": {
+      "sweet": 0,
+      "sour": 0,
+      "umami": 3,
+      "bitter": 0,
+      "salty": 0
+    },
+    "molecular": {
+      "n_total": 48,
+      "pct": {
+        "sour": 0.05,
+        "sweet": 0.1,
+        "umami": 0.9,
+        "bitter": 0.05,
+        "nausea_aroma": 0.05
+      },
+      "confidence": "ok",
+      "key_molecules": [
+        {
+          "name": "monosodium glutamate (natural)",
+          "pubchem_id": 23672308,
+          "descriptors": [
+            "brothy",
+            "umami",
+            "savory"
+          ],
+          "role": "Maximizes resilient T1R1/T1R3 taste signal without animal heme"
+        },
+        {
+          "name": "5-ribonucleotides (IMP/GMP)",
+          "pubchem_id": 8582,
+          "descriptors": [
+            "umami synergy"
+          ],
+          "role": "Synergistically amplifies umami perception by 8-fold"
+        }
+      ]
+    },
+    "protein_per_100g": 50,
+    "moisture": 0.05
+  }
+}

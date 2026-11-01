@@ -1,0 +1,1373 @@
+[
+  {
+    "id": "r_moong_khichdi",
+    "title": "Moong Dal Khichdi (Clinical Gold Standard)",
+    "cuisine": "Indian",
+    "prep_time": 25,
+    "ingredients": [
+      "1 cup moong dal",
+      "1/2 cup rice",
+      "4 cups water",
+      "1 tbsp ghee",
+      "1/2 tsp cumin",
+      "1/2 tsp ginger",
+      "1/2 tsp turmeric",
+      "1/2 tsp salt"
+    ],
+    "temperature_tag": "warm",
+    "processes": [
+      "pressure cook",
+      "simmer",
+      "temper"
+    ],
+    "protein_g": 16,
+    "calories": 340,
+    "moisture_index": 1,
+    "servings": 2,
+    "instructions": [
+      "Rinse split yellow moong dal and white polished rice thoroughly.",
+      "Pressure cook with 4 cups of water, turmeric, and salt until very soft and porridge-like.",
+      "Heat ghee in a small pan, add cumin seeds and mild grated ginger until fragrant, then fold into the khichdi.",
+      "Serve lukewarm with non-metallic cutlery for optimal oral mucosal tolerability."
+    ]
+  },
+  {
+    "id": "r_curd_rice",
+    "title": "Curd Rice (Thayir Sadam)",
+    "cuisine": "Indian",
+    "prep_time": 15,
+    "ingredients": [
+      "1 cup rice",
+      "1 cup curd",
+      "1/4 cup water",
+      "1/2 tsp cumin",
+      "1/2 tsp ginger",
+      "1/2 tsp salt"
+    ],
+    "temperature_tag": "room_temp",
+    "processes": [
+      "mash",
+      "mix",
+      "fold"
+    ],
+    "protein_g": 12.5,
+    "calories": 280,
+    "moisture_index": 0.85,
+    "servings": 2,
+    "instructions": [
+      "Cook polished rice until soft and slightly overcooked, then gently mash.",
+      "Allow rice to cool to room temperature (never cold, safe for Oxaliplatin).",
+      "Gently fold in fresh pasteurized curd and a pinch of salt.",
+      "Temper with cumin seeds in a drop of ghee and stir in for soothing gut and mucosal support."
+    ]
+  },
+  {
+    "id": "r_paneer_puree",
+    "title": "Fresh Chhena & Paneer Protein Purée",
+    "cuisine": "Indian",
+    "prep_time": 12,
+    "ingredients": [
+      "150g paneer",
+      "1/2 cup water",
+      "1 tbsp pumpkin seeds",
+      "1/4 tsp turmeric",
+      "1/2 tsp salt"
+    ],
+    "temperature_tag": "warm",
+    "processes": [
+      "blend",
+      "warm gently"
+    ],
+    "protein_g": 22,
+    "calories": 310,
+    "moisture_index": 0.8,
+    "servings": 1,
+    "instructions": [
+      "Crumble fresh unsalted paneer or freshly made chhena.",
+      "Blend with warm water, ground pumpkin seeds, and a pinch of salt until velvety smooth.",
+      "Warm very gently to lukewarm; provides high-density protein with zero sulfurous volatiles."
+    ]
+  },
+  {
+    "id": "r_lauki_stew",
+    "title": "Soothing Lauki (Bottle Gourd) & Jeera Stew",
+    "cuisine": "Indian",
+    "prep_time": 20,
+    "ingredients": [
+      "2 cups lauki",
+      "1/2 cup moong dal",
+      "3 cups water",
+      "1/2 tsp cumin",
+      "1/2 tsp turmeric",
+      "1/2 tsp salt"
+    ],
+    "temperature_tag": "warm",
+    "processes": [
+      "simmer",
+      "mash"
+    ],
+    "protein_g": 13,
+    "calories": 210,
+    "moisture_index": 0.95,
+    "servings": 2,
+    "instructions": [
+      "Peel and dice tender bottle gourd (lauki).",
+      "Simmer with split moong dal, water, and turmeric until completely tender.",
+      "Lightly mash with a wooden spoon for dysphagia-safe texture and finish with tempered cumin."
+    ]
+  },
+  {
+    "id": "r_turai_dal",
+    "title": "Turai (Ridge Gourd) Lentil Gravy",
+    "cuisine": "Indian",
+    "prep_time": 22,
+    "ingredients": [
+      "2 cups turai",
+      "1/2 cup moong dal",
+      "2 cups water",
+      "1/2 tsp cumin",
+      "1/2 tsp salt",
+      "1 tsp ghee"
+    ],
+    "temperature_tag": "warm",
+    "processes": [
+      "stew",
+      "temper"
+    ],
+    "protein_g": 13.5,
+    "calories": 225,
+    "moisture_index": 0.9,
+    "servings": 2,
+    "instructions": [
+      "Sauté ridge gourd pieces lightly in ghee with cumin.",
+      "Add cooked moong dal and water, simmering into a rich, gentle gravy.",
+      "Serve warm over soft steamed rice."
+    ]
+  },
+  {
+    "id": "r_miso_tofu",
+    "title": "Shiro Miso Soup with Silken Tofu & Shiitake",
+    "cuisine": "Japanese",
+    "prep_time": 18,
+    "ingredients": [
+      "2 tbsp miso",
+      "150g silken tofu",
+      "1 cup shiitake mushroom",
+      "3 cups vegetable broth",
+      "1/2 tsp ginger"
+    ],
+    "temperature_tag": "warm",
+    "processes": [
+      "simmer",
+      "dissolve"
+    ],
+    "protein_g": 14,
+    "calories": 190,
+    "moisture_index": 1,
+    "servings": 2,
+    "instructions": [
+      "Simmer sliced shiitake mushrooms and grated ginger in vegetable broth for 10 minutes.",
+      "Cut silken tofu into gentle bite-sized cubes and slide into the broth.",
+      "Turn off the heat, dissolve white miso paste using a ladle so beneficial enzymes remain intact.",
+      "Serve warm; stimulates the resilient T1R1/T1R3 umami pathway."
+    ]
+  },
+  {
+    "id": "r_lemon_poached_chicken",
+    "title": "Lemon Herb Poached Chicken with Steamed Sweet Potato",
+    "cuisine": "Mediterranean",
+    "prep_time": 30,
+    "ingredients": [
+      "200g chicken breast",
+      "1 large sweet potato",
+      "2 tbsp lemon juice",
+      "2 cups vegetable broth",
+      "1/2 tsp salt",
+      "1 tbsp olive oil"
+    ],
+    "temperature_tag": "warm",
+    "processes": [
+      "poach",
+      "steam",
+      "mash"
+    ],
+    "protein_g": 34,
+    "calories": 420,
+    "moisture_index": 0.7,
+    "servings": 2,
+    "instructions": [
+      "Gently poach chicken breast in vegetable broth with lemon juice and salt until tender and juicy.",
+      "Steam sweet potato until completely fork-tender, then mash with olive oil.",
+      "Shred chicken finely over the sweet potato mash; citric acid naturally chelates salivary platinum ions (contraindicated if active mouth sores present)."
+    ]
+  },
+  {
+    "id": "r_butternut_soup",
+    "title": "Creamy Butternut Squash & Ginger Soup with Pumpkin Seeds",
+    "cuisine": "American",
+    "prep_time": 25,
+    "ingredients": [
+      "2 cups sweet potato",
+      "1 cup carrot",
+      "2 cups vegetable broth",
+      "2 tbsp pumpkin seeds",
+      "1/2 tsp ginger",
+      "1/2 tsp salt",
+      "1 tbsp olive oil"
+    ],
+    "temperature_tag": "warm",
+    "processes": [
+      "roast",
+      "blend",
+      "simmer"
+    ],
+    "protein_g": 12,
+    "calories": 290,
+    "moisture_index": 0.95,
+    "servings": 2,
+    "instructions": [
+      "Simmer diced sweet potato, carrot, and grated ginger in vegetable broth until soft.",
+      "Purée with an immersion blender until silky and uniform.",
+      "Top with ground zinc-rich pumpkin seeds for carbonic anhydrase receptor renewal."
+    ]
+  },
+  {
+    "id": "r_tofu_rice_bowl",
+    "title": "Silken Tofu & Steamed Jasmine Rice Bowl with Mild Turmeric",
+    "cuisine": "Asian",
+    "prep_time": 15,
+    "ingredients": [
+      "200g silken tofu",
+      "1 cup rice",
+      "1 cup vegetable broth",
+      "1/2 tsp turmeric",
+      "1/2 tsp salt"
+    ],
+    "temperature_tag": "warm",
+    "processes": [
+      "steam",
+      "assemble"
+    ],
+    "protein_g": 15,
+    "calories": 310,
+    "moisture_index": 0.75,
+    "servings": 1,
+    "instructions": [
+      "Steam jasmine rice with a pinch of turmeric and salt.",
+      "Gently warm silken tofu cubes in mild vegetable broth.",
+      "Layer tofu over warm rice for an easy-to-swallow, non-aromatic protein meal."
+    ]
+  },
+  {
+    "id": "r_carrot_veloute",
+    "title": "Carrot & Ginger Velouté with Soft Egg Whites",
+    "cuisine": "French",
+    "prep_time": 20,
+    "ingredients": [
+      "2 cups carrot",
+      "3 egg white",
+      "2 cups vegetable broth",
+      "1/2 tsp ginger",
+      "1/2 tsp salt",
+      "1 tbsp olive oil"
+    ],
+    "temperature_tag": "warm",
+    "processes": [
+      "simmer",
+      "purée",
+      "whisk"
+    ],
+    "protein_g": 14.5,
+    "calories": 220,
+    "moisture_index": 0.9,
+    "servings": 2,
+    "instructions": [
+      "Simmer carrots and ginger in vegetable broth, then blend until velvet smooth.",
+      "Return to low heat and slowly drizzle in whisked egg whites, creating tender protein ribbons.",
+      "Comforting, antiemetic, and high in moisture."
+    ]
+  },
+  {
+    "id": "r_chicken_congee",
+    "title": "Golden Chicken & Ginger Congee",
+    "cuisine": "Chinese",
+    "prep_time": 40,
+    "ingredients": [
+      "150g chicken breast",
+      "1/2 cup rice",
+      "5 cups water",
+      "1/2 tsp ginger",
+      "1/2 tsp turmeric",
+      "1/2 tsp salt"
+    ],
+    "temperature_tag": "warm",
+    "processes": [
+      "slow simmer",
+      "shred"
+    ],
+    "protein_g": 24,
+    "calories": 330,
+    "moisture_index": 1,
+    "servings": 2,
+    "instructions": [
+      "Slow simmer rice in water with turmeric and ginger for 40 minutes until grains break into thick silk congee.",
+      "Add shredded poached chicken breast and simmer for 5 additional minutes.",
+      "Optimal for xerostomia, providing complete hydration and lean tissue maintenance."
+    ]
+  },
+  {
+    "id": "r_oatmeal_banana",
+    "title": "Warm Soothing Oatmeal with Mashed Banana & Curd",
+    "cuisine": "Contemporary",
+    "prep_time": 10,
+    "ingredients": [
+      "1 cup oats",
+      "1 ripe banana",
+      "1/2 cup curd",
+      "2 cups water",
+      "1 tbsp pumpkin seeds"
+    ],
+    "temperature_tag": "warm",
+    "processes": [
+      "simmer",
+      "mash",
+      "stir"
+    ],
+    "protein_g": 13,
+    "calories": 360,
+    "moisture_index": 0.85,
+    "servings": 1,
+    "instructions": [
+      "Simmer rolled oats in water until soft and creamy.",
+      "Mash ripe banana into the warm porridge to overcome raised sweet thresholds naturally.",
+      "Stir in room-temperature curd and ground pumpkin seeds off the heat."
+    ]
+  },
+  {
+    "id": "r_spinach_paneer_puree",
+    "title": "Velvety Palak & Paneer Purée with Mild Jeera",
+    "cuisine": "Indian",
+    "prep_time": 20,
+    "ingredients": [
+      "150g paneer",
+      "2 cups water",
+      "1/2 tsp cumin",
+      "1/2 tsp ginger",
+      "1/2 tsp turmeric",
+      "1/2 tsp salt",
+      "1 tsp ghee"
+    ],
+    "temperature_tag": "warm",
+    "processes": [
+      "blanch",
+      "purée",
+      "simmer"
+    ],
+    "protein_g": 20,
+    "calories": 320,
+    "moisture_index": 0.85,
+    "servings": 2,
+    "instructions": [
+      "Lightly steam greens and purée into a smooth base.",
+      "Simmer with soft cubed fresh paneer and tempered cumin in ghee.",
+      "Gentle and savory without harsh spices."
+    ]
+  },
+  {
+    "id": "r_apple_cider_chicken",
+    "title": "Tart Apple Cider Glazed Chicken over Mashed Potatoes",
+    "cuisine": "American",
+    "prep_time": 25,
+    "ingredients": [
+      "200g chicken breast",
+      "2 tbsp apple cider vinegar",
+      "2 sweet potato",
+      "1/2 tsp salt",
+      "1 tbsp olive oil"
+    ],
+    "temperature_tag": "warm",
+    "processes": [
+      "sear lightly",
+      "glaze",
+      "steam"
+    ],
+    "protein_g": 32,
+    "calories": 390,
+    "moisture_index": 0.65,
+    "servings": 2,
+    "instructions": [
+      "Pan-glaze lean chicken breast strips with apple cider vinegar and a touch of water.",
+      "Serve over smooth steamed mashed sweet potato.",
+      "The tart malic and acetic acid effectively clears metallic phantoms in non-mucositis patients."
+    ]
+  },
+  {
+    "id": "r_egg_drop_soup",
+    "title": "Mild Egg Drop Soup with Silken Tofu",
+    "cuisine": "Chinese",
+    "prep_time": 15,
+    "ingredients": [
+      "3 egg white",
+      "100g silken tofu",
+      "3 cups vegetable broth",
+      "1/2 tsp ginger",
+      "1/2 tsp salt"
+    ],
+    "temperature_tag": "warm",
+    "processes": [
+      "simmer",
+      "whisk ribbon"
+    ],
+    "protein_g": 16,
+    "calories": 160,
+    "moisture_index": 1,
+    "servings": 2,
+    "instructions": [
+      "Bring mild vegetable broth and ginger to a gentle simmer.",
+      "Swirl in cubed silken tofu and slowly stream whisked egg whites to form soft ribbons.",
+      "High lubrication, high digestibility, zero mucosal irritation."
+    ]
+  },
+  {
+    "id": "r_masoor_cumin_soup",
+    "title": "Red Lentil (Masoor) Purée with Roasted Cumin",
+    "cuisine": "Indian",
+    "prep_time": 20,
+    "ingredients": [
+      "1 cup moong dal",
+      "3 cups water",
+      "1/2 tsp cumin",
+      "1/2 tsp turmeric",
+      "1/2 tsp salt",
+      "1 tsp ghee"
+    ],
+    "temperature_tag": "warm",
+    "processes": [
+      "simmer",
+      "blend"
+    ],
+    "protein_g": 15,
+    "calories": 240,
+    "moisture_index": 0.95,
+    "servings": 2,
+    "instructions": [
+      "Cook red lentils with water and turmeric until completely broken down.",
+      "Whisk smooth and temper with roasted cumin in ghee.",
+      "Gentle protein-dense soup for mucosal recovery days."
+    ]
+  },
+  {
+    "id": "r_avocado_tofu_gazpacho",
+    "title": "Chilled Avocado & Silken Tofu Soup (Cold Dish)",
+    "cuisine": "Fusion",
+    "prep_time": 10,
+    "ingredients": [
+      "1 avocado",
+      "150g silken tofu",
+      "1 cup water",
+      "1 tbsp lime juice",
+      "1/2 tsp salt"
+    ],
+    "temperature_tag": "cold",
+    "processes": [
+      "blend",
+      "chill in refrigerator"
+    ],
+    "protein_g": 11,
+    "calories": 290,
+    "moisture_index": 0.85,
+    "servings": 2,
+    "instructions": [
+      "Blend ripe avocado and silken tofu with lime juice and ice cold water.",
+      "Refrigerate and serve chilled.",
+      "Note: Absolutely contraindicated for Oxaliplatin patients due to acute cold allodynia."
+    ]
+  },
+  {
+    "id": "r_grapefruit_salmon_salad",
+    "title": "Raw Salmon Sashimi with Grapefruit & Citrus Dressing",
+    "cuisine": "Contemporary",
+    "prep_time": 15,
+    "ingredients": [
+      "150g sushi",
+      "1/2 cup grapefruit",
+      "1 tbsp lemon juice",
+      "1/2 tsp black pepper"
+    ],
+    "temperature_tag": "cold",
+    "processes": [
+      "slice raw",
+      "toss"
+    ],
+    "protein_g": 22,
+    "calories": 310,
+    "moisture_index": 0.5,
+    "servings": 1,
+    "instructions": [
+      "Slice raw sushi-grade salmon and toss with fresh grapefruit segments.",
+      "Note: Strict P0 clinical hazard! Raw fish risks neutropenic sepsis and grapefruit inhibits CYP3A4 enzymes."
+    ]
+  },
+  {
+    "id": "r_szechuan_spicy_beef",
+    "title": "Fiery Szechuan Chili Beef with Fried Garlic",
+    "cuisine": "Chinese",
+    "prep_time": 20,
+    "ingredients": [
+      "200g beef",
+      "2 tbsp chili",
+      "4 cloves garlic",
+      "1/2 cup onion",
+      "2 tbsp olive oil"
+    ],
+    "temperature_tag": "warm",
+    "processes": [
+      "stir fry",
+      "char"
+    ],
+    "protein_g": 28,
+    "calories": 480,
+    "moisture_index": 0.3,
+    "servings": 2,
+    "instructions": [
+      "Stir fry sliced beef with fiery red chilis, raw garlic, and onions at high heat.",
+      "Note: Multiple clinical contraindications! Red meat amplifies metallic dysgeusia; capsaicin burns oral mucositis; pungent volatiles trigger nausea."
+    ]
+  },
+  {
+    "id": "r_penne_vodka",
+    "title": "Penne alla Vodka with Spicy Cream Sauce",
+    "cuisine": "Italian",
+    "prep_time": 25,
+    "ingredients": [
+      "1 cup tomato",
+      "1/4 cup alcohol",
+      "1/2 cup onion",
+      "1/2 tsp chili",
+      "1 cup water"
+    ],
+    "temperature_tag": "warm",
+    "processes": [
+      "boil",
+      "flambé"
+    ],
+    "protein_g": 6,
+    "calories": 380,
+    "moisture_index": 0.5,
+    "servings": 2,
+    "instructions": [
+      "Simmer crushed tomatoes with vodka, onion, and chili flakes.",
+      "Note: P0 violation! Alcohol is strictly contraindicated during active chemotherapy regimens."
+    ]
+  },
+  {
+    "id": "r_dry_roast_chicken",
+    "title": "Dry Roasted Spiced Chicken Cutlet",
+    "cuisine": "American",
+    "prep_time": 35,
+    "ingredients": [
+      "200g chicken breast",
+      "1/2 tsp black pepper",
+      "1/2 tsp salt",
+      "1 tbsp olive oil"
+    ],
+    "temperature_tag": "warm",
+    "processes": [
+      "bake dry",
+      "broil"
+    ],
+    "protein_g": 32,
+    "calories": 310,
+    "moisture_index": 0.2,
+    "servings": 1,
+    "instructions": [
+      "Bake chicken breast on dry rack until crispy and dehydrated.",
+      "Note: Low moisture index (0.2) causes dysphagia and choking hazard for xerostomia patients without added gravy."
+    ]
+  },
+  {
+    "id": "r_starfruit_sorbet",
+    "title": "Chilled Starfruit & Lime Slush",
+    "cuisine": "Fusion",
+    "prep_time": 10,
+    "ingredients": [
+      "2 starfruit",
+      "2 tbsp lime juice",
+      "1 cup water"
+    ],
+    "temperature_tag": "cold",
+    "processes": [
+      "freeze",
+      "blend"
+    ],
+    "protein_g": 1,
+    "calories": 90,
+    "moisture_index": 0.9,
+    "servings": 2,
+    "instructions": [
+      "Blend starfruit with lime juice and crush into cold slush.",
+      "Note: Strict P0 violation! Starfruit contains caramboxin neurotoxin contraindicated in oncology/renal vulnerability."
+    ]
+  },
+  {
+    "id": "r_paneer_bhurji_soft",
+    "title": "Soft Turmeric Paneer Bhurji with Cumin",
+    "cuisine": "Indian",
+    "prep_time": 15,
+    "ingredients": [
+      "150g paneer",
+      "1/2 cup tomato",
+      "1/2 tsp cumin",
+      "1/2 tsp turmeric",
+      "1/2 tsp salt",
+      "1 tsp ghee"
+    ],
+    "temperature_tag": "warm",
+    "processes": [
+      "scramble",
+      "sauté lightly"
+    ],
+    "protein_g": 19,
+    "calories": 310,
+    "moisture_index": 0.7,
+    "servings": 2,
+    "instructions": [
+      "Gently crumble fresh paneer.",
+      "Sauté with tempered cumin and turmeric in ghee, folding in mild tomato purée until moist and tender.",
+      "High protein, easy to chew, and rich in natural antioxidants."
+    ]
+  },
+  {
+    "id": "r_sabudana_kanji",
+    "title": "Hydrating Sabudana (Sago) Porridge with Lemon",
+    "cuisine": "Indian",
+    "prep_time": 20,
+    "ingredients": [
+      "1/2 cup rice",
+      "3 cups water",
+      "1 tbsp lemon juice",
+      "1/2 tsp cumin",
+      "1/2 tsp salt",
+      "1 tsp ghee"
+    ],
+    "temperature_tag": "warm",
+    "processes": [
+      "boil",
+      "temper"
+    ],
+    "protein_g": 4,
+    "calories": 210,
+    "moisture_index": 0.95,
+    "servings": 2,
+    "instructions": [
+      "Boil polished rice/sago in water until translucent and gel-like.",
+      "Stir in lemon juice (if mucosa healthy) to stimulate salivation and chelate metallic ions.",
+      "Finish with cumin tempered in ghee."
+    ]
+  },
+  {
+    "id": "r_steamed_cod_broth",
+    "title": "Tender Whitefish Poached in Gentle Vegetable Broth",
+    "cuisine": "European",
+    "prep_time": 20,
+    "ingredients": [
+      "180g chicken breast",
+      "2 cups vegetable broth",
+      "1 cup carrot",
+      "1/2 tsp salt",
+      "1/2 tsp ginger"
+    ],
+    "temperature_tag": "warm",
+    "processes": [
+      "poach",
+      "simmer"
+    ],
+    "protein_g": 26,
+    "calories": 260,
+    "moisture_index": 0.9,
+    "servings": 2,
+    "instructions": [
+      "Poach tender lean protein in warm vegetable broth with sliced carrots and mild ginger.",
+      "Soft flakes require minimal chewing and deliver bioavailable amino acids."
+    ]
+  },
+  {
+    "id": "r_chhena_kheer_mild",
+    "title": "Warm Chhena & Rice Milk Pudding (Non-Aromatic)",
+    "cuisine": "Indian",
+    "prep_time": 25,
+    "ingredients": [
+      "100g paneer",
+      "1/2 cup rice",
+      "2 cups water",
+      "1/2 cup curd",
+      "1/2 tsp salt"
+    ],
+    "temperature_tag": "warm",
+    "processes": [
+      "simmer",
+      "whisk"
+    ],
+    "protein_g": 16,
+    "calories": 290,
+    "moisture_index": 0.85,
+    "servings": 2,
+    "instructions": [
+      "Simmer soft rice in water until it forms a creamy porridge base.",
+      "Whisk in fresh chhena (paneer) and room-temperature curd off the flame.",
+      "Mild comfort food tailored for post-infusion acute nausea days."
+    ]
+  },
+  {
+    "id": "r_sweet_potato_mash",
+    "title": "Silky Sweet Potato & Pumpkin Seed Purée",
+    "cuisine": "Contemporary",
+    "prep_time": 20,
+    "ingredients": [
+      "2 sweet potato",
+      "2 tbsp pumpkin seeds",
+      "1/2 cup vegetable broth",
+      "1/2 tsp salt",
+      "1 tbsp olive oil"
+    ],
+    "temperature_tag": "warm",
+    "processes": [
+      "steam",
+      "whip"
+    ],
+    "protein_g": 12,
+    "calories": 310,
+    "moisture_index": 0.8,
+    "servings": 2,
+    "instructions": [
+      "Steam sweet potatoes until completely soft.",
+      "Whip with vegetable broth, olive oil, and finely ground pumpkin seeds.",
+      "Naturally addresses elevated sweet detection thresholds while replenishing zinc."
+    ]
+  },
+  {
+    "id": "r_mild_tomato_dal",
+    "title": "Mild Tomato & Yellow Lentil Gravy",
+    "cuisine": "Indian",
+    "prep_time": 25,
+    "ingredients": [
+      "1 cup moong dal",
+      "1 cup tomato",
+      "3 cups water",
+      "1/2 tsp cumin",
+      "1/2 tsp turmeric",
+      "1/2 tsp salt",
+      "1 tsp ghee"
+    ],
+    "temperature_tag": "warm",
+    "processes": [
+      "simmer",
+      "temper"
+    ],
+    "protein_g": 15,
+    "calories": 270,
+    "moisture_index": 0.9,
+    "servings": 2,
+    "instructions": [
+      "Cook yellow moong dal with ripe diced tomatoes and turmeric until creamy.",
+      "Add cumin tempered in ghee; tomatoes provide dual umami and gentle acid chelation (avoid if mouth sores present)."
+    ]
+  },
+  {
+    "id": "r_dalia_khichdi",
+    "title": "Broken Wheat & Moong Dal Dalia Khichdi",
+    "cuisine": "Indian",
+    "prep_time": 30,
+    "ingredients": [
+      "1/2 cup oats",
+      "1/2 cup moong dal",
+      "1 cup lauki",
+      "4 cups water",
+      "1/2 tsp cumin",
+      "1/2 tsp turmeric",
+      "1/2 tsp salt",
+      "1 tsp ghee"
+    ],
+    "temperature_tag": "warm",
+    "processes": [
+      "pressure cook",
+      "temper"
+    ],
+    "protein_g": 15.5,
+    "calories": 310,
+    "moisture_index": 0.95,
+    "servings": 2,
+    "instructions": [
+      "Pressure cook broken wheat/grains with moong dal and diced bottle gourd (lauki).",
+      "Temper with cumin in pure ghee for high-fiber, gentle digestion."
+    ]
+  },
+  {
+    "id": "r_tofu_sweet_potato_soup",
+    "title": "Golden Tofu & Sweet Potato Comfort Broth",
+    "cuisine": "Fusion",
+    "prep_time": 22,
+    "ingredients": [
+      "150g silken tofu",
+      "1 sweet potato",
+      "3 cups vegetable broth",
+      "1/2 tsp ginger",
+      "1/2 tsp turmeric",
+      "1/2 tsp salt"
+    ],
+    "temperature_tag": "warm",
+    "processes": [
+      "simmer",
+      "cube"
+    ],
+    "protein_g": 14,
+    "calories": 260,
+    "moisture_index": 0.95,
+    "servings": 2,
+    "instructions": [
+      "Simmer diced sweet potato in vegetable broth until tender.",
+      "Add cubes of silken tofu, grated ginger, and turmeric, simmering gently for 5 minutes.",
+      "A complete meal in a bowl providing hydration, electrolytes, and clean protein."
+    ]
+  },
+  {
+    "id": "r_masoor_spinach",
+    "title": "Creamy Masoor Dal & Palak (Spinach) Purée",
+    "cuisine": "Indian",
+    "prep_time": 25,
+    "ingredients": [
+      "1 cup masoor dal",
+      "2 cups spinach",
+      "3 cups water",
+      "1/2 tsp cumin",
+      "1/2 tsp turmeric",
+      "1/2 tsp salt",
+      "1 tsp ghee"
+    ],
+    "temperature_tag": "warm",
+    "processes": [
+      "simmer",
+      "blend",
+      "temper"
+    ],
+    "protein_g": 18,
+    "calories": 290,
+    "moisture_index": 0.9,
+    "servings": 2,
+    "instructions": [
+      "Cook split red lentils (masoor dal) with washed baby spinach and turmeric until tender.",
+      "Gently immersion blend into a velvety green purée suitable for tender oral mucosa.",
+      "Temper with cumin seeds in ghee and serve lukewarm with bamboo cutlery."
+    ]
+  },
+  {
+    "id": "r_lauki_kanji",
+    "title": "Tender Lauki & Rice Kanji (Healing Porridge)",
+    "cuisine": "Indian",
+    "prep_time": 30,
+    "ingredients": [
+      "1/2 cup rice",
+      "2 cups lauki",
+      "5 cups water",
+      "1/2 tsp cumin",
+      "1/2 tsp ginger",
+      "1/2 tsp salt"
+    ],
+    "temperature_tag": "warm",
+    "processes": [
+      "slow simmer",
+      "mash"
+    ],
+    "protein_g": 12,
+    "calories": 210,
+    "moisture_index": 1,
+    "servings": 2,
+    "instructions": [
+      "Slowly simmer polished rice and diced bottle gourd (lauki) in 5 cups of water until grains break down into a silk-like kanji broth.",
+      "Add a pinch of ground cumin and grated ginger for gentle gastric relief.",
+      "Ultra-hydrating meal for severe dry mouth (xerostomia) and mucositis recovery."
+    ]
+  },
+  {
+    "id": "r_paneer_turai",
+    "title": "Fresh Paneer & Turai (Ridge Gourd) Mild Gravy",
+    "cuisine": "Indian",
+    "prep_time": 20,
+    "ingredients": [
+      "150g paneer",
+      "2 cups turai",
+      "1 cup water",
+      "1/2 tsp cumin",
+      "1/2 tsp turmeric",
+      "1/2 tsp salt",
+      "1 tbsp ghee"
+    ],
+    "temperature_tag": "warm",
+    "processes": [
+      "saute",
+      "simmer"
+    ],
+    "protein_g": 20,
+    "calories": 330,
+    "moisture_index": 0.85,
+    "servings": 2,
+    "instructions": [
+      "Peel ridge gourd (turai) and simmer in lightly salted water with turmeric until very tender.",
+      "Add soft cubes of fresh paneer or chhena and simmer for 3 minutes to absorb moisture.",
+      "Delivers high anabolic protein without acidic stinging or sulfurous volatility."
+    ]
+  },
+  {
+    "id": "r_sabudana_kheer",
+    "title": "Soothing Sabudana & Coconut Milk Kheer",
+    "cuisine": "Indian",
+    "prep_time": 25,
+    "ingredients": [
+      "1/2 cup sago",
+      "1 cup coconut milk",
+      "2 cups water",
+      "1 tbsp jaggery",
+      "1/4 tsp cardamom"
+    ],
+    "temperature_tag": "room_temp",
+    "processes": [
+      "boil",
+      "simmer",
+      "sweeten"
+    ],
+    "protein_g": 12,
+    "calories": 280,
+    "moisture_index": 0.9,
+    "servings": 2,
+    "instructions": [
+      "Soak tapioca pearls (sabudana) and boil until translucent and soft.",
+      "Stir in coconut milk, a hint of mineral-rich jaggery, and crushed cardamom off the flame.",
+      "Serve lukewarm; non-acidic creamy treat calibrated to cross elevated sweet detection thresholds."
+    ]
+  },
+  {
+    "id": "r_chana_lauki",
+    "title": "Protein-Rich Chana Dal & Lauki Stew",
+    "cuisine": "Indian",
+    "prep_time": 35,
+    "ingredients": [
+      "1 cup chana dal",
+      "2 cups lauki",
+      "4 cups water",
+      "1/2 tsp cumin",
+      "1/2 tsp turmeric",
+      "1/2 tsp salt",
+      "1 tsp ghee"
+    ],
+    "temperature_tag": "warm",
+    "processes": [
+      "pressure cook",
+      "temper"
+    ],
+    "protein_g": 19,
+    "calories": 320,
+    "moisture_index": 0.9,
+    "servings": 2,
+    "instructions": [
+      "Pressure cook split bengal gram (chana dal) and tender lauki with turmeric and salt until very soft.",
+      "Gently mash to create an easily swallowable, protein-dense gravy.",
+      "Enriched with bioavailable zinc to support taste bud renewal."
+    ]
+  },
+  {
+    "id": "r_barley_lentil_broth",
+    "title": "Hydrating Barley & Yellow Lentil Sipping Broth",
+    "cuisine": "Indian",
+    "prep_time": 30,
+    "ingredients": [
+      "1/2 cup barley",
+      "1/2 cup moong dal",
+      "5 cups water",
+      "1/2 tsp cumin",
+      "1/2 tsp salt",
+      "1 tsp ghee"
+    ],
+    "temperature_tag": "warm",
+    "processes": [
+      "simmer",
+      "strain optional"
+    ],
+    "protein_g": 14,
+    "calories": 240,
+    "moisture_index": 1,
+    "servings": 2,
+    "instructions": [
+      "Slow-cook barley and split yellow lentils in plenty of water until the starch gelatinizes into a velvety broth.",
+      "Lightly season with roasted cumin and pure ghee.",
+      "Provides salivary lubrication for dry mouth and restores hydration."
+    ]
+  },
+  {
+    "id": "r_idli_coconut",
+    "title": "Soft Steamed Idli with Mild Coconut Chutney",
+    "cuisine": "Indian",
+    "prep_time": 20,
+    "ingredients": [
+      "4 steamed idli",
+      "1/2 cup coconut milk",
+      "1/2 tsp cumin",
+      "1/2 tsp salt"
+    ],
+    "temperature_tag": "room_temp",
+    "processes": [
+      "steam",
+      "dip"
+    ],
+    "protein_g": 12,
+    "calories": 290,
+    "moisture_index": 0.75,
+    "servings": 1,
+    "instructions": [
+      "Steam fermented rice-lentil batter into ultra-soft, pillowy idlis.",
+      "Pair with a gentle room-temperature coconut-cumin dip (zero chili, zero mustard).",
+      "Easily chewed and swallowed with minimal mucosal resistance."
+    ]
+  },
+  {
+    "id": "r_stewed_pear_cinnamon",
+    "title": "Warm Stewed Pear with Ceylon Cinnamon & Chia",
+    "cuisine": "Continental",
+    "prep_time": 18,
+    "ingredients": [
+      "2 pear",
+      "1 tbsp chia seeds",
+      "1/2 cup water",
+      "1/4 tsp cinnamon",
+      "1 tsp honey"
+    ],
+    "temperature_tag": "warm",
+    "processes": [
+      "poach",
+      "soak"
+    ],
+    "protein_g": 12,
+    "calories": 220,
+    "moisture_index": 0.85,
+    "servings": 2,
+    "instructions": [
+      "Poach peeled, cored pears in water with Ceylon cinnamon until fork-tender.",
+      "Stir in soaked chia seeds for natural lubricating mucilage.",
+      "Non-acidic sweet stimulation safe for mucosal ulcers."
+    ]
+  },
+  {
+    "id": "r_cauliflower_nooch_soup",
+    "title": "Velvety Cauliflower & Nutritional Yeast Bisque",
+    "cuisine": "Contemporary",
+    "prep_time": 25,
+    "ingredients": [
+      "3 cups cauliflower",
+      "3 tbsp nutritional yeast",
+      "3 cups vegetable broth",
+      "1/2 tsp salt",
+      "1 tbsp olive oil"
+    ],
+    "temperature_tag": "warm",
+    "processes": [
+      "steam",
+      "puree"
+    ],
+    "protein_g": 16,
+    "calories": 250,
+    "moisture_index": 0.95,
+    "servings": 2,
+    "instructions": [
+      "Steam cauliflower florets until thoroughly tender.",
+      "Purée with vegetable broth and nutritional yeast to build intense umami signaling without dairy or meat.",
+      "High B-vitamin and protein content supports anabolic recovery."
+    ]
+  },
+  {
+    "id": "r_quinoa_beet_puree",
+    "title": "Anabolic Quinoa & Sweet Beetroot Velvet",
+    "cuisine": "Fusion",
+    "prep_time": 25,
+    "ingredients": [
+      "1/2 cup quinoa",
+      "1 cup beetroot",
+      "2 cups water",
+      "1/2 cup curd",
+      "1/2 tsp salt"
+    ],
+    "temperature_tag": "room_temp",
+    "processes": [
+      "cook",
+      "blend"
+    ],
+    "protein_g": 14.5,
+    "calories": 270,
+    "moisture_index": 0.85,
+    "servings": 2,
+    "instructions": [
+      "Cook quinoa until very soft and over-hydrated.",
+      "Blend with steamed sweet beetroot and soothing room-temperature curd.",
+      "Restores sweet taste perceptions while providing complete plant protein."
+    ]
+  },
+  {
+    "id": "r_zucchini_carrot_cream",
+    "title": "Zucchini & Sweet Carrot Soothing Broth",
+    "cuisine": "European",
+    "prep_time": 20,
+    "ingredients": [
+      "2 zucchini",
+      "2 carrot",
+      "3 cups vegetable broth",
+      "1/2 tsp ginger",
+      "1/2 tsp salt",
+      "1 tbsp olive oil"
+    ],
+    "temperature_tag": "warm",
+    "processes": [
+      "simmer",
+      "blend"
+    ],
+    "protein_g": 12,
+    "calories": 180,
+    "moisture_index": 0.95,
+    "servings": 2,
+    "instructions": [
+      "Simmer sliced zucchini and carrots in vegetable broth with a trace of ginger.",
+      "Purée until smooth; 95% moisture content enables effortless swallowing for xerostomia patients."
+    ]
+  },
+  {
+    "id": "r_tofu_miso_congee",
+    "title": "Silken Tofu & White Miso Breakfast Congee",
+    "cuisine": "Asian",
+    "prep_time": 30,
+    "ingredients": [
+      "1/2 cup rice",
+      "150g silken tofu",
+      "1 tbsp miso",
+      "4 cups water",
+      "1/2 tsp salt"
+    ],
+    "temperature_tag": "warm",
+    "processes": [
+      "slow simmer",
+      "fold"
+    ],
+    "protein_g": 17,
+    "calories": 280,
+    "moisture_index": 1,
+    "servings": 2,
+    "instructions": [
+      "Simmer rice into a continuous comforting porridge.",
+      "Whisk in mild white miso off the heat and fold in delicate cubes of silken tofu.",
+      "Strong intact umami pathway agonist targeting TRC Type I preservation."
+    ]
+  },
+  {
+    "id": "r_steamed_fish_ginger",
+    "title": "Gentle Steamed Fish with Ginger & Turmeric",
+    "cuisine": "Asian",
+    "prep_time": 18,
+    "ingredients": [
+      "180g white fish fillet",
+      "1/2 tsp ginger",
+      "1/2 tsp turmeric",
+      "1/2 cup vegetable broth",
+      "1/2 tsp salt",
+      "1 tsp olive oil"
+    ],
+    "temperature_tag": "warm",
+    "processes": [
+      "gentle steam",
+      "flake"
+    ],
+    "protein_g": 26,
+    "calories": 240,
+    "moisture_index": 0.8,
+    "servings": 1,
+    "instructions": [
+      "Gently steam fresh white fish with grated ginger and turmeric until tender and flaking.",
+      "Moisten with warm vegetable broth; lean non-heme protein without metallic lipid oxidation."
+    ]
+  },
+  {
+    "id": "r_chicken_congee",
+    "title": "Poached Chicken Breast & Golden Rice Congee",
+    "cuisine": "Asian",
+    "prep_time": 35,
+    "ingredients": [
+      "150g chicken breast",
+      "1/2 cup rice",
+      "4 cups water",
+      "1/2 tsp ginger",
+      "1/2 tsp salt"
+    ],
+    "temperature_tag": "warm",
+    "processes": [
+      "poach",
+      "shred",
+      "simmer"
+    ],
+    "protein_g": 28,
+    "calories": 350,
+    "moisture_index": 1,
+    "servings": 2,
+    "instructions": [
+      "Poach lean chicken breast until tender, then finely shred.",
+      "Simmer into thick rice congee with mild ginger; high anabolic density combats cancer cachexia."
+    ]
+  },
+  {
+    "id": "r_almond_oat_porridge",
+    "title": "Warm Blanched Almond Butter & Oat Porridge",
+    "cuisine": "Contemporary",
+    "prep_time": 15,
+    "ingredients": [
+      "1 cup oats",
+      "2 tbsp almond butter",
+      "2 cups water",
+      "1 tbsp jaggery",
+      "1/4 tsp cinnamon"
+    ],
+    "temperature_tag": "warm",
+    "processes": [
+      "simmer",
+      "whip"
+    ],
+    "protein_g": 15,
+    "calories": 360,
+    "moisture_index": 0.85,
+    "servings": 2,
+    "instructions": [
+      "Cook rolled oats in water until soft and creamy.",
+      "Whip in smooth blanched almond butter, unrefined jaggery, and cinnamon.",
+      "Dense calories and zinc to support taste progenitor renewal."
+    ]
+  },
+  {
+    "id": "r_curd_cucumber_pachadi",
+    "title": "Soothing Cucumber & Fresh Curd Pachadi",
+    "cuisine": "Indian",
+    "prep_time": 12,
+    "ingredients": [
+      "1 cup curd",
+      "1 cup peeled cucumber",
+      "1/2 tsp cumin",
+      "1/2 tsp salt"
+    ],
+    "temperature_tag": "room_temp",
+    "processes": [
+      "grate",
+      "mix"
+    ],
+    "protein_g": 12,
+    "calories": 160,
+    "moisture_index": 0.9,
+    "servings": 2,
+    "instructions": [
+      "Grate peeled cucumber and fold into pasteurized room-temperature curd.",
+      "Season with roasted ground cumin and salt; cooling mucosal shield."
+    ]
+  },
+  {
+    "id": "r_toor_dal_rice",
+    "title": "Mild Toor Dal & Polished Rice Mash",
+    "cuisine": "Indian",
+    "prep_time": 25,
+    "ingredients": [
+      "1/2 cup toor dal",
+      "1/2 cup rice",
+      "3 cups water",
+      "1/2 tsp cumin",
+      "1/2 tsp turmeric",
+      "1/2 tsp salt",
+      "1 tbsp ghee"
+    ],
+    "temperature_tag": "warm",
+    "processes": [
+      "pressure cook",
+      "mash"
+    ],
+    "protein_g": 16,
+    "calories": 310,
+    "moisture_index": 0.9,
+    "servings": 2,
+    "instructions": [
+      "Pressure cook split pigeon peas and rice with turmeric and salt until soft.",
+      "Stir in melted ghee and tempered cumin for wholesome staple comfort."
+    ]
+  },
+  {
+    "id": "r_coconut_water_chia",
+    "title": "Tender Coconut Water & Hydrating Chia Elixir",
+    "cuisine": "Tropical",
+    "prep_time": 10,
+    "ingredients": [
+      "2 cups coconut water",
+      "1 tbsp chia seeds",
+      "1 tsp honey"
+    ],
+    "temperature_tag": "room_temp",
+    "processes": [
+      "hydrate",
+      "stir"
+    ],
+    "protein_g": 12,
+    "calories": 140,
+    "moisture_index": 1,
+    "servings": 1,
+    "instructions": [
+      "Soak chia seeds in fresh coconut water for 10 minutes until a gentle jelly forms.",
+      "Stir in honey; provides mucosal coating, hydration, and natural potassium."
+    ]
+  },
+  {
+    "id": "r_ice_slush_test",
+    "title": "Chilled Iced Fruit Slush (Clinical Test Fixture)",
+    "cuisine": "Beverage",
+    "prep_time": 5,
+    "ingredients": [
+      "2 cups crushed ice",
+      "1 cup watermelon",
+      "1 tbsp sugar"
+    ],
+    "temperature_tag": "cold",
+    "processes": [
+      "freeze",
+      "blend ice",
+      "serve chilled"
+    ],
+    "protein_g": 1,
+    "calories": 90,
+    "moisture_index": 1,
+    "servings": 1,
+    "instructions": [
+      "Blend crushed ice with watermelon.",
+      "NOTE: Hard-blocked by P1 safety gate for Oxaliplatin patients to prevent cold allodynia and pharyngolaryngeal dysesthesia."
+    ]
+  },
+  {
+    "id": "r_raw_sashimi_test",
+    "title": "Raw Salmon Sashimi & Sushi Rice (Clinical Test Fixture)",
+    "cuisine": "Japanese",
+    "prep_time": 15,
+    "ingredients": [
+      "150g raw salmon sashimi",
+      "1 cup sushi rice",
+      "1 tbsp soy sauce"
+    ],
+    "temperature_tag": "cold",
+    "processes": [
+      "raw slicing",
+      "serve uncooked"
+    ],
+    "protein_g": 24,
+    "calories": 320,
+    "moisture_index": 0.6,
+    "servings": 1,
+    "instructions": [
+      "Slice fresh raw salmon.",
+      "NOTE: Permanently hard-blocked by P0 universal safety gate across all cancer regimens due to immunosuppression and neutropenic sepsis risks."
+    ]
+  }
+]
