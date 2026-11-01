@@ -6,12 +6,13 @@
 
 ## 1. Project Overview & Core Entities
 
-ChemoTaste computationally personalizes meal planning for cancer patients undergoing chemotherapy. The system maps drug-specific taste receptor damage (dysgeusia, parosmia, mucositis) against Foodoscope's **FlavorDB** and **RecipeDB** to produce safe, perceptible, and palatable recipes.
+ChemoTaste computationally personalizes meal planning for cancer patients undergoing chemotherapy. The system maps drug-specific taste receptor and salivary damage (dysgeusia, parosmia, xerostomia, mucositis) against Foodoscope's **FlavorDB** and **RecipeDB** to produce safe, perceptible, and palatable recipes.
 
 ### Key Paths & Resources
 * **Master Specification:** [`IMPLEMENTATION.md`](file:///e:/projects/ChemoTaste/IMPLEMENTATION.md)
 * **Agent Guidelines:** [`AGENT.md`](file:///e:/projects/ChemoTaste/AGENT.md)
 * **API Discovery Contract:** [`docs/api-contract.md`](file:///e:/projects/ChemoTaste/docs/api-contract.md)
+* **Hackathon Operational Roadmap:** [`PLAN.md`](file:///e:/projects/ChemoTaste/PLAN.md)
 * **Primary Challenge Databases:** FlavorDB2 (`cosylab.iiitd.edu.in/flavordb2`), RecipeDB (`cosylab.iiitd.edu.in/recipedb`).
 
 ---
@@ -69,6 +70,36 @@ ChemoTaste computationally personalizes meal planning for cancer patients underg
 * **Decision:** Enforce raw-string regexes (`NON_VEG_PATTERNS`, `COLD_DISH_PATTERNS`, `DRUG_INTERACTION_BLACKLIST`) directly against raw recipe line strings.
 * **Consequence:** Complete safety coverage even when external recipes have uncataloged ingredient variants.
 
+### ADR-009: Salivary Lipid Peroxidation & Retronasal Metallic Mechanism
+* **Context:** Clinical literature (Amézaga 2018, Henkin 2008) shows metallic taste is not merely receptor-binding; it is driven by chemotherapy drugs in saliva oxidizing oral mucosal lipids via reactive oxygen species (ROS), yielding volatile aldehydes (1-octen-3-one, hexanal) reaching the olfactory bulb retronasally.
+* **Decision:** FlavorDB tracks volatile aldehydes and ketones to suppress lipid oxidation aroma products, while natural metal chelators (citric/malic acid where mucositis allows) and dietary polyphenols neutralize free salivary metal ions.
+* **Consequence:** Aligns the system with the actual biological cause of metallic dysgeusia.
+
+### ADR-010: Cachexia Prevention via Anabolic Protein & Calorie Floors
+* **Context:** ESPEN Cancer Guidelines emphasize that cancer-related malnutrition kills 20–30% of patients. Over-filtering ingredients produces low-calorie, protein-deficient meals.
+* **Decision:** Enforce a nutritional floor: recipes providing $< 12\text{g}$ protein receive a $15\%$ penalty, and low-aroma, high-protein carriers (chhena, moong dal, paneer, silken tofu, chicken breast) are prioritized.
+* **Consequence:** Prevents the "empty plate" trap and supports patient muscle mass maintenance.
+
+### ADR-011: Moisture & Lubrication Index for Xerostomia/Dysphagia
+* **Context:** 40–70% of chemo patients suffer from xerostomia (dry mouth). Tastants cannot dissolve to reach taste pores without liquid, and dry food causes dysphagic aspiration.
+* **Decision:** Classify recipes by Moisture Index ($M \in [0, 1]$). If dry mouth or mucositis is active, recipes with $M < 0.5$ receive a $40\%$ penalty or require liquid adaptation (khichdi, broths, gravies).
+* **Consequence:** Ensures physical swallowability and tastant dissolution.
+
+### ADR-012: Dynamic 3-Phase Chemotherapy Cycle Adaptation
+* **Context:** Chemotherapy cycles are cyclical (14–21 days) with distinct biological phases: Days 1–3 (Acute post-infusion), Days 4–8 (Nadir & mucositis peak), Days 9–21 (Anabolic recovery window).
+* **Decision:** Add a Cycle Phase Selector (`acute_1_3`, `nadir_4_8`, `recovery_9_21`) that automatically modulates constraints (e.g. Days 9–21 re-opens mild aromatics and high protein).
+* **Consequence:** Reflects true longitudinal clinical oncology care.
+
+### ADR-013: Indian Computational Gastronomy Integration
+* **Context:** The challenge is hosted by IIIT Delhi (Prof. Ganesh Bagler), pioneers of Indian cuisine computing. Western bland diets (smoothies, cold oatmeal) are non-viable for Indian oncology patients.
+* **Decision:** Feature Indian therapeutic staples: Moong dal khichdi, curd rice, fresh chhena, jeera infusion, and lauki stew.
+* **Consequence:** Culturally authentic, clinically effective, and aligned with CoSy Lab research.
+
+### ADR-014: Electrochemical Cutlery & Oral Buffering Advisory
+* **Context:** Stainless steel cutlery catalyzes electrochemical oxidation in saliva, amplifying metallic phantoms by 200–300%.
+* **Decision:** Advise non-metallic cutlery (bamboo, ceramic, wood) and a 10-minute pre-meal warm salt-soda oral rinse to clear salivary lipid peroxides.
+* **Consequence:** Integrates zero-cost physical oral chemesthesis interventions.
+
 ---
 
 ## 3. Calibration Constants & Tuning Reference
@@ -81,6 +112,8 @@ ChemoTaste computationally personalizes meal planning for cancer patients underg
 | `RATE_LIMIT` | `3` | Maximum concurrent upstream requests client-side (`p-limit(3)`). |
 | `PROXY_TIMEOUT` | `8000ms` | Next.js API route upstream fetch timeout. |
 | `SWEET_SENS` | `0.69` | Relative sensitivity coordinate on radar chart when sweet threshold is elevated 45%. |
+| `PROTEIN_MIN_G` | `12g` | Minimum protein floor per serving to protect against cancer cachexia. |
+| `MOISTURE_MIN` | `0.5` | Minimum moisture index threshold required during active xerostomia or mucositis. |
 
 ---
 
@@ -101,10 +134,9 @@ ChemoTaste computationally personalizes meal planning for cancer patients underg
 
 ## 5. Pre-Hackathon Status & Checklist
 
-- [x] Master specification updated and verified (`IMPLEMENTATION.md`).
-- [x] Agent guidelines created (`AGENT.md`).
-- [x] Architectural memory documented (`MEMORY.md`).
-- [ ] API discovery contract populated (`docs/api-contract.md`).
-- [ ] Foodoscope API key provisioned and verified with curl.
-- [ ] Top 80 ingredients pre-compiled into `data/precompiled/ingredient_profiles.json`.
-- [ ] Top 50 curated recipes validated into `data/curated_recipes.json`.
+- [x] Master specification updated with lipid peroxidation and cachexia guardrails ([`IMPLEMENTATION.md`](file:///e:/projects/ChemoTaste/IMPLEMENTATION.md)).
+- [x] Agent guidelines updated ([`AGENT.md`](file:///e:/projects/ChemoTaste/AGENT.md)).
+- [x] Architectural memory enriched with ADR-001 through ADR-014 ([`MEMORY.md`](file:///e:/projects/ChemoTaste/MEMORY.md)).
+- [x] API discovery contract populated ([`docs/api-contract.md`](file:///e:/projects/ChemoTaste/docs/api-contract.md)).
+- [x] Repository README updated ([`README.md`](file:///e:/projects/ChemoTaste/README.md)).
+- [x] Hackathon operational roadmap established ([`PLAN.md`](file:///e:/projects/ChemoTaste/PLAN.md)).
