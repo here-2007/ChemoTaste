@@ -3,7 +3,7 @@ import { NextRequest } from 'next/server';
 
 const UPSTREAM = {
   flavordb: {
-    base: 'https://cosylab.iiitd.edu.in/flavordb2/api',
+    base: process.env.FOODOSCOPE_FLAVORDB_BASE ?? 'https://api.foodoscope.com/flavordb',
     allow: [
       /^properties\/(taste-threshold|by-description)$/,
       /^molecules_data\/(filter-by-type|by-commonName)$/,
@@ -11,11 +11,15 @@ const UPSTREAM = {
     ],
   },
   recipedb: {
-    base: 'https://cosylab.iiitd.edu.in/recipedb/api',
+    base: process.env.FOODOSCOPE_RECIPEDB_BASE ?? 'https://api.foodoscope.com/recipe2-api',
     allow: [
       /^recipe-bytitle\/recipeByTitle$/,
       /^recipes_cuisine\/cuisine\/[A-Za-z0-9 _%-]+$/,
-      /^recipes\/ingredient$/,
+      /^recipebyingredient\/by-ingredients-categories-title$/,
+      /^search-recipe\/[A-Za-z0-9_-]+$/,
+      /^recipe\/recipesinfo$/,
+      /^recipe\/region-diet\/region-diet$/,
+      /^recipe\/recipe-day\/with-ingredients-categories$/,
     ],
   },
 } as const;
@@ -23,7 +27,7 @@ const UPSTREAM = {
 export async function GET(req: NextRequest) {
   const sp = req.nextUrl.searchParams;
   const db = sp.get('db') as keyof typeof UPSTREAM | null;
-  const endpoint = sp.get('endpoint') ?? '';
+  const endpoint = (sp.get('endpoint') ?? '').replace(/^\/+/, '');
 
   if (!db || !(db in UPSTREAM)) {
     return Response.json({ error: 'Invalid database target' }, { status: 400 });

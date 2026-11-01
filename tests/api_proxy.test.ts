@@ -39,4 +39,20 @@ describe('Hardened API Proxy Security Policy', () => {
     expect(res.status).not.toBe(403);
     expect(res.status).not.toBe(400);
   });
+
+  it('permits verified RecipeDB search-recipe by id endpoint regex', async () => {
+    const req = new NextRequest('http://localhost:3000/api/proxy?db=recipedb&endpoint=search-recipe/2642');
+    const res = await GET(req);
+
+    expect(res.status).not.toBe(403);
+    expect(res.status).not.toBe(400);
+  });
+
+  it('permits verified RecipeDB recipebyingredient endpoint regex', async () => {
+    const req = new NextRequest('http://localhost:3000/api/proxy?db=recipedb&endpoint=recipebyingredient/by-ingredients-categories-title&includeIngredients=ginger');
+    const res = await GET(req);
+
+    expect(res.status).not.toBe(403);
+    expect(res.status).not.toBe(400);
+  });
 });
