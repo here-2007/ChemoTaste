@@ -27,6 +27,8 @@ export const RecipeCard: React.FC<Props> = ({ recipe, onOpenDetails }) => {
       className={`rounded-3xl border transition-all flex flex-col justify-between p-6 ${
         isExcluded
           ? 'bg-red-950/10 border-red-500/20 opacity-75'
+          : recipe.is_live
+          ? 'bg-black/60 border-emerald-500/30 hover:border-emerald-500/50 hover:bg-black/80'
           : 'bg-black/60 border-white/10 hover:border-white/30 hover:bg-black/80'
       }`}
     >
@@ -34,10 +36,21 @@ export const RecipeCard: React.FC<Props> = ({ recipe, onOpenDetails }) => {
         {/* Header: Score Gauge & Cuisine */}
         <div className="flex items-start justify-between gap-3 mb-4">
           <div className="flex flex-col">
-            <span className="text-[10px] uppercase tracking-[0.15em] text-[#ffb829] font-semibold">
-              {recipe.cuisine} CUISINE
-            </span>
-            <h4 className="text-lg font-normal tracking-[-0.02em] text-white mt-0.5 leading-snug">
+            <div className="flex items-center gap-2 flex-wrap mb-1">
+              <span className="text-[10px] uppercase tracking-[0.15em] text-[#ffb829] font-semibold">
+                {recipe.cuisine} CUISINE
+              </span>
+              {recipe.is_live && (
+                <span
+                  data-testid="live-recipe-badge"
+                  className="inline-flex items-center gap-1 text-[9px] uppercase tracking-wider font-semibold px-2 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-300"
+                >
+                  <Sparkles className="w-2.5 h-2.5 text-emerald-400" />
+                  RecipeDB Live
+                </span>
+              )}
+            </div>
+            <h4 className="text-lg font-normal tracking-[-0.02em] text-white leading-snug">
               {recipe.title}
             </h4>
           </div>

@@ -13,12 +13,13 @@ import { RecipeModal } from '../components/RecipeModal';
 import { SubstitutionCard } from '../components/SubstitutionCard';
 import { ScienceModal } from '../components/ScienceModal';
 import { ProvenanceChip } from '../components/ProvenanceChip';
+import { LiveNoticeBanner, LiveNotice } from '../components/LiveNoticeBanner';
 
 import { getRecommendations } from '../lib/dataService';
 import { recipedbClient } from '../lib/recipedbClient';
 import { UserContext, ScoredRecipe, RawRecipe } from '../lib/types';
 import { PRESET_REGIMENS } from '../data/drugProfiles';
-import { Search, ArrowDown, Database, RefreshCw, AlertCircle, Sparkles } from 'lucide-react';
+import { Search, ArrowDown, Database, RefreshCw, Sparkles } from 'lucide-react';
 
 export default function Home() {
   // State for drug selection and patient context
@@ -46,12 +47,12 @@ export default function Home() {
   // Filter states for recipe discovery
   const [recipeSearch, setRecipeSearch] = useState('');
   const [cuisineFilter, setCuisineFilter] = useState('all');
-  const [bandFilter, setBandFilter] = useState<'all' | 'recommended' | 'excluded'>('all');
+  const [bandFilter, setBandFilter] = useState<'all' | 'recommended' | 'excluded' | 'live'>('all');
 
   // Live Gateway Query state
   const [liveQuery, setLiveQuery] = useState('');
   const [isLiveQuerying, setIsLiveQuerying] = useState(false);
-  const [liveNotice, setLiveNotice] = useState<string | null>(null);
+  const [liveNotice, setLiveNotice] = useState<LiveNotice | null>(null);
   const [extraRecipes, setExtraRecipes] = useState<RawRecipe[]>([]);
   const [isLiveApiActive, setIsLiveApiActive] = useState(false);
 
@@ -82,22 +83,66 @@ export default function Home() {
 
   const handleQueryLiveRecipeDB = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!liveQuery.trim()) return;
+    const query = liveQuery.trim();
+    if (!query) {
+      setLiveNotice({
+        type: 'info',
+        message: 'Please enter a dish title or ingredient to query RecipeDB (e.g., "khichdi", "miso soup").',
+      });
+      return;
+    }
 
     setIsLiveQuerying(true);
     setLiveNotice(null);
 
     try {
-      const res = await recipedbClient.searchByTitle(liveQuery.trim());
+      const res = await recipedbClient.searchByTitle(query);
       if (res && res.length > 0) {
-        setExtraRecipes(prev => [...res, ...prev]);
+        const liveRetrieved = res.map(r => ({ ...r, is_live: true }));
+        
+        // Fully deduplicate within the response array as well as against existing extraRecipes
+        let newCount = 0;
+        setExtraRecipes(prev => {
+          const existingIds = new Set(prev.map(p => p.id));
+          const newUnique: RawRecipe[] = [];
+          for (const item of liveRetrieved) {
+            if (!existingIds.has(item.id)) {
+              existingIds.add(item.id);
+              newUnique.push(item);
+            }
+          }
+          newCount = newUnique.length;
+          return [...newUnique, ...prev];
+        });
+
         setIsLiveApiActive(true);
-        setLiveNotice(`Retrieved and clinically evaluated ${res.length} live recipes from RecipeDB gateway.`);
+        // Reset filters so the live retrieved recipes are immediately visible in the grid
+        setCuisineFilter('all');
+        setRecipeSearch('');
+        setBandFilter('all');
+
+        const message =
+          newCount === 0
+            ? `Retrieved ${res.length} live recipes for "${query}" from RecipeDB gateway. All ${res.length} recipes are already loaded in your recommendations below.`
+            : newCount < res.length
+            ? `Retrieved ${res.length} live recipes for "${query}" from RecipeDB gateway (${newCount} new recipes added to recommendations below).`
+            : `Retrieved and clinically evaluated ${res.length} live recipes for "${query}" from RecipeDB gateway. Added to recommendations below.`;
+
+        setLiveNotice({
+          type: 'success',
+          message,
+        });
       } else {
-        setLiveNotice(`No live recipes returned for "${liveQuery}". Maintained verified curated corpus.`);
+        setLiveNotice({
+          type: 'info',
+          message: `No live recipes returned for "${query}". Maintained verified curated corpus.`,
+        });
       }
     } catch (err: any) {
-      setLiveNotice(`Gateway note: ${err?.message ?? 'Live API unreachable'}. Operating in verified offline fallback mode.`);
+      setLiveNotice({
+        type: 'error',
+        message: `Gateway note: ${err?.message ?? 'Live API unreachable'}. Operating in verified offline fallback mode.`,
+      });
       setIsLiveApiActive(false);
     } finally {
       setIsLiveQuerying(false);
@@ -120,7 +165,9 @@ export default function Home() {
           ? true
           : bandFilter === 'recommended'
           ? !r.excluded && r.taste_safe_score >= 55
-          : r.excluded;
+          : bandFilter === 'excluded'
+          ? r.excluded
+          : Boolean(r.is_live);
 
       return matchesSearch && matchesCuisine && matchesBand;
     });
@@ -350,6 +397,20 @@ export default function Home() {
                 >
                   Blocked
                 </button>
+                {extraRecipes.length > 0 && (
+                  <button
+                    onClick={() => setBandFilter('live')}
+                    data-testid="filter-live-recipes-btn"
+                    className={`px-3 py-1 rounded-full transition-all flex items-center gap-1.5 ${
+                      bandFilter === 'live'
+                        ? 'bg-emerald-600 text-white shadow-sm'
+                        : 'text-emerald-400 hover:text-emerald-300'
+                    }`}
+                  >
+                    <Sparkles className="w-3 h-3 text-emerald-300" />
+                    <span>Live ({extraRecipes.length})</span>
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -383,12 +444,11 @@ export default function Home() {
           </form>
 
           {/* Live API Notice Banner */}
-          {liveNotice && (
-            <div className="p-3.5 rounded-xl bg-white/[0.02] border border-white/10 text-xs text-silver-mist flex items-start gap-2.5">
-              <AlertCircle className="w-4 h-4 text-[#ffb829] flex-shrink-0 mt-0.5" />
-              <span>{liveNotice}</span>
-            </div>
-          )}
+          <LiveNoticeBanner
+            notice={liveNotice}
+            onDismiss={() => setLiveNotice(null)}
+            onViewLive={() => setBandFilter('live')}
+          />
 
           {/* Recipes Card Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

@@ -31,10 +31,19 @@ export const RecipeModal: React.FC<Props> = ({ recipe, onClose, onSelectIngredie
 
         {/* Modal Header */}
         <div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-wrap mb-1">
             <span className="text-xs uppercase tracking-[0.2em] text-[#ffb829] font-semibold">
               {recipe.cuisine} Cuisine · {recipe.prep_time} Min
             </span>
+            {recipe.is_live && (
+              <span
+                data-testid="modal-live-recipe-badge"
+                className="inline-flex items-center gap-1 text-[10px] uppercase tracking-wider font-semibold px-2.5 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-300"
+              >
+                <Sparkles className="w-3 h-3 text-emerald-400" />
+                RecipeDB Live
+              </span>
+            )}
             {recipe.excluded && (
               <span className="text-xs uppercase tracking-wider text-red-400 font-semibold px-2 py-0.5 rounded-full bg-red-950/40 border border-red-500/40">
                 Clinically Contraindicated

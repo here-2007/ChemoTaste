@@ -18,8 +18,8 @@ function mapRawRecipe(item: any, fallbackIdx = 0): RawRecipe {
 
   return {
     id: String(item.Recipe_id ?? item._id ?? `live-${Date.now()}-${fallbackIdx}`),
-    title: item.Recipe_title ?? item.title ?? 'Untitled Dish',
-    cuisine: item.Region ?? item.Sub_region ?? item.Continent ?? item.cuisine ?? 'Global',
+    title: (item.Recipe_title || item.title || '').trim() || 'Untitled Dish',
+    cuisine: (item.Region || item.Sub_region || item.Continent || item.cuisine || '').trim() || 'Global',
     prep_time: Number(item.prep_time || item.total_time || 25),
     ingredients,
     temperature_tag: 'warm' as const,
@@ -30,6 +30,7 @@ function mapRawRecipe(item: any, fallbackIdx = 0): RawRecipe {
     processes: typeof item.Processes === 'string'
       ? item.Processes.split('||')
       : (item.processes ?? ['simmer']),
+    is_live: true,
   };
 }
 
@@ -51,8 +52,8 @@ export const recipedbClient = {
 
       return {
         id: String(recipe.Recipe_id ?? id),
-        title: recipe.Recipe_title ?? 'Untitled Dish',
-        cuisine: recipe.Region ?? recipe.Sub_region ?? recipe.Continent ?? 'Global',
+        title: (recipe.Recipe_title || recipe.title || '').trim() || 'Untitled Dish',
+        cuisine: (recipe.Region || recipe.Sub_region || recipe.Continent || recipe.cuisine || '').trim() || 'Global',
         prep_time: Number(recipe.prep_time || recipe.total_time || 25),
         ingredients: ingredients.length > 0 ? ingredients : [recipe.Recipe_title || 'Dish'],
         temperature_tag: 'warm' as const,
@@ -63,6 +64,7 @@ export const recipedbClient = {
         processes: typeof recipe.Processes === 'string'
           ? recipe.Processes.split('||')
           : (recipe.processes ?? ['simmer']),
+        is_live: true,
       };
     } catch {
       return null;

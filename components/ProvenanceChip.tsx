@@ -26,7 +26,7 @@ export const ProvenanceChip: React.FC<Props> = ({ mode, recipeCount, profiledCou
               <span className="text-[11px] font-extralight text-silver-mist">
                 {mode === 'curated_offline'
                   ? `Offline Resilient · ${profiledCount} Precompiled Ingredient Fingerprints · ${recipeCount} Curated Oncology Recipes`
-                  : 'Live CoSy Lab Academic API Gateway'}
+                  : `Live CoSy Lab Academic API Gateway · ${recipeCount} Evaluated Recipes · ${profiledCount} Precompiled Ingredient Fingerprints`}
               </span>
             </div>
           </div>

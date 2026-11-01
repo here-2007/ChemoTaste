@@ -122,6 +122,7 @@ export interface RawRecipe {
   image_url?: string;
   servings?: number;
   instructions?: string[];
+  is_live?: boolean;
 }
 
 export interface ScoredRecipe extends RawRecipe {
