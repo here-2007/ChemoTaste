@@ -135,6 +135,7 @@ export default function Home() {
     <div className="min-h-screen bg-black text-white flex flex-col selection:bg-[#8052ff] selection:text-white">
       {/* Top Navbar */}
       <Navbar
+        isScienceOpen={isScienceOpen}
         onStartIntake={() => {
           document.getElementById('intake')?.scrollIntoView({ behavior: 'smooth' });
         }}
