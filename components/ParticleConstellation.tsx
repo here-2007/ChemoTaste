@@ -124,23 +124,47 @@ export const ParticleConstellation: React.FC<ParticleConstellationProps> = ({
       }
     };
 
+    const autoTriggerTimer = setTimeout(() => {
+      triggerFormationOnce();
+    }, 700);
+
     /**
-     * Exact original brain position & scale inside the parent Upper Stage div:
-     * (stageW * 0.78, stageH * 0.48), offset by the full-bleed canvas margin.
+     * Brain position & scale centered inside the parent container.
+     * Calculated to fill the blank space dynamically to maximum visual scale,
+     * while guaranteeing no overlap with the bottom-right badge ("Interactive Dual-Hemisphere...")
+     * and preserving HUD compass degree margins.
      */
     const getBrainCenter = () => {
       const stageLeft = (width - stageW) * 0.5;
-      if (stageW >= 1024) {
-        return {
-          cx: stageLeft + stageW * 0.78,
-          cy: STAGE_TOP_OFFSET + stageH * 0.48,
-          scale: Math.min(1.06, Math.max(0.84, stageW / 1100)),
-        };
-      }
+      const cx = stageLeft + stageW * 0.5;
+
+      // Available vertical space above bottom-right badge
+      // Badge is positioned at bottom-4 right-4 (16px bottom margin, ~28px height => top is stageH - 44)
+      const badgeTop = stageH - 44;
+      const availH = badgeTop - 8;
+
+      // Horizontal scale constraint (leaving 24px stage side margins)
+      // Compass circle diameter is 316 * scale
+      const maxScaleW = (stageW - 24) / 316;
+
+      // Vertical scale constraint above badge
+      // Total HUD height (including ANT // 000° and POST // 180° labels) is 316 * scale + 24
+      const maxScaleH = (availH - 24) / 316;
+
+      // Scale up to aggressively fill the blank space, clamped safely
+      const targetScale = Math.min(maxScaleW, maxScaleH);
+      const scale = Math.max(0.78, Math.min(1.28, targetScale));
+
+      const outerR = 158 * scale;
+
+      // Center vertically within available space above badge with balanced margins
+      const stageTopMargin = Math.max(12, (availH - (outerR * 2 + 20)) / 2 + 10 + outerR);
+      const cy = STAGE_TOP_OFFSET + stageTopMargin;
+
       return {
-        cx: stageLeft + stageW * 0.5,
-        cy: STAGE_TOP_OFFSET + stageH * 0.5,
-        scale: Math.min(0.88, Math.max(0.68, stageW / 640)),
+        cx,
+        cy,
+        scale,
       };
     };
 
@@ -305,7 +329,7 @@ export const ParticleConstellation: React.FC<ParticleConstellationProps> = ({
         const isHub = opts.isHub ?? false;
         const isSignal = opts.isSignal ?? (isHub || Math.random() < 0.065);
         const size =
-          opts.size ?? (isHub ? 2.4 : isSignal ? 2.05 : rand < 0.38 ? 1.7 : 1.35);
+          opts.size ?? (isHub ? 2.85 : isSignal ? 2.4 : rand < 0.38 ? 1.95 : 1.5);
 
         const distFromCenter = Math.hypot(scatterX - cx, scatterY - cy);
         const maxDist = Math.hypot(width, window.innerHeight || 800) * 0.9;
@@ -604,7 +628,7 @@ export const ParticleConstellation: React.FC<ParticleConstellationProps> = ({
             tractIdx: tIdx,
             progress: (c / count + tIdx * 0.13) % 1,
             speed: baseSpeed,
-            radius: tract.isMainArtery ? 2.5 : 2.1,
+            radius: tract.isMainArtery ? 3.0 : 2.4,
           });
         }
       }
@@ -614,8 +638,8 @@ export const ParticleConstellation: React.FC<ParticleConstellationProps> = ({
       const parent = canvas.parentElement;
       if (!parent) return;
       dpr = Math.min(window.devicePixelRatio || 1, 2);
-      stageW = parent.clientWidth || 1000;
-      stageH = parent.clientHeight || 460;
+      stageW = parent.clientWidth || 480;
+      stageH = parent.clientHeight || 480;
       width = Math.max(window.innerWidth || 1200, stageW);
       height = Math.max(window.innerHeight || 900, stageH + STAGE_TOP_OFFSET);
 
@@ -648,8 +672,9 @@ export const ParticleConstellation: React.FC<ParticleConstellationProps> = ({
       const rect = canvas.getBoundingClientRect();
       const mx = e.clientX - rect.left;
       const my = e.clientY - rect.top;
-      const { cx, cy } = getBrainCenter();
-      if (Math.hypot(mx - cx, my - cy) < 220) {
+      const { cx, cy, scale } = getBrainCenter();
+      const outerR = 158 * scale;
+      if (Math.hypot(mx - cx, my - cy) < outerR * 1.08) {
         pulseSurgeTime = performance.now();
       }
     };
@@ -681,8 +706,9 @@ export const ParticleConstellation: React.FC<ParticleConstellationProps> = ({
         const rect = canvas.getBoundingClientRect();
         const tx = touch.clientX - rect.left;
         const ty = touch.clientY - rect.top;
-        const { cx, cy } = getBrainCenter();
-        if (Math.hypot(tx - cx, ty - cy) < 220) {
+        const { cx, cy, scale } = getBrainCenter();
+        const outerR = 158 * scale;
+        if (Math.hypot(tx - cx, ty - cy) < outerR * 1.08) {
           pulseSurgeTime = performance.now();
         }
       }
@@ -771,7 +797,7 @@ export const ParticleConstellation: React.FC<ParticleConstellationProps> = ({
 
       // 1. Primary Outer Solid Architectural Circle
       ctx.strokeStyle = '#B8B4AA';
-      ctx.lineWidth = 0.9;
+      ctx.lineWidth = 1.05;
       ctx.globalAlpha = alpha * 0.65;
       ctx.beginPath();
       ctx.arc(cx, cy, outerR, 0, Math.PI * 2);
@@ -779,7 +805,7 @@ export const ParticleConstellation: React.FC<ParticleConstellationProps> = ({
 
       // 2. Inner Dashed Calibration Circle
       ctx.strokeStyle = '#C8C4BA';
-      ctx.lineWidth = 0.75;
+      ctx.lineWidth = 0.85;
       ctx.globalAlpha = alpha * 0.5;
       ctx.setLineDash([3, 5]);
       ctx.beginPath();
@@ -792,11 +818,11 @@ export const ParticleConstellation: React.FC<ParticleConstellationProps> = ({
         const ang = (i / 72) * Math.PI * 2;
         const isCardinal = i % 18 === 0;
         const isMajor = i % 6 === 0;
-        const tickIn = outerR - (isCardinal ? 7 : isMajor ? 4.5 : 2.2);
-        const tickOut = outerR + (isCardinal ? 4 : 0);
+        const tickIn = outerR - (isCardinal ? 8 : isMajor ? 5 : 2.5);
+        const tickOut = outerR + (isCardinal ? 4.5 : 0);
 
         ctx.strokeStyle = isCardinal ? '#D95338' : '#87847C';
-        ctx.lineWidth = isCardinal ? 1.2 : 0.75;
+        ctx.lineWidth = isCardinal ? 1.35 : 0.8;
         ctx.globalAlpha = alpha * (isCardinal ? 0.85 : isMajor ? 0.55 : 0.3);
 
         ctx.beginPath();
@@ -808,7 +834,7 @@ export const ParticleConstellation: React.FC<ParticleConstellationProps> = ({
       // 4. Slow Counter-Rotating Vermilion Telemetry Arc Brackets on the Outer Circle
       const sweepAngle = elapsedSec * 0.25;
       ctx.strokeStyle = '#D95338';
-      ctx.lineWidth = 1.6;
+      ctx.lineWidth = 1.8;
       ctx.globalAlpha = alpha * 0.8;
 
       ctx.beginPath();
@@ -820,7 +846,7 @@ export const ParticleConstellation: React.FC<ParticleConstellationProps> = ({
       ctx.stroke();
 
       // 5. Cardinal Compass Labels on the Circle
-      ctx.font = '500 8px "IBM Plex Mono", monospace';
+      ctx.font = '500 8.5px "IBM Plex Mono", monospace';
       ctx.fillStyle = '#87847C';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
@@ -916,9 +942,10 @@ export const ParticleConstellation: React.FC<ParticleConstellationProps> = ({
         const tRaw = (maxAssemblyProgress - p.stagger) / (1 - p.stagger);
         const tLocal = easeInOutCubic(Math.max(0, Math.min(1, tRaw)));
 
-        const bx = p.tx * scale;
-        const by = p.ty * scale;
-        const bz = p.tz * scale;
+        const brainMultiplier = 1.08;
+        const bx = p.tx * scale * brainMultiplier;
+        const by = p.ty * scale * brainMultiplier;
+        const bz = p.tz * scale * brainMultiplier;
 
         const x1 = bx * cosY - bz * sinY;
         const z1 = bz * cosY + bx * sinY;
@@ -954,7 +981,7 @@ export const ParticleConstellation: React.FC<ParticleConstellationProps> = ({
         const dx = baseScreenX + p.ox - mouseX;
         const dy = baseScreenY + p.oy - mouseY;
         const distSq = dx * dx + dy * dy;
-        const interactionRadius = 64;
+        const interactionRadius = 64 * Math.max(1, scale / 1.15);
         let nearCursor = false;
 
         if (distSq < interactionRadius * interactionRadius && distSq > 0.01) {
@@ -962,7 +989,7 @@ export const ParticleConstellation: React.FC<ParticleConstellationProps> = ({
           const force = (1 - dist / interactionRadius) * 2.1;
           p.vx += (dx / dist) * force;
           p.vy += (dy / dist) * force;
-          nearCursor = dist < 44;
+          nearCursor = dist < (44 * Math.max(1, scale / 1.15));
         }
 
         p.vx += -p.ox * 0.14;
@@ -1002,6 +1029,8 @@ export const ParticleConstellation: React.FC<ParticleConstellationProps> = ({
         const meshAlpha = Math.min(1, (maxAssemblyProgress - 0.32) / 0.55);
         ctx.save();
 
+        const zScale = Math.max(1, (scale * 1.08) / 0.85);
+
         for (let e = 0; e < edges.length; e++) {
           const { a, b, isBridge } = edges[e];
           const ptA = screenCoords[a];
@@ -1010,13 +1039,13 @@ export const ParticleConstellation: React.FC<ParticleConstellationProps> = ({
           if (ptA.tLocal < 0.6 || ptB.tLocal < 0.6) continue;
 
           const avgZ = (ptA.z + ptB.z) * 0.5;
-          if (avgZ > 55 && !isBridge) continue;
+          if (avgZ > 55 * zScale && !isBridge) continue;
 
-          const depthFade = Math.max(0.06, Math.min(1, (75 - avgZ) / 185));
+          const depthFade = Math.max(0.06, Math.min(1, (75 * zScale - avgZ) / (185 * zScale)));
           const highlight = ptA.nearCursor || ptB.nearCursor || ptA.inSurge || ptB.inSurge;
 
           ctx.strokeStyle = highlight || isBridge ? '#D95338' : '#262523';
-          ctx.lineWidth = highlight || isBridge ? 0.95 : 0.6;
+          ctx.lineWidth = highlight || isBridge ? 1.05 : 0.7;
           ctx.globalAlpha =
             meshAlpha *
             depthFade *
@@ -1046,12 +1075,12 @@ export const ParticleConstellation: React.FC<ParticleConstellationProps> = ({
           if (minT < 0.65) continue;
 
           const avgZ = sumZ / idxs.length;
-          if (avgZ > 65) continue;
+          if (avgZ > 65 * zScale) continue;
 
-          const depthFade = Math.max(0.12, Math.min(1, (80 - avgZ) / 170));
+          const depthFade = Math.max(0.12, Math.min(1, (80 * zScale - avgZ) / (170 * zScale)));
 
           ctx.strokeStyle = tract.isMainArtery ? '#D95338' : '#57554F';
-          ctx.lineWidth = tract.isMainArtery ? 1.05 : 0.8;
+          ctx.lineWidth = tract.isMainArtery ? 1.25 : 0.9;
           ctx.globalAlpha =
             meshAlpha * depthFade * (tract.isMainArtery ? 0.42 : 0.28);
 
@@ -1090,9 +1119,9 @@ export const ParticleConstellation: React.FC<ParticleConstellationProps> = ({
               corp.progress,
               screenCoords
             );
-            if (head.tLocal < 0.8 || head.z > 65) continue;
+            if (head.tLocal < 0.8 || head.z > 65 * zScale) continue;
 
-            const depthAlpha = Math.max(0.2, Math.min(1, (80 - head.z) / 160));
+            const depthAlpha = Math.max(0.2, Math.min(1, (80 * zScale - head.z) / (160 * zScale)));
             const dirSign = corp.speed >= 0 ? 1 : -1;
 
             // 1. Two trailing micro-droplets behind the main red mini-circle
@@ -1124,10 +1153,10 @@ export const ParticleConstellation: React.FC<ParticleConstellationProps> = ({
 
             // 3. Delicate Outer Red Mini-Ring around the circulating corpuscle
             ctx.strokeStyle = '#D95338';
-            ctx.lineWidth = 0.9;
+            ctx.lineWidth = 1.0;
             ctx.globalAlpha = circAlpha * depthAlpha * 0.55;
             ctx.beginPath();
-            ctx.arc(head.x, head.y, corp.radius + 2.1, 0, Math.PI * 2);
+            ctx.arc(head.x, head.y, corp.radius + 2.3, 0, Math.PI * 2);
             ctx.stroke();
           }
         }
@@ -1211,19 +1240,46 @@ export const ParticleConstellation: React.FC<ParticleConstellationProps> = ({
         ctx.font = '500 8.5px "IBM Plex Mono", monospace';
         ctx.textBaseline = 'middle';
 
+        const calloutZThreshold = 22 * Math.max(1, (scale * 1.08) / 0.85);
+        const calloutZFade = 48 * Math.max(1, (scale * 1.08) / 0.85);
+
+        const stageLeft = (width - stageW) * 0.5;
+        const stageMinX = stageLeft + 8;
+        const stageMaxX = stageLeft + stageW - 8;
+
         for (const cIdx of calloutIndices) {
           const sc = screenCoords[cIdx];
-          if (!sc || !sc.calloutLabel || sc.z > 18) continue;
+          if (!sc || !sc.calloutLabel || sc.z > calloutZThreshold) continue;
 
-          const frontFade = Math.max(0, Math.min(1, (18 - sc.z) / 50));
+          const frontFade = Math.max(0, Math.min(1, (calloutZThreshold - sc.z) / calloutZFade));
           const dir = sc.x >= cx ? 1 : -1;
-          const elbowX = sc.x + dir * 14;
+
+          const textWidth = ctx.measureText(sc.calloutLabel).width;
+          const padX = 5.5;
+          const boxW = textWidth + padX * 2;
+          const boxH = 14.5;
           const elbowY = sc.y - 10;
-          const endX = elbowX + dir * 16;
+
+          let elbowX = sc.x + dir * 14;
+          let endX = elbowX + dir * 16;
+          let boxX = dir === 1 ? endX : endX - boxW;
+
+          // Clamp callout box horizontally so it never overflows stage bounds,
+          // encroaches upon the left editorial text column, or clips off-screen on mobile
+          if (dir === -1 && boxX < stageMinX) {
+            boxX = stageMinX;
+            endX = boxX + boxW;
+            elbowX = Math.min(sc.x - 4, Math.max(stageMinX + 12, endX));
+          } else if (dir === 1 && boxX + boxW > stageMaxX) {
+            boxX = stageMaxX - boxW;
+            endX = boxX;
+            elbowX = Math.max(sc.x + 4, Math.min(stageMaxX - 12, endX));
+          }
+          const boxY = elbowY - boxH / 2;
 
           ctx.globalAlpha = calloutAlpha * frontFade * 0.9;
           ctx.strokeStyle = '#D95338';
-          ctx.lineWidth = 0.9;
+          ctx.lineWidth = 0.95;
 
           ctx.beginPath();
           ctx.moveTo(sc.x, sc.y);
@@ -1231,17 +1287,10 @@ export const ParticleConstellation: React.FC<ParticleConstellationProps> = ({
           ctx.lineTo(endX, elbowY);
           ctx.stroke();
 
-          const textWidth = ctx.measureText(sc.calloutLabel).width;
-          const padX = 5;
-          const boxW = textWidth + padX * 2;
-          const boxH = 14;
-          const boxX = dir === 1 ? endX : endX - boxW;
-          const boxY = elbowY - boxH / 2;
-
           ctx.fillStyle = '#F2F0EC';
           ctx.fillRect(boxX, boxY, boxW, boxH);
           ctx.strokeStyle = '#262523';
-          ctx.lineWidth = 0.8;
+          ctx.lineWidth = 0.85;
           ctx.strokeRect(boxX, boxY, boxW, boxH);
 
           ctx.fillStyle = '#262523';
@@ -1260,6 +1309,7 @@ export const ParticleConstellation: React.FC<ParticleConstellationProps> = ({
 
     return () => {
       disposed = true;
+      clearTimeout(autoTriggerTimer);
       if (animationFrameId) {
         cancelAnimationFrame(animationFrameId);
       }
