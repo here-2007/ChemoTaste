@@ -87,8 +87,7 @@ Chemotherapy damages rapidly dividing taste receptor progenitor cells, alters sa
 ```
 ChemoTaste/
 ├── app/
-│   ├── page.tsx                     # Drug, cycle phase & symptom selector
-│   ├── results/page.tsx             # Radar chart, ingredient filter, and recipe cards
+│   ├── page.tsx                     # Unified pipeline (intake, sensory radar, ingredients, recipes, live gateway)
 │   ├── api/proxy/route.ts           # Hardened CORS proxy with allow-lists
 │   ├── layout.tsx
 │   └── globals.css
@@ -113,7 +112,9 @@ ChemoTaste/
 │   └── precompiled/
 │       └── ingredient_profiles.json # Build-time FlavorDB molecular profiles
 ├── tests/
-│   └── golden_safety.test.ts        # Automated clinical safety test suite (Vitest)
+│   ├── golden_safety.test.ts        # Automated clinical safety test suite (Vitest)
+│   ├── algorithm.test.ts            # Scoring math, Bayesian shrinkage, deduplication, boundaries & counts
+│   └── api_proxy.test.ts            # Hardened proxy security allow-list & regex verification
 ├── docs/
 │   └── api-contract.md              # Verified API endpoints, auth, and schemas
 ├── AGENT.md                         # Autonomous agent rules and operational personas
