@@ -1,9 +1,9 @@
-// components/ScienceModal.tsx
 'use client';
+// components/ScienceModal.tsx
 
-import React, { useState } from 'react';
-import { X, BookOpen, Dna, Atom, ShieldAlert, Award, Sparkles, Beaker, CheckCircle2 } from 'lucide-react';
-import { getIngredientDetail } from '../lib/dataService';
+import React, { useState, useEffect } from 'react';
+import { X, BookOpen, Dna, Atom, ShieldAlert, Award, Sparkles, Beaker, CheckCircle2, Loader2 } from 'lucide-react';
+import { getIngredientDetail, fetchIngredientDetailDynamic } from '../lib/dataService';
 
 interface Props {
   isOpen: boolean;
@@ -13,10 +13,52 @@ interface Props {
 
 export const ScienceModal: React.FC<Props> = ({ isOpen, onClose, selectedIngredient }) => {
   const [activeTab, setActiveTab] = useState<'ingredient' | 'framework'>('ingredient');
+  const [dynamicDetail, setDynamicDetail] = useState<ReturnType<typeof getIngredientDetail> | null>(null);
+  const [isLoadingDynamic, setIsLoadingDynamic] = useState(false);
+
+  useEffect(() => {
+    if (!selectedIngredient) {
+      setDynamicDetail(null);
+      setIsLoadingDynamic(false);
+      return;
+    }
+
+    setActiveTab('ingredient');
+
+    const precompiled = getIngredientDetail(selectedIngredient);
+    // If we have a full precompiled profile with molecular data, use it immediately (O(1))
+    if (precompiled.profile) {
+      setDynamicDetail(precompiled);
+      setIsLoadingDynamic(false);
+      return;
+    }
+
+    // If precompiled KB entry exists, display it immediately so user sees clinical data without delay
+    if (precompiled.entry) {
+      setDynamicDetail(precompiled);
+    }
+
+    // Dynamic live fallback for molecular data from FlavorDB
+    let active = true;
+    setIsLoadingDynamic(true);
+    fetchIngredientDetailDynamic(selectedIngredient)
+      .then(res => {
+        if (active) {
+          setDynamicDetail(res);
+        }
+      })
+      .finally(() => {
+        if (active) setIsLoadingDynamic(false);
+      });
+
+    return () => {
+      active = false;
+    };
+  }, [selectedIngredient]);
 
   if (!isOpen) return null;
 
-  const detail = selectedIngredient ? getIngredientDetail(selectedIngredient) : null;
+  const detail = dynamicDetail ?? (selectedIngredient ? getIngredientDetail(selectedIngredient) : null);
   const showIngredientDetail = activeTab === 'ingredient' && detail && (detail.entry || detail.profile);
 
   return (
@@ -31,6 +73,14 @@ export const ScienceModal: React.FC<Props> = ({ isOpen, onClose, selectedIngredi
         >
           <X className="w-5 h-5" />
         </button>
+
+        {/* Dynamic Loading State */}
+        {isLoadingDynamic && (
+          <div className="flex items-center gap-2 p-3 rounded-xl bg-purple-950/30 border border-purple-500/30 text-xs text-purple-200">
+            <Loader2 className="w-4 h-4 animate-spin text-[#8052ff]" />
+            <span>Resolving live molecular volatile profile from FlavorDB...</span>
+          </div>
+        )}
 
         {/* Tab switcher if an ingredient is active */}
         {detail && (detail.entry || detail.profile) && (
@@ -74,7 +124,7 @@ export const ScienceModal: React.FC<Props> = ({ isOpen, onClose, selectedIngredi
             </div>
 
             {/* Molecular Breakdown Cards */}
-            {detail.profile?.molecular && (
+            {detail.profile?.molecular && detail.profile.molecular.n_total > 0 ? (
               <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-3">
                 <div className="flex items-center justify-between text-xs pb-2 border-b border-white/10">
                   <span className="text-[#8052ff] font-semibold uppercase tracking-wider flex items-center gap-1.5">
@@ -119,7 +169,17 @@ export const ScienceModal: React.FC<Props> = ({ isOpen, onClose, selectedIngredi
                   </div>
                 </div>
               </div>
-            )}
+            ) : !isLoadingDynamic ? (
+              <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/10 text-xs text-silver-mist space-y-1">
+                <div className="flex items-center gap-2 text-teal-300 font-medium">
+                  <Atom className="w-4 h-4" />
+                  <span>Staple Volatile Profile</span>
+                </div>
+                <p className="font-extralight text-silver-mist leading-relaxed">
+                  FlavorDB catalogs volatile aroma compounds (Fenaroli / Flavornet). For mild or non-volatile oncology staples like <strong className="text-white capitalize">{detail.name}</strong>, retronasal emetic volatile risk is negligible. Non-volatile tongue tastants and clinical oncology tolerances are profiled below.
+                </p>
+              </div>
+            ) : null}
 
             {/* Key Identified Molecules with PubChem IDs and Chemical Roles */}
             {detail.profile?.molecular?.key_molecules && detail.profile.molecular.key_molecules.length > 0 && (

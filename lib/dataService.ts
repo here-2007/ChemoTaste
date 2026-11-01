@@ -3,6 +3,12 @@ import { DrugProfile, UserContext, RawRecipe, ScoredRecipe, KBEntry, IngredientP
 import { DRUG_PROFILES } from '../data/drugProfiles';
 import { buildEffectiveProfile, buildConstraints } from './safety';
 import { buildScoredMap, scoreRecipe, computeSensoryRadarData } from './algorithm';
+import { resolveIngredientToken } from './resolveIngredient';
+import {
+  flavordbClient,
+  adaptFlavorMoleculesToMolecularProfile,
+  adaptFlavorEntityToMolecularProfile,
+} from './flavordbClient';
 
 import rawCuratedRecipes from '../data/curated_recipes.json';
 import rawIngredientKB from '../data/ingredient_kb.json';
@@ -175,18 +181,142 @@ export function getRecommendations(
   };
 }
 
+const failedDynamicLookups = new Set<string>();
+
 export function getIngredientDetail(name: string): {
   name: string;
   entry?: KBEntry;
   profile?: IngredientProfile;
 } {
-  const lower = name.toLowerCase();
-  const entry = ingredientKBMap.get(lower);
-  const profile = ingredientProfilesMap.get(lower);
+  if (!name || typeof name !== 'string') {
+    return { name: '' };
+  }
+
+  const lower = name.toLowerCase().trim();
+  let entry = ingredientKBMap.get(lower);
+  let profile = ingredientProfilesMap.get(lower);
+
+  if (!entry && !profile) {
+    const resolved = resolveIngredientToken(name, ingredientKBMap);
+    if (resolved && resolved !== lower) {
+      entry = ingredientKBMap.get(resolved);
+      profile = ingredientProfilesMap.get(resolved);
+      if (entry || profile) {
+        return {
+          name: entry?.name || profile?.name || resolved,
+          entry,
+          profile,
+        };
+      }
+    }
+  }
+
   return {
-    name,
+    name: entry?.name || profile?.name || lower,
     entry,
     profile,
   };
 }
+
+export async function fetchIngredientDetailDynamic(name: string): Promise<{
+  name: string;
+  entry?: KBEntry;
+  profile?: IngredientProfile;
+}> {
+  if (!name || typeof name !== 'string') {
+    return { name: '' };
+  }
+
+  const clean = resolveIngredientToken(name, ingredientKBMap) || name.toLowerCase().trim();
+
+  // 1. Check in-memory profiles (precompiled or previously fetched)
+  if (ingredientProfilesMap.has(clean)) {
+    return {
+      name: clean,
+      entry: ingredientKBMap.get(clean),
+      profile: ingredientProfilesMap.get(clean),
+    };
+  }
+
+  // If this ingredient was already queried from FlavorDB and returned no entity, skip re-fetching
+  if (failedDynamicLookups.has(clean)) {
+    return {
+      name: clean,
+      entry: ingredientKBMap.get(clean),
+      profile: ingredientProfilesMap.get(clean),
+    };
+  }
+
+  // 2. Dynamic lookup via FlavorDB
+  try {
+    let entities = await flavordbClient.getEntityByAlias(clean);
+    const titleCase = clean.replace(/\b\w/g, c => c.toUpperCase());
+    if ((!entities || entities.length === 0) && titleCase !== clean) {
+      entities = await flavordbClient.getEntityByAlias(titleCase);
+    }
+
+    if (entities && entities.length > 0) {
+      const entity = entities[0];
+      let molecules = entity.molecules;
+
+      if (!molecules || molecules.length === 0) {
+        const mol = await flavordbClient.getMoleculeDetails(clean);
+        if (mol) {
+          molecules = [mol];
+        } else {
+          molecules = await flavordbClient.getMoleculesByDescription(clean);
+        }
+      }
+
+      const adaptedMol = adaptFlavorEntityToMolecularProfile(entity, molecules);
+      const existingEntry = ingredientKBMap.get(clean);
+
+      const dynamicProfile: IngredientProfile = {
+        name: clean,
+        tags: existingEntry?.tags ?? [entity.category || 'botanical'],
+        tastants: existingEntry?.tastants ?? {
+          sweet: Math.min(3, Math.round(adaptedMol.pct.sweet * 3)),
+          sour: Math.min(3, Math.round(adaptedMol.pct.sour * 3)),
+          umami: Math.min(3, Math.round(adaptedMol.pct.umami * 3)),
+          bitter: Math.min(3, Math.round(adaptedMol.pct.bitter * 3)),
+          salty: 0,
+        },
+        molecular: adaptedMol,
+        protein_per_100g: existingEntry?.protein_per_100g ?? 0,
+        moisture: existingEntry?.moisture_contribution ?? 0.5,
+      };
+
+      // Cache dynamically resolved profile in memory to maintain precompiled performance on repeat requests
+      ingredientProfilesMap.set(clean, dynamicProfile);
+
+      if (!ingredientKBMap.has(clean)) {
+        ingredientKBMap.set(clean, {
+          name: clean,
+          aliases: [name],
+          tags: [entity.category || 'botanical'],
+          vegetarian: true,
+          tastants: dynamicProfile.tastants,
+        });
+      }
+
+      return {
+        name: clean,
+        entry: ingredientKBMap.get(clean),
+        profile: dynamicProfile,
+      };
+    } else {
+      failedDynamicLookups.add(clean);
+    }
+  } catch {
+    failedDynamicLookups.add(clean);
+  }
+
+  return {
+    name: clean,
+    entry: ingredientKBMap.get(clean),
+    profile: ingredientProfilesMap.get(clean),
+  };
+}
+
+export { adaptFlavorMoleculesToMolecularProfile, adaptFlavorEntityToMolecularProfile };
 

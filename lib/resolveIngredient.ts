@@ -1,6 +1,8 @@
 // lib/resolveIngredient.ts
 import { COLD_DISH_PATTERNS, RAW_RISK_PATTERNS, isNonVegetarian } from './safety';
 import { KBEntry, ResolvedLine, Constraints } from './types';
+import rawIngredientKB from '../data/ingredient_kb.json';
+import rawIngredientProfiles from '../data/precompiled/ingredient_profiles.json';
 
 export const NEUTRAL_BASE_LIST = new Set([
   'water',
@@ -18,10 +20,116 @@ export const NEUTRAL_BASE_LIST = new Set([
   'vegetable broth',
 ]);
 
-const STOP_WORDS = /\b(cup|cups|tbsp|tsp|teaspoon|tablespoon|ounce|oz|pound|lb|g|gram|grams|kg|pinch|handful|chopped|diced|minced|sliced|fresh|freshly|ground|grated|peeled|cooked|warm|cold|crushed|clove|cloves|large|small|medium|can|cans|package|packages)\b/gi;
+export const STOP_WORDS = /\b(cup|cups|tbsp|tsp|teaspoon|teaspoons|tablespoon|tablespoons|ounce|oz|pound|lb|g|gram|grams|kg|ml|pinch|pinches|dash|dashes|handful|handfuls|stalk|stalks|bunch|bunches|head|heads|chopped|diced|minced|sliced|fresh|freshly|ground|grated|peeled|cooked|warm|cold|crushed|clove|cloves|large|small|medium|can|cans|package|packages|piece|pieces|slice|slices|sprig|sprigs|leaf|leaves|powder|whole|halved|shredded|mashed|pureed|purée|boiled|steamed|roasted|cubed|to|taste|optional)\b/gi;
 
 function escapeRegExp(str: string): string {
   return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+const defaultKBMap = new Map<string, KBEntry>(Object.entries(rawIngredientKB as Record<string, KBEntry>));
+const defaultProfilesSet = new Set<string>(Object.keys(rawIngredientProfiles));
+
+export function resolveIngredientToken(rawString: string, kbMap: Map<string, KBEntry> = defaultKBMap): string {
+  if (!rawString || typeof rawString !== 'string') return '';
+  const trimmed = rawString.trim();
+  if (!trimmed) return '';
+
+  const lower = trimmed.toLowerCase();
+
+  // 1. Direct match with KB or precompiled profiles
+  if (kbMap.has(lower) || defaultProfilesSet.has(lower)) {
+    return lower;
+  }
+
+  // 2. Extract parenthetical remark (e.g. "(lauki)" from "bottle gourd (lauki)")
+  const parenMatch = lower.match(/\(([^)]+)\)/);
+  const parenContent = parenMatch ? parenMatch[1].trim() : '';
+
+  // 3. Clean measurements, fractions, units, and stop words
+  const clean = lower
+    .replace(/\([^)]*\)/g, ' ')
+    .replace(STOP_WORDS, ' ')
+    .replace(/[0-9\/\.\,\(\)]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  // 4. Exact cleaned match
+  if (kbMap.has(clean) || defaultProfilesSet.has(clean)) {
+    return clean;
+  }
+
+  // 5. Parenthetical content match
+  if (parenContent) {
+    const cleanParen = parenContent
+      .replace(STOP_WORDS, ' ')
+      .replace(/[0-9\/\.\,\(\)]/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+    if (kbMap.has(cleanParen) || defaultProfilesSet.has(cleanParen)) {
+      return cleanParen;
+    }
+  }
+
+  // 6. Match against KB entry names and aliases with specificity ranking (longest match first)
+  let bestName: string | undefined = undefined;
+  let bestScore = -1;
+
+  for (const entry of kbMap.values()) {
+    const entryName = entry.name.toLowerCase();
+
+    // Exact match on cleaned string or parenthetical content
+    if (clean === entryName || (parenContent && parenContent === entryName)) {
+      return entry.name;
+    }
+
+    const entryRx = new RegExp(`\\b${escapeRegExp(entryName)}\\b`, 'i');
+    if (entryRx.test(clean) || (parenContent && entryRx.test(parenContent))) {
+      const score = 100 + entryName.length;
+      if (score > bestScore) {
+        bestScore = score;
+        bestName = entry.name;
+      }
+    }
+
+    if (entry.aliases) {
+      for (const alias of entry.aliases) {
+        const a = alias.toLowerCase();
+        if (clean === a || (parenContent && parenContent === a)) {
+          const score = 500 + a.length;
+          if (score > bestScore) {
+            bestScore = score;
+            bestName = entry.name;
+          }
+        } else {
+          const aliasRx = new RegExp(`\\b${escapeRegExp(a)}\\b`, 'i');
+          if (aliasRx.test(clean) || (parenContent && aliasRx.test(parenContent))) {
+            const score = 50 + a.length;
+            if (score > bestScore) {
+              bestScore = score;
+              bestName = entry.name;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  if (bestName) {
+    return bestName;
+  }
+
+  // 7. Check singular form for plurals (e.g. "tomatoes" -> "tomato")
+  if (clean.endsWith('es')) {
+    const singular = clean.slice(0, -2);
+    if (kbMap.has(singular) || defaultProfilesSet.has(singular)) return singular;
+  }
+  if (clean.endsWith('s')) {
+    const singular = clean.slice(0, -1);
+    if (kbMap.has(singular) || defaultProfilesSet.has(singular)) return singular;
+  }
+
+  // 8. Fallback to clean string if valid, otherwise original trimmed lower
+  return clean.length >= 2 ? clean : lower;
 }
 
 export function resolveIngredient(

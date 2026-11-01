@@ -3,6 +3,7 @@
 
 import React from 'react';
 import { ScoredRecipe } from '../lib/types';
+import { resolveIngredientToken } from '../lib/resolveIngredient';
 import { X, ShieldAlert, Sparkles, UtensilsCrossed, Waves, Dumbbell, Droplets, Clock, Flame } from 'lucide-react';
 
 interface Props {
@@ -126,21 +127,24 @@ export const RecipeModal: React.FC<Props> = ({ recipe, onClose, onSelectIngredie
             Ingredients & Portioning (Tap to inspect volatile compounds)
           </h4>
           <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-white">
-            {recipe.ingredients.map((ing, idx) => (
-              <li
-                key={idx}
-                onClick={() => onSelectIngredient?.(ing)}
-                className="flex items-center justify-between p-2.5 rounded-xl bg-white/[0.02] border border-white/5 hover:border-[#8052ff]/50 hover:bg-white/[0.04] cursor-pointer transition-all group"
-              >
-                <div className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#8052ff]" />
-                  <span className="font-extralight group-hover:text-white transition-colors">{ing}</span>
-                </div>
-                <span className="text-[10px] text-teal-300 opacity-0 group-hover:opacity-100 transition-opacity">
-                  Inspect →
-                </span>
-              </li>
-            ))}
+            {recipe.ingredients.map((ing, idx) => {
+              const cleanToken = resolveIngredientToken(ing);
+              return (
+                <li
+                  key={idx}
+                  onClick={() => onSelectIngredient?.(cleanToken || ing)}
+                  className="flex items-center justify-between p-2.5 rounded-xl bg-white/[0.02] border border-white/5 hover:border-[#8052ff]/50 hover:bg-white/[0.04] cursor-pointer transition-all group"
+                >
+                  <div className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#8052ff]" />
+                    <span className="font-extralight group-hover:text-white transition-colors">{ing}</span>
+                  </div>
+                  <span className="text-[10px] text-teal-300 opacity-0 group-hover:opacity-100 transition-opacity">
+                    Inspect →
+                  </span>
+                </li>
+              );
+            })}
           </ul>
         </div>
 
