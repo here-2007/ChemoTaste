@@ -54,7 +54,10 @@ export async function fetchViaProxy<T>(options: ProxyFetchOptions): Promise<T> {
 
       if (!res.ok) {
         const errJson = await res.json().catch(() => ({}));
-        throw new Error(errJson.error ?? `Proxy request failed with HTTP ${res.status}`);
+        const message = errJson.detail
+          ? `${errJson.error ?? 'Error'}: ${errJson.detail}`
+          : (errJson.error ?? `Proxy request failed with HTTP ${res.status}`);
+        throw new Error(message);
       }
 
       return (await res.json()) as T;

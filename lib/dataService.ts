@@ -182,6 +182,11 @@ export function getRecommendations(
 }
 
 const failedDynamicLookups = new Set<string>();
+const inFlightLookups = new Map<string, Promise<{
+  name: string;
+  entry?: KBEntry;
+  profile?: IngredientProfile;
+}>>();
 
 export function getIngredientDetail(name: string): {
   name: string;
@@ -218,16 +223,57 @@ export function getIngredientDetail(name: string): {
   };
 }
 
+export function isIngredientQuery(query: string): boolean {
+  if (!query || typeof query !== 'string') return false;
+  const q = query.toLowerCase().trim();
+  if (!q) return false;
+
+  if (ingredientKBMap.has(q)) return true;
+  for (const [key, entry] of ingredientKBMap.entries()) {
+    if (key === q || entry.name?.toLowerCase() === q) return true;
+    if (Array.isArray(entry.aliases) && entry.aliases.some((a: string) => a.toLowerCase() === q)) {
+      return true;
+    }
+  }
+
+  // Check singular form for common plurals (e.g. tomatoes -> tomato, carrots -> carrot)
+  if (q.endsWith('es')) {
+    const s = q.slice(0, -2);
+    if (ingredientKBMap.has(s)) return true;
+    for (const [key, entry] of ingredientKBMap.entries()) {
+      if (key === s || entry.name?.toLowerCase() === s) return true;
+      if (Array.isArray(entry.aliases) && entry.aliases.some((a: string) => a.toLowerCase() === s)) {
+        return true;
+      }
+    }
+  }
+  if (q.endsWith('s')) {
+    const s = q.slice(0, -1);
+    if (ingredientKBMap.has(s)) return true;
+    for (const [key, entry] of ingredientKBMap.entries()) {
+      if (key === s || entry.name?.toLowerCase() === s) return true;
+      if (Array.isArray(entry.aliases) && entry.aliases.some((a: string) => a.toLowerCase() === s)) {
+        return true;
+      }
+    }
+  }
+
+  return false;
+}
+
 export async function fetchIngredientDetailDynamic(name: string): Promise<{
   name: string;
   entry?: KBEntry;
   profile?: IngredientProfile;
 }> {
-  if (!name || typeof name !== 'string') {
+  if (!name || typeof name !== 'string' || !name.trim()) {
     return { name: '' };
   }
 
   const clean = resolveIngredientToken(name, ingredientKBMap) || name.toLowerCase().trim();
+  if (!clean) {
+    return { name: '' };
+  }
 
   // 1. Check in-memory profiles (precompiled or previously fetched)
   if (ingredientProfilesMap.has(clean)) {
@@ -247,76 +293,87 @@ export async function fetchIngredientDetailDynamic(name: string): Promise<{
     };
   }
 
-  // 2. Dynamic lookup via FlavorDB
-  try {
-    let entities = await flavordbClient.getEntityByAlias(clean);
-    const titleCase = clean.replace(/\b\w/g, c => c.toUpperCase());
-    if ((!entities || entities.length === 0) && titleCase !== clean) {
-      entities = await flavordbClient.getEntityByAlias(titleCase);
-    }
-
-    if (entities && entities.length > 0) {
-      const entity = entities[0];
-      let molecules = entity.molecules;
-
-      if (!molecules || molecules.length === 0) {
-        const mol = await flavordbClient.getMoleculeDetails(clean);
-        if (mol) {
-          molecules = [mol];
-        } else {
-          molecules = await flavordbClient.getMoleculesByDescription(clean);
-        }
-      }
-
-      const adaptedMol = adaptFlavorEntityToMolecularProfile(entity, molecules);
-      const existingEntry = ingredientKBMap.get(clean);
-
-      const dynamicProfile: IngredientProfile = {
-        name: clean,
-        tags: existingEntry?.tags ?? [entity.category || 'botanical'],
-        tastants: existingEntry?.tastants ?? {
-          sweet: Math.min(3, Math.round(adaptedMol.pct.sweet * 3)),
-          sour: Math.min(3, Math.round(adaptedMol.pct.sour * 3)),
-          umami: Math.min(3, Math.round(adaptedMol.pct.umami * 3)),
-          bitter: Math.min(3, Math.round(adaptedMol.pct.bitter * 3)),
-          salty: 0,
-        },
-        molecular: adaptedMol,
-        protein_per_100g: existingEntry?.protein_per_100g ?? 0,
-        moisture: existingEntry?.moisture_contribution ?? 0.5,
-      };
-
-      // Cache dynamically resolved profile in memory to maintain precompiled performance on repeat requests
-      ingredientProfilesMap.set(clean, dynamicProfile);
-
-      if (!ingredientKBMap.has(clean)) {
-        ingredientKBMap.set(clean, {
-          name: clean,
-          aliases: [name],
-          tags: [entity.category || 'botanical'],
-          vegetarian: true,
-          tastants: dynamicProfile.tastants,
-        });
-      }
-
-      return {
-        name: clean,
-        entry: ingredientKBMap.get(clean),
-        profile: dynamicProfile,
-      };
-    } else {
-      failedDynamicLookups.add(clean);
-    }
-  } catch {
-    failedDynamicLookups.add(clean);
+  // 2. In-flight promise deduplication
+  const inFlight = inFlightLookups.get(clean);
+  if (inFlight) {
+    return inFlight;
   }
 
-  return {
-    name: clean,
-    entry: ingredientKBMap.get(clean),
-    profile: ingredientProfilesMap.get(clean),
-  };
+  // 3. Dynamic lookup via FlavorDB
+  const lookupPromise = (async () => {
+    try {
+      const titleCase = clean.replace(/\b\w/g, c => c.toUpperCase());
+      let entities = await flavordbClient.getEntityByAlias(titleCase);
+      if ((!entities || entities.length === 0) && titleCase !== clean) {
+        entities = await flavordbClient.getEntityByAlias(clean);
+      }
+
+      if (entities && entities.length > 0) {
+        const entity = entities[0];
+        let molecules = entity.molecules;
+
+        // Skip calling getMoleculeDetails(clean) with food names (which always 404s);
+        // search Fenaroli descriptions directly if molecules are empty
+        if (!molecules || molecules.length === 0) {
+          molecules = await flavordbClient.getMoleculesByDescription(clean);
+        }
+
+        const adaptedMol = adaptFlavorEntityToMolecularProfile(entity, molecules);
+        const existingEntry = ingredientKBMap.get(clean);
+
+        const dynamicProfile: IngredientProfile = {
+          name: clean,
+          tags: existingEntry?.tags ?? [entity.category || 'botanical'],
+          tastants: existingEntry?.tastants ?? {
+            sweet: Math.min(3, Math.round(adaptedMol.pct.sweet * 3)),
+            sour: Math.min(3, Math.round(adaptedMol.pct.sour * 3)),
+            umami: Math.min(3, Math.round(adaptedMol.pct.umami * 3)),
+            bitter: Math.min(3, Math.round(adaptedMol.pct.bitter * 3)),
+            salty: 0,
+          },
+          molecular: adaptedMol,
+          protein_per_100g: existingEntry?.protein_per_100g ?? 0,
+          moisture: existingEntry?.moisture_contribution ?? 0.5,
+        };
+
+        // Cache dynamically resolved profile in memory to maintain precompiled performance on repeat requests
+        ingredientProfilesMap.set(clean, dynamicProfile);
+
+        if (!ingredientKBMap.has(clean)) {
+          ingredientKBMap.set(clean, {
+            name: clean,
+            aliases: [name],
+            tags: [entity.category || 'botanical'],
+            vegetarian: true,
+            tastants: dynamicProfile.tastants,
+          });
+        }
+
+        return {
+          name: clean,
+          entry: ingredientKBMap.get(clean),
+          profile: dynamicProfile,
+        };
+      } else {
+        failedDynamicLookups.add(clean);
+      }
+    } catch {
+      failedDynamicLookups.add(clean);
+    } finally {
+      inFlightLookups.delete(clean);
+    }
+
+    return {
+      name: clean,
+      entry: ingredientKBMap.get(clean),
+      profile: ingredientProfilesMap.get(clean),
+    };
+  })();
+
+  inFlightLookups.set(clean, lookupPromise);
+  return lookupPromise;
 }
 
 export { adaptFlavorMoleculesToMolecularProfile, adaptFlavorEntityToMolecularProfile };
+export const _testOnly = { ingredientKBMap, ingredientProfilesMap, failedDynamicLookups, inFlightLookups };
 

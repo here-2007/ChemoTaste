@@ -57,8 +57,51 @@ export async function GET(req: NextRequest) {
     });
 
     if (!upstreamRes.ok) {
+      let errBodyText = '';
+      try {
+        errBodyText = await upstreamRes.text();
+      } catch {}
+
+      let parsedErr: any = null;
+      try {
+        parsedErr = JSON.parse(errBodyText);
+      } catch {}
+
+      const errorMsg =
+        (typeof parsedErr === 'object' && parsedErr !== null
+          ? parsedErr.message || parsedErr.error || parsedErr.detail || parsedErr.msg
+          : null) || errBodyText;
+
+      const lowerMsg = String(errorMsg).toLowerCase();
+      const isAuthError =
+        upstreamRes.status === 401 ||
+        lowerMsg.includes('invalid') ||
+        lowerMsg.includes('unauthorized') ||
+        lowerMsg.includes('forbidden');
+
+      const isQuotaExhausted =
+        !isAuthError &&
+        (lowerMsg.includes('not enough tokens') ||
+          lowerMsg.includes('out of token') ||
+          lowerMsg.includes('insufficient token') ||
+          lowerMsg.includes('token balance') ||
+          lowerMsg.includes('credit') ||
+          lowerMsg.includes('quota') ||
+          upstreamRes.status === 429 ||
+          (upstreamRes.status === 400 && lowerMsg.includes('token')));
+
+      if (isQuotaExhausted) {
+        return Response.json(
+          {
+            error: 'Foodoscope API Quota Exhausted',
+            detail: 'Account token balance is 0. ChemoTaste is running in offline baseline mode.',
+          },
+          { status: 503 }
+        );
+      }
+
       return Response.json(
-        { error: `Upstream HTTP ${upstreamRes.status}` },
+        { error: `Upstream HTTP ${upstreamRes.status}`, detail: errorMsg || undefined },
         { status: upstreamRes.status }
       );
     }

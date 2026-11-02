@@ -16,10 +16,15 @@ import { ProvenanceChip } from '../components/ProvenanceChip';
 import { LiveNoticeBanner, LiveNotice } from '../components/LiveNoticeBanner';
 
 import { getRecommendations } from '../lib/dataService';
-import { recipedbClient } from '../lib/recipedbClient';
+import { recipedbClient, normalizeTitle } from '../lib/recipedbClient';
 import { UserContext, ScoredRecipe, RawRecipe } from '../lib/types';
 import { PRESET_REGIMENS } from '../data/drugProfiles';
 import { Search, ArrowDown, Database, RefreshCw, Sparkles } from 'lucide-react';
+
+import { isIngredientQuery } from '../lib/dataService';
+import rawCuratedRecipes from '../data/curated_recipes.json';
+
+const curatedRecipes = rawCuratedRecipes as RawRecipe[];
 
 export default function Home() {
   // State for drug selection and patient context
@@ -96,24 +101,36 @@ export default function Home() {
     setLiveNotice(null);
 
     try {
-      const res = await recipedbClient.searchByTitle(query);
+      const isIngredient = isIngredientQuery(query);
+      const res = isIngredient
+        ? await recipedbClient.searchByIngredient(query)
+        : await recipedbClient.searchByTitle(query);
+
       if (res && res.length > 0) {
         const liveRetrieved = res.map(r => ({ ...r, is_live: true }));
         
-        // Fully deduplicate within the response array as well as against existing extraRecipes
-        let newCount = 0;
-        setExtraRecipes(prev => {
-          const existingIds = new Set(prev.map(p => p.id));
-          const newUnique: RawRecipe[] = [];
-          for (const item of liveRetrieved) {
-            if (!existingIds.has(item.id)) {
-              existingIds.add(item.id);
-              newUnique.push(item);
-            }
+        // Fully deduplicate within incoming batch and against BOTH extraRecipes and curatedRecipes
+        const curatedIds = new Set(curatedRecipes.map(c => String(c.id)));
+        const curatedTitles = new Set(curatedRecipes.map(c => normalizeTitle(c.title)));
+
+        const existingIds = new Set([...curatedIds, ...extraRecipes.map(p => String(p.id))]);
+        const existingTitles = new Set([...curatedTitles, ...extraRecipes.map(p => normalizeTitle(p.title))]);
+        const newUnique: RawRecipe[] = [];
+
+        for (const item of liveRetrieved) {
+          const normTitle = normalizeTitle(item.title);
+          const itemId = String(item.id);
+          if (!existingIds.has(itemId) && !existingTitles.has(normTitle)) {
+            existingIds.add(itemId);
+            existingTitles.add(normTitle);
+            newUnique.push(item);
           }
-          newCount = newUnique.length;
-          return [...newUnique, ...prev];
-        });
+        }
+
+        const newCount = newUnique.length;
+        if (newCount > 0) {
+          setExtraRecipes(prev => [...newUnique, ...prev]);
+        }
 
         setIsLiveApiActive(true);
         // Reset filters so the live retrieved recipes are immediately visible in the grid
@@ -139,10 +156,18 @@ export default function Home() {
         });
       }
     } catch (err: any) {
-      setLiveNotice({
-        type: 'error',
-        message: `Gateway note: ${err?.message ?? 'Live API unreachable'}. Operating in verified offline fallback mode.`,
-      });
+      const errStr = String(err?.message || err?.detail || err || '').toLowerCase();
+      if (errStr.includes('token') || errStr.includes('quota') || errStr.includes('503')) {
+        setLiveNotice({
+          type: 'info',
+          message: 'Foodoscope API token quota reached. Operating seamlessly in verified offline baseline mode with curated recipes.',
+        });
+      } else {
+        setLiveNotice({
+          type: 'error',
+          message: `Gateway note: ${err?.message ?? 'Live API unreachable'}. Operating in verified offline fallback mode.`,
+        });
+      }
       setIsLiveApiActive(false);
     } finally {
       setIsLiveQuerying(false);

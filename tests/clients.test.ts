@@ -6,9 +6,20 @@ import {
   adaptFlavorMoleculesToMolecularProfile,
   adaptFlavorEntityToMolecularProfile,
 } from '../lib/flavordbClient';
-import { recipedbClient } from '../lib/recipedbClient';
+import {
+  recipedbClient,
+  extractInstructions,
+  extractIngredients,
+  isGranularRecipe,
+  normalizeTitle,
+} from '../lib/recipedbClient';
 import { resolveIngredientToken } from '../lib/resolveIngredient';
-import { getIngredientDetail, fetchIngredientDetailDynamic } from '../lib/dataService';
+import {
+  getIngredientDetail,
+  fetchIngredientDetailDynamic,
+  isIngredientQuery,
+  _testOnly,
+} from '../lib/dataService';
 
 describe('FlavorDB & RecipeDB Client Protocol Compliance', () => {
   beforeEach(() => {
@@ -154,7 +165,7 @@ describe('FlavorDB & RecipeDB Client Protocol Compliance', () => {
     expect(result?.flavor_profile).toEqual(['sweet', 'creamy']);
   });
 
-  it('recipedbClient.searchByIngredient targets recipebyingredient endpoint with includeIngredients param', async () => {
+  it('recipedbClient.searchByIngredient targets recipebyingredient endpoint and enriches with getRecipeById', async () => {
     const mockResponse = {
       success: true,
       data: [
@@ -167,21 +178,50 @@ describe('FlavorDB & RecipeDB Client Protocol Compliance', () => {
       ],
     };
 
-    const fetchSpy = vi.spyOn(global, 'fetch').mockResolvedValueOnce({
-      ok: true,
-      json: async () => mockResponse,
-    } as Response);
+    const mockDetailResponse = {
+      success: true,
+      data: {
+        recipe: {
+          Recipe_id: '100034',
+          Recipe_title: 'Heirloom Tomato and Chili Preserves',
+          Region: 'South American',
+          Calories: '322.6',
+        },
+        ingredients: [
+          { ingredient_Phrase: '1 lb heirloom tomatoes', ingredient: 'tomato' },
+          { ingredient_Phrase: '1 fresh red chili', ingredient: 'chili' },
+        ],
+        instructions: ['Wash and chop tomatoes.', 'Simmer with minced chili for 20 minutes.'],
+      },
+    };
+
+    const fetchSpy = vi.spyOn(global, 'fetch')
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => mockResponse,
+      } as Response)
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => mockDetailResponse,
+      } as Response);
 
     const result = await recipedbClient.searchByIngredient('ginger');
 
-    const calledUrl = fetchSpy.mock.calls[0][0] as string;
-    expect(calledUrl).toContain('endpoint=recipebyingredient%2Fby-ingredients-categories-title');
-    expect(calledUrl).toContain('includeIngredients=ginger');
+    expect(fetchSpy).toHaveBeenCalledTimes(2);
+    const searchUrl = fetchSpy.mock.calls[0][0] as string;
+    expect(searchUrl).toContain('endpoint=recipebyingredient%2Fby-ingredients-categories-title');
+    expect(searchUrl).toContain('includeIngredients=ginger');
+
+    const detailUrl = fetchSpy.mock.calls[1][0] as string;
+    expect(detailUrl).toContain('endpoint=search-recipe%2F100034');
+
     expect(result).toHaveLength(1);
     expect(result[0].title).toBe('Heirloom Tomato and Chili Preserves');
+    expect(result[0].ingredients).toEqual(['1 lb heirloom tomatoes', '1 fresh red chili']);
+    expect(result[0].instructions).toEqual(['Wash and chop tomatoes.', 'Simmer with minced chili for 20 minutes.']);
   });
 
-  it('recipedbClient.getRecipeById parses recipe entity and extracts granular ingredient phrases', async () => {
+  it('recipedbClient.getRecipeById parses recipe entity, extracts granular ingredients, and extracts instructions', async () => {
     const mockResponse = {
       success: true,
       data: {
@@ -195,6 +235,7 @@ describe('FlavorDB & RecipeDB Client Protocol Compliance', () => {
           { ingredient_Phrase: '2 cloves garlic , peeled and chopped', ingredient: 'garlic' },
           { ingredient_Phrase: '1 can whole peeled tomatoes', ingredient: 'tomato' },
         ],
+        instructions: ['Heat oil in large pot.', 'Add garlic and tomatoes, simmer gently.'],
       },
     };
 
@@ -211,6 +252,187 @@ describe('FlavorDB & RecipeDB Client Protocol Compliance', () => {
     expect(result?.title).toBe('African Curry');
     expect(result?.ingredients).toContain('2 cloves garlic , peeled and chopped');
     expect(result?.ingredients).toContain('1 can whole peeled tomatoes');
+    expect(result?.instructions).toEqual(['Heat oil in large pot.', 'Add garlic and tomatoes, simmer gently.']);
+  });
+
+  it('recipedbClient.getRecipeById handles structured instruction step objects cleanly', async () => {
+    const mockResponse = {
+      success: true,
+      data: {
+        recipe: {
+          Recipe_id: '5001',
+          Recipe_title: 'Steamed Rice Porridge',
+        },
+        ingredients: [
+          { ingredient_Phrase: '1 cup polished rice', ingredient: 'rice' },
+        ],
+        instructions: [
+          { step: 'Rinse rice thoroughly in cold water.' },
+          { steps: 'Boil in 4 cups water until soft and gelatinous.' },
+        ],
+      },
+    };
+
+    vi.spyOn(global, 'fetch').mockResolvedValueOnce({
+      ok: true,
+      json: async () => mockResponse,
+    } as Response);
+
+    const result = await recipedbClient.getRecipeById('5001');
+    expect(result?.instructions).toEqual([
+      'Rinse rice thoroughly in cold water.',
+      'Boil in 4 cups water until soft and gelatinous.',
+    ]);
+  });
+
+  it('recipedbClient.getRecipeById handles nulls and empty steps in instructions array without throwing', async () => {
+    const mockResponse = {
+      success: true,
+      data: {
+        recipe: {
+          Recipe_id: '5002',
+          Recipe_title: 'Clear Broth',
+        },
+        ingredients: [
+          null,
+          { ingredient_Phrase: '1 cup vegetable stock' },
+          { ingredient_Phrase: '' },
+        ],
+        instructions: [
+          null,
+          { step: 'Heat stock to a gentle simmer.' },
+          undefined,
+          { step: '' },
+          'Serve warm.',
+        ],
+      },
+    };
+
+    vi.spyOn(global, 'fetch').mockResolvedValueOnce({
+      ok: true,
+      json: async () => mockResponse,
+    } as Response);
+
+    const result = await recipedbClient.getRecipeById('5002');
+    expect(result).not.toBeNull();
+    expect(result?.ingredients).toEqual(['1 cup vegetable stock']);
+    expect(result?.instructions).toEqual([
+      'Heat stock to a gentle simmer.',
+      'Serve warm.',
+    ]);
+  });
+
+  it('recipedbClient.getRecipeById handles multiline and numbered string instructions', async () => {
+    const mockResponse = {
+      success: true,
+      data: {
+        recipe: {
+          Recipe_id: '5003',
+          Recipe_title: 'Soothing Khichdi',
+        },
+        ingredients: [
+          { ingredient_Phrase: '1/2 cup yellow moong dal' },
+          { ingredient_Phrase: '1/2 cup rice' },
+        ],
+        instructions: '1. Wash rice and lentils.\n2. Pressure cook with turmeric and 4 cups water.\n3. Stir gently and serve.',
+      },
+    };
+
+    vi.spyOn(global, 'fetch').mockResolvedValueOnce({
+      ok: true,
+      json: async () => mockResponse,
+    } as Response);
+
+    const result = await recipedbClient.getRecipeById('5003');
+    expect(result?.instructions).toEqual([
+      '1. Wash rice and lentils.',
+      '2. Pressure cook with turmeric and 4 cups water.',
+      '3. Stir gently and serve.',
+    ]);
+  });
+
+  it('extractInstructions helper handles all variations robustly', () => {
+    expect(extractInstructions(null)).toEqual([]);
+    expect(extractInstructions(undefined)).toEqual([]);
+    expect(extractInstructions('')).toEqual([]);
+    expect(extractInstructions(['Step A', 'Step B'])).toEqual(['Step A', 'Step B']);
+    expect(extractInstructions([{ step: 'Step 1' }, { instruction: 'Step 2' }, { description: 'Step 3' }])).toEqual([
+      'Step 1',
+      'Step 2',
+      'Step 3',
+    ]);
+    expect(extractInstructions('Step 1 || Step 2 || Step 3')).toEqual(['Step 1', 'Step 2', 'Step 3']);
+    expect(extractInstructions('1. Boil water. 2. Add salt.')).toEqual(['1. Boil water.', '2. Add salt.']);
+  });
+
+  it('isGranularRecipe validates clinical safety requirement', () => {
+    expect(isGranularRecipe({ id: '1', title: 'Soup', cuisine: 'Global', prep_time: 10, ingredients: [] })).toBe(false);
+    expect(isGranularRecipe({ id: '1', title: 'Miso Soup', cuisine: 'Japanese', prep_time: 10, ingredients: ['Miso Soup'] })).toBe(false);
+    expect(isGranularRecipe({ id: '1', title: 'Miso Soup', cuisine: 'Japanese', prep_time: 10, ingredients: ['miso soup '] })).toBe(false);
+    expect(isGranularRecipe({ id: '1', title: 'African Curry', cuisine: 'African', prep_time: 10, ingredients: ['Dish'] })).toBe(false);
+    expect(isGranularRecipe({ id: '1', title: 'Miso Soup', cuisine: 'Japanese', prep_time: 10, ingredients: ['miso paste', 'tofu', 'seaweed'] })).toBe(true);
+  });
+
+  it('recipedbClient.searchByTitle bounds enrichment to 4 recipes and excludes non-granular entries', async () => {
+    const mockSearchResponse = {
+      success: true,
+      data: [
+        { Recipe_id: '1', Recipe_title: 'Dish 1' },
+        { Recipe_id: '2', Recipe_title: 'Dish 2' },
+        { Recipe_id: '3', Recipe_title: 'Dish 3' },
+        { Recipe_id: '4', Recipe_title: 'Dish 4' },
+        { Recipe_id: '5', Recipe_title: 'Dish 5' },
+        { Recipe_id: '6', Recipe_title: 'Dish 6' },
+      ],
+    };
+
+    const fetchSpy = vi.spyOn(global, 'fetch')
+      .mockResolvedValueOnce({ ok: true, json: async () => mockSearchResponse } as Response)
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({
+          data: {
+            recipe: { Recipe_id: '1', Recipe_title: 'Dish 1' },
+            ingredients: [{ ingredient_Phrase: '1 cup rice', ingredient: 'rice' }],
+            instructions: ['Cook rice'],
+          },
+        }),
+      } as Response)
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({
+          data: {
+            recipe: { Recipe_id: '2', Recipe_title: 'Dish 2' },
+            ingredients: [{ ingredient_Phrase: '1 cup lentils', ingredient: 'lentil' }],
+          },
+        }),
+      } as Response)
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({
+          data: {
+            recipe: { Recipe_id: '3', Recipe_title: 'Dish 3' },
+            ingredients: [],
+          },
+        }),
+      } as Response)
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({
+          data: {
+            recipe: { Recipe_id: '4', Recipe_title: 'Dish 4' },
+            ingredients: [{ ingredient_Phrase: '1 cup oats', ingredient: 'oats' }],
+          },
+        }),
+      } as Response);
+
+    const results = await recipedbClient.searchByTitle('healthy');
+
+    // 1 search call + 4 enrichment calls = 5 total calls
+    expect(fetchSpy).toHaveBeenCalledTimes(5);
+    // Dish 1, Dish 2, and Dish 4 have granular ingredients; Dish 3 does not and was filtered out
+    expect(results).toHaveLength(3);
+    expect(results.map(r => r.id)).toEqual(['1', '2', '4']);
   });
 });
 
@@ -371,46 +593,165 @@ describe('Recipe Modal Ingredient Drill-Down & Dynamic Live Fallback', () => {
   });
 
   it('fetchIngredientDetailDynamic resolves KB-present ingredients missing precompiled molecular profiles while preserving KB nutrition', async () => {
-    // Carrot is in ingredient_kb.json (protein: 0.9g) but NOT in ingredient_profiles.json
-    const mockCarrotEntity = {
-      content: [
-        {
-          entity_id: 110,
-          entity_alias_readable: 'Carrot',
-          category: 'vegetable-root',
-        },
-      ],
-    };
+    // Temporarily remove carrot from precompiled map to simulate dynamically resolving an ingredient
+    const cachedCarrot = _testOnly.ingredientProfilesMap.get('carrot');
+    _testOnly.ingredientProfilesMap.delete('carrot');
 
-    const mockCarrotMolecules = {
-      content: [
-        {
-          common_name: 'beta-carotene',
-          pubchem_id: 5280489,
-          flavor_profile: 'sweet@earthy',
-          Taste_threshold_values: '1.0',
-        },
-      ],
-    };
+    try {
+      const mockCarrotEntity = {
+        content: [
+          {
+            entity_id: 110,
+            entity_alias_readable: 'Carrot',
+            category: 'vegetable-root',
+          },
+        ],
+      };
 
-    const fetchSpy = vi.spyOn(global, 'fetch')
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => mockCarrotEntity,
-      } as Response)
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => mockCarrotMolecules,
-      } as Response);
+      const mockCarrotMolecules = {
+        content: [
+          {
+            common_name: 'beta-carotene',
+            pubchem_id: 5280489,
+            flavor_profile: 'sweet@earthy',
+            Taste_threshold_values: '1.0',
+          },
+        ],
+      };
 
-    const carrotRes = await fetchIngredientDetailDynamic('1 medium diced carrot');
+      const fetchSpy = vi.spyOn(global, 'fetch')
+        .mockResolvedValueOnce({
+          ok: true,
+          json: async () => mockCarrotEntity,
+        } as Response)
+        .mockResolvedValueOnce({
+          ok: true,
+          json: async () => mockCarrotMolecules,
+        } as Response);
 
-    expect(carrotRes.name).toBe('carrot');
-    expect(carrotRes.entry).toBeDefined();
-    expect(carrotRes.entry?.protein_per_100g).toBe(0.9); // Curated KB protein preserved
-    expect(carrotRes.profile).toBeDefined();
-    expect(carrotRes.profile?.protein_per_100g).toBe(0.9);
-    expect(carrotRes.profile?.molecular.key_molecules?.[0].name).toBe('beta-carotene');
-    expect(fetchSpy).toHaveBeenCalledTimes(2);
+      const carrotRes = await fetchIngredientDetailDynamic('1 medium diced carrot');
+
+      expect(carrotRes.name).toBe('carrot');
+      expect(carrotRes.entry).toBeDefined();
+      expect(carrotRes.entry?.protein_per_100g).toBe(0.9); // Curated KB protein preserved
+      expect(carrotRes.profile).toBeDefined();
+      expect(carrotRes.profile?.protein_per_100g).toBe(0.9);
+      expect(carrotRes.profile?.molecular.key_molecules?.[0].name).toBe('beta-carotene');
+      expect(fetchSpy).toHaveBeenCalledTimes(2);
+    } finally {
+      if (cachedCarrot) {
+        _testOnly.ingredientProfilesMap.set('carrot', cachedCarrot);
+      }
+    }
+  });
+
+  it('fetchIngredientDetailDynamic deduplicates in-flight promises on concurrent lookups', async () => {
+    // Delete carrot to force dynamic lookup
+    const cachedCarrot = _testOnly.ingredientProfilesMap.get('carrot');
+    _testOnly.ingredientProfilesMap.delete('carrot');
+
+    try {
+      const mockCarrotEntity = {
+        content: [{ entity_id: 110, entity_alias_readable: 'Carrot', category: 'vegetable-root' }],
+      };
+      const mockCarrotMolecules = {
+        content: [{ common_name: 'beta-carotene', pubchem_id: 5280489, flavor_profile: 'sweet@earthy', Taste_threshold_values: '1.0' }],
+      };
+
+      const fetchSpy = vi.spyOn(global, 'fetch')
+        .mockImplementation(async () => {
+          // slight delay to simulate async network flight
+          await new Promise(r => setTimeout(r, 10));
+          return {
+            ok: true,
+            json: async () => mockCarrotEntity,
+          } as Response;
+        });
+
+      // Issue 3 simultaneous concurrent calls
+      const [res1, res2, res3] = await Promise.all([
+        fetchIngredientDetailDynamic('carrot'),
+        fetchIngredientDetailDynamic('carrot'),
+        fetchIngredientDetailDynamic('carrot'),
+      ]);
+
+      expect(res1.name).toBe('carrot');
+      expect(res2.name).toBe('carrot');
+      expect(res3.name).toBe('carrot');
+      // Only 2 network calls (entity + molecules) should occur for all 3 concurrent requests
+      expect(fetchSpy).toHaveBeenCalledTimes(2);
+    } finally {
+      if (cachedCarrot) {
+        _testOnly.ingredientProfilesMap.set('carrot', cachedCarrot);
+      }
+    }
+  });
+});
+
+describe('Smart Search Routing & Curated Corpus Cross-Deduplication', () => {
+  it('smart search routing correctly differentiates between ingredients in ingredient_kb and dish titles', () => {
+    // Canonical ingredients
+    expect(isIngredientQuery('ginger')).toBe(true);
+    expect(isIngredientQuery('moong dal')).toBe(true);
+    expect(isIngredientQuery('coconut water')).toBe(true);
+    expect(isIngredientQuery('turmeric')).toBe(true);
+
+    // Aliases in KB
+    expect(isIngredientQuery('split yellow mung beans')).toBe(true);
+    expect(isIngredientQuery('fresh ginger')).toBe(true);
+
+    // Plurals
+    expect(isIngredientQuery('carrots')).toBe(true);
+    expect(isIngredientQuery('tomatoes')).toBe(true);
+    expect(isIngredientQuery('apples')).toBe(true);
+
+    // Dish titles NOT in ingredient KB
+    expect(isIngredientQuery('khichdi')).toBe(false);
+    expect(isIngredientQuery('african curry')).toBe(false);
+    expect(isIngredientQuery('miso soup')).toBe(false);
+    expect(isIngredientQuery('rice porridge')).toBe(false);
+    expect(isIngredientQuery('chicken stew')).toBe(false);
+
+    // Defensive empty/null queries
+    expect(isIngredientQuery('')).toBe(false);
+    expect(isIngredientQuery('   ')).toBe(false);
+  });
+
+  it('cross-deduplicates live incoming recipes against curated recipes by id and normalized title', () => {
+    const curatedRecipes = [
+      { id: 'curated-1', title: 'Moong Dal Khichdi' },
+      { id: 'curated-2', title: 'Soothing Rice Congee' },
+    ];
+    const extraRecipes = [
+      { id: 'extra-1', title: 'Ginger Turmeric Tea' },
+    ];
+
+    const incomingBatch = [
+      { id: 'live-100', title: 'moong  dal  khichdi' }, // duplicate of curated-1 by title
+      { id: 'curated-2', title: 'Rice Congee' },         // duplicate of curated-2 by ID
+      { id: 'extra-1', title: 'Ginger Turmeric Tea' },   // duplicate of extra-1 by ID
+      { id: 'live-101', title: 'Golden Broth' },         // unique new dish
+    ];
+
+    const curatedIds = new Set(curatedRecipes.map(c => String(c.id)));
+    const curatedTitles = new Set(curatedRecipes.map(c => normalizeTitle(c.title)));
+
+    const existingIds = new Set([...curatedIds, ...extraRecipes.map(p => String(p.id))]);
+    const existingTitles = new Set([...curatedTitles, ...extraRecipes.map(p => normalizeTitle(p.title))]);
+    const newUnique: any[] = [];
+
+    for (const item of incomingBatch) {
+      const normTitle = normalizeTitle(item.title);
+      const itemId = String(item.id);
+      if (!existingIds.has(itemId) && !existingTitles.has(normTitle)) {
+        existingIds.add(itemId);
+        existingTitles.add(normTitle);
+        newUnique.push(item);
+      }
+    }
+
+    expect(newUnique).toHaveLength(1);
+    expect(newUnique[0].id).toBe('live-101');
+    expect(newUnique[0].title).toBe('Golden Broth');
   });
 });
