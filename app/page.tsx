@@ -110,19 +110,23 @@ export default function Home() {
         const liveRetrieved = res.map(r => ({ ...r, is_live: true }));
         
         // Fully deduplicate within incoming batch and against BOTH extraRecipes and curatedRecipes
-        const curatedIds = new Set(curatedRecipes.map(c => String(c.id)));
-        const curatedTitles = new Set(curatedRecipes.map(c => normalizeTitle(c.title)));
+        const curatedIds = new Set(curatedRecipes.map(c => (c.id ? String(c.id).trim() : '')).filter(Boolean));
+        const curatedTitles = new Set(curatedRecipes.map(c => normalizeTitle(c.title)).filter(Boolean));
 
-        const existingIds = new Set([...curatedIds, ...extraRecipes.map(p => String(p.id))]);
-        const existingTitles = new Set([...curatedTitles, ...extraRecipes.map(p => normalizeTitle(p.title))]);
+        const existingIds = new Set([...curatedIds, ...extraRecipes.map(p => (p.id ? String(p.id).trim() : '')).filter(Boolean)]);
+        const existingTitles = new Set([...curatedTitles, ...extraRecipes.map(p => normalizeTitle(p.title)).filter(Boolean)]);
         const newUnique: RawRecipe[] = [];
 
         for (const item of liveRetrieved) {
+          if (!item) continue;
           const normTitle = normalizeTitle(item.title);
-          const itemId = String(item.id);
-          if (!existingIds.has(itemId) && !existingTitles.has(normTitle)) {
-            existingIds.add(itemId);
-            existingTitles.add(normTitle);
+          const itemId = item.id ? String(item.id).trim() : '';
+          const hasDupId = itemId ? existingIds.has(itemId) : false;
+          const hasDupTitle = normTitle ? existingTitles.has(normTitle) : false;
+
+          if (!hasDupId && !hasDupTitle) {
+            if (itemId) existingIds.add(itemId);
+            if (normTitle) existingTitles.add(normTitle);
             newUnique.push(item);
           }
         }
@@ -174,9 +178,9 @@ export default function Home() {
     }
   };
 
-  // Filter recipes based on UI controls
+  // Filter recipes based on UI controls and guarantee strict UI deduplication
   const filteredRecipes = useMemo(() => {
-    return recommendation.scoredRecipes.filter(r => {
+    const matched = recommendation.scoredRecipes.filter(r => {
       const matchesSearch =
         r.title.toLowerCase().includes(recipeSearch.toLowerCase()) ||
         r.cuisine.toLowerCase().includes(recipeSearch.toLowerCase()) ||
@@ -196,6 +200,26 @@ export default function Home() {
 
       return matchesSearch && matchesCuisine && matchesBand;
     });
+
+    const seenIds = new Set<string>();
+    const seenTitles = new Set<string>();
+    const unique: ScoredRecipe[] = [];
+
+    for (const r of matched) {
+      if (!r) continue;
+      const idKey = r.id ? String(r.id).trim() : '';
+      const titleKey = normalizeTitle(r.title);
+      const hasDuplicateId = idKey ? seenIds.has(idKey) : false;
+      const hasDuplicateTitle = titleKey ? seenTitles.has(titleKey) : false;
+
+      if (!hasDuplicateId && !hasDuplicateTitle) {
+        if (idKey) seenIds.add(idKey);
+        if (titleKey) seenTitles.add(titleKey);
+        unique.push(r);
+      }
+    }
+
+    return unique;
   }, [recommendation.scoredRecipes, recipeSearch, cuisineFilter, bandFilter]);
 
   const uniqueCuisines = useMemo(() => {
@@ -477,9 +501,9 @@ export default function Home() {
 
           {/* Recipes Card Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredRecipes.map(recipe => (
+            {filteredRecipes.map((recipe, idx) => (
               <RecipeCard
-                key={recipe.id}
+                key={`${recipe.id}-${idx}`}
                 recipe={recipe}
                 onOpenDetails={setActiveModalRecipe}
               />

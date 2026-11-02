@@ -1,9 +1,10 @@
 // lib/dataService.ts
 import { DrugProfile, UserContext, RawRecipe, ScoredRecipe, KBEntry, IngredientProfile, SensoryAxisPoint, SubstitutionDelta } from './types';
 import { DRUG_PROFILES } from '../data/drugProfiles';
-import { buildEffectiveProfile, buildConstraints } from './safety';
+import { buildEffectiveProfile, buildConstraints, isNonVegetarian } from './safety';
 import { buildScoredMap, scoreRecipe, computeSensoryRadarData } from './algorithm';
 import { resolveIngredientToken } from './resolveIngredient';
+import { normalizeTitle } from './recipedbClient';
 import {
   flavordbClient,
   adaptFlavorMoleculesToMolecularProfile,
@@ -96,8 +97,25 @@ export function getRecommendations(
     context
   );
 
-  // Pool recipes
-  const allRecipes = [...curatedRecipes, ...(additionalRecipes ?? [])];
+  // Pool and strictly deduplicate recipes across curated and incoming live feeds
+  const rawPool = [...curatedRecipes, ...(additionalRecipes ?? [])];
+  const seenIds = new Set<string>();
+  const seenTitles = new Set<string>();
+  const allRecipes: RawRecipe[] = [];
+
+  for (const r of rawPool) {
+    if (!r) continue;
+    const idKey = r.id ? String(r.id).trim() : '';
+    const titleKey = normalizeTitle(r.title);
+    const hasDuplicateId = idKey ? seenIds.has(idKey) : false;
+    const hasDuplicateTitle = titleKey ? seenTitles.has(titleKey) : false;
+
+    if (!hasDuplicateId && !hasDuplicateTitle) {
+      if (idKey) seenIds.add(idKey);
+      if (titleKey) seenTitles.add(titleKey);
+      allRecipes.push(r);
+    }
+  }
 
   // Score and categorize recipes
   const scoredRecipes = allRecipes.map(r =>
@@ -340,11 +358,17 @@ export async function fetchIngredientDetailDynamic(name: string): Promise<{
         ingredientProfilesMap.set(clean, dynamicProfile);
 
         if (!ingredientKBMap.has(clean)) {
+          const category = String(entity.category || '').toLowerCase();
+          const isNonVeg =
+            isNonVegetarian(clean) ||
+            isNonVegetarian(name) ||
+            /meat|poultry|seafood|fish/i.test(category);
+
           ingredientKBMap.set(clean, {
             name: clean,
             aliases: [name],
             tags: [entity.category || 'botanical'],
-            vegetarian: true,
+            vegetarian: !isNonVeg,
             tastants: dynamicProfile.tastants,
           });
         }

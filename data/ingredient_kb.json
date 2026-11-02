@@ -424,12 +424,15 @@
     "aliases": [
       "shredded chicken",
       "poached chicken",
-      "chicken tenderloin"
+      "chicken tenderloin",
+      "chicken breasts"
     ],
     "tags": [
       "high_protein",
       "mild_flavor",
-      "low_fat"
+      "low_fat",
+      "poultry",
+      "meat"
     ],
     "vegetarian": false,
     "tastants": {
@@ -441,6 +444,58 @@
     },
     "moisture_contribution": 0.65,
     "protein_per_100g": 31
+  },
+  "chicken": {
+    "name": "chicken",
+    "aliases": [
+      "chicken pieces",
+      "cooked chicken",
+      "diced chicken",
+      "chicken thigh",
+      "chicken thighs",
+      "chicken meat",
+      "poultry"
+    ],
+    "tags": [
+      "high_protein",
+      "mild_flavor",
+      "poultry",
+      "meat"
+    ],
+    "vegetarian": false,
+    "tastants": {
+      "sweet": 0,
+      "sour": 0,
+      "umami": 2,
+      "bitter": 0,
+      "salty": 0
+    },
+    "moisture_contribution": 0.65,
+    "protein_per_100g": 27
+  },
+  "chicken broth": {
+    "name": "chicken broth",
+    "aliases": [
+      "chicken stock",
+      "chicken bone broth",
+      "chicken bouillon"
+    ],
+    "tags": [
+      "high_protein",
+      "mild_flavor",
+      "poultry",
+      "meat"
+    ],
+    "vegetarian": false,
+    "tastants": {
+      "sweet": 0,
+      "sour": 0,
+      "umami": 2,
+      "bitter": 0,
+      "salty": 1
+    },
+    "moisture_contribution": 0.95,
+    "protein_per_100g": 5
   },
   "egg white": {
     "name": "egg white",

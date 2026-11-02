@@ -114,8 +114,11 @@ export function scoreRecipe(
   // Dietary and Allergen Filtering
   const hasNonVeg =
     ctx.vegetarian &&
-    (lines.some(l => l.vegetarian === false) ||
-      lines.some(l => isNonVegetarian(l.raw)));
+    (isNonVegetarian(r.title) ||
+      lines.some(l => l.vegetarian === false) ||
+      lines.some(l => isNonVegetarian(l.raw)) ||
+      lines.some(l => Boolean(l.cleanName && isNonVegetarian(l.cleanName))) ||
+      lines.some(l => l.tags?.some(t => /meat|poultry|seafood|fish/i.test(t))));
 
   const hasAllergen = lines.some(l =>
     ctx.allergens.some(a => a.trim().length > 0 && l.raw.toLowerCase().includes(a.trim().toLowerCase()))

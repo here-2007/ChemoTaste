@@ -66,7 +66,31 @@ export function isGranularRecipe(r: RawRecipe): boolean {
   return true;
 }
 
-export const normalizeTitle = (t: string): string => t.toLowerCase().trim().replace(/[^a-z0-9]/g, '');
+export const normalizeTitle = (t: string | undefined | null): string =>
+  typeof t === 'string' ? t.toLowerCase().trim().replace(/[^a-z0-9]/g, '') : '';
+
+export function deduplicateRecipes(recipes: RawRecipe[]): RawRecipe[] {
+  const seenIds = new Set<string>();
+  const seenTitles = new Set<string>();
+  const unique: RawRecipe[] = [];
+
+  for (const r of recipes) {
+    if (!r) continue;
+    const idKey = r.id ? String(r.id).trim() : '';
+    const titleKey = normalizeTitle(r.title);
+
+    const hasDuplicateId = idKey ? seenIds.has(idKey) : false;
+    const hasDuplicateTitle = titleKey ? seenTitles.has(titleKey) : false;
+
+    if (!hasDuplicateId && !hasDuplicateTitle) {
+      if (idKey) seenIds.add(idKey);
+      if (titleKey) seenTitles.add(titleKey);
+      unique.push(r);
+    }
+  }
+
+  return unique;
+}
 
 function mapRawRecipe(item: any, fallbackIdx = 0): RawRecipe {
   let ingredients = extractIngredients(item?.ingredients ?? item?.Ingredients);
@@ -168,9 +192,10 @@ export const recipedbClient = {
       : (raw?.data && Array.isArray(raw.data) ? raw.data : []);
 
     const baseRecipes = items.map((item, idx) => mapRawRecipe(item, idx));
+    const uniqueBase = deduplicateRecipes(baseRecipes);
 
-    // Bound enrichment to 4 fully evaluated recipes to protect clinical safety and conserve token budget
-    const candidates = baseRecipes.slice(0, 4);
+    // Bound enrichment to 4 fully evaluated unique recipes to protect clinical safety and conserve token budget
+    const candidates = uniqueBase.slice(0, 4);
     const enriched = await Promise.all(
       candidates.map(async (recipe) => {
         const full = await recipedbClient.getRecipeById(recipe.id);
@@ -178,8 +203,8 @@ export const recipedbClient = {
       })
     );
 
-    // Return only recipes that have granular ingredient lists
-    return enriched.filter(isGranularRecipe);
+    // Return only recipes that have granular ingredient lists and ensure post-enrichment uniqueness
+    return deduplicateRecipes(enriched.filter(isGranularRecipe));
   },
 
   async getRecipesByCuisine(region: string): Promise<RawRecipe[]> {
@@ -190,7 +215,7 @@ export const recipedbClient = {
     const items: any[] = Array.isArray(raw)
       ? raw
       : (raw?.data && Array.isArray(raw.data) ? raw.data : []);
-    return items.map((item, idx) => mapRawRecipe(item, idx));
+    return deduplicateRecipes(items.map((item, idx) => mapRawRecipe(item, idx)));
   },
 
   async searchByIngredient(ingredient: string): Promise<RawRecipe[]> {
@@ -204,9 +229,10 @@ export const recipedbClient = {
       ? raw
       : (raw?.data && Array.isArray(raw.data) ? raw.data : []);
     const baseRecipes = items.map((item, idx) => mapRawRecipe(item, idx));
+    const uniqueBase = deduplicateRecipes(baseRecipes);
 
     // Enrich returned items using getRecipeById so ingredient searches yield full recipes with instructions and ingredients
-    const candidates = baseRecipes.slice(0, 4);
+    const candidates = uniqueBase.slice(0, 4);
     const enriched = await Promise.all(
       candidates.map(async (recipe) => {
         const full = await recipedbClient.getRecipeById(recipe.id);
@@ -214,7 +240,7 @@ export const recipedbClient = {
       })
     );
 
-    // Return only recipes that have granular ingredient lists
-    return enriched.filter(isGranularRecipe);
+    // Return only recipes that have granular ingredient lists and ensure post-enrichment uniqueness
+    return deduplicateRecipes(enriched.filter(isGranularRecipe));
   },
 };

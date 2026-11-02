@@ -254,6 +254,11 @@ export function resolveIngredient(
 
   // Step 7: Process KB match
   if (bestEntry) {
+    const isEntryNonVeg =
+      nonVegDetected ||
+      bestEntry.vegetarian === false ||
+      bestEntry.tags.some(t => /meat|poultry|seafood|fish/i.test(t));
+
     // Check for hard clinical blocks on tags
     for (const tag of bestEntry.tags) {
       if (constraints.blockedTags.has(tag)) {
@@ -262,7 +267,7 @@ export function resolveIngredient(
           cleanName: bestEntry.name,
           kind: 'scored',
           tags: bestEntry.tags,
-          vegetarian: nonVegDetected ? false : bestEntry.vegetarian,
+          vegetarian: isEntryNonVeg ? false : (bestEntry.vegetarian ?? true),
           blocked: { reason: constraints.reasons[tag] ?? `Blocked safety category: ${tag}` },
         };
       }
@@ -275,7 +280,7 @@ export function resolveIngredient(
         cleanName: bestEntry.name,
         kind: 'neutral',
         tags: bestEntry.tags,
-        vegetarian: nonVegDetected ? false : true,
+        vegetarian: isEntryNonVeg ? false : true,
       };
     }
 
@@ -286,7 +291,7 @@ export function resolveIngredient(
       kind: 'scored',
       score: s,
       tags: bestEntry.tags,
-      vegetarian: nonVegDetected ? false : bestEntry.vegetarian,
+      vegetarian: isEntryNonVeg ? false : (bestEntry.vegetarian ?? true),
     };
   }
 

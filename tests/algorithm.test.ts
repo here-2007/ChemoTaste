@@ -2,8 +2,10 @@
 import { describe, it, expect } from 'vitest';
 import { scoreRecipe, clamp, isColdDish } from '../lib/algorithm';
 import { resolveIngredient } from '../lib/resolveIngredient';
-import { buildConstraints, buildEffectiveProfile } from '../lib/safety';
+import { buildConstraints, buildEffectiveProfile, isNonVegetarian } from '../lib/safety';
 import { DRUG_PROFILES } from '../data/drugProfiles';
+import { getRecommendations } from '../lib/dataService';
+import { normalizeTitle, deduplicateRecipes } from '../lib/recipedbClient';
 import { KBEntry, RawRecipe } from '../lib/types';
 import rawKB from '../data/ingredient_kb.json';
 import rawRecipes from '../data/curated_recipes.json';
@@ -208,5 +210,152 @@ describe('Algorithm Math, Deduplication & Edge Cases', () => {
     expect(Object.keys(rawKB).length).toBeGreaterThanOrEqual(80);
     expect(rawRecipes.length).toBeGreaterThanOrEqual(50);
     expect(Object.keys(rawProfiles).length).toBeGreaterThanOrEqual(25);
+  });
+
+  it('Vegetarian gate strictly excludes all chicken congee recipes when context.vegetarian is true', () => {
+    const resVeg = getRecommendations(['cisplatin'], { ...defaultCtx, vegetarian: true });
+    const poached = resVeg.scoredRecipes.find(r => r.title === 'Poached Chicken Breast & Golden Rice Congee');
+    const golden = resVeg.scoredRecipes.find(r => r.title === 'Golden Chicken & Ginger Congee');
+
+    expect(poached).toBeDefined();
+    expect(poached?.excluded).toBe(true);
+    expect(poached?.taste_safe_score).toBe(0);
+    expect(poached?.excluded_reason).toContain('vegetarian');
+
+    expect(golden).toBeDefined();
+    expect(golden?.excluded).toBe(true);
+    expect(golden?.taste_safe_score).toBe(0);
+    expect(golden?.excluded_reason).toContain('vegetarian');
+
+    const cauliflower = resVeg.scoredRecipes.find(r => r.id === 'r_cauliflower_nooch_soup');
+    expect(cauliflower?.excluded).toBe(false);
+  });
+
+  it('Vegetarian gate strictly excludes recipes with non-vegetarian dish titles or processes even if ingredients are minimal', () => {
+    const kbMap = new Map<string, KBEntry>(Object.entries(rawKB as Record<string, KBEntry>));
+    const scoredMap = new Map<string, number>();
+    const constraints = buildConstraints(DRUG_PROFILES['cisplatin'], defaultCtx);
+
+    const chickenTitleOnly: RawRecipe = {
+      id: 'live_test_chicken_soup',
+      title: 'Comforting Chicken Soup',
+      cuisine: 'Global',
+      prep_time: 20,
+      ingredients: ['water', 'salt', 'rice noodles'],
+      protein_g: 10,
+    };
+
+    const scored = scoreRecipe(chickenTitleOnly, kbMap, scoredMap, DRUG_PROFILES['cisplatin'], constraints, { ...defaultCtx, vegetarian: true });
+    expect(scored.excluded).toBe(true);
+    expect(scored.taste_safe_score).toBe(0);
+    expect(scored.excluded_reason).toContain('vegetarian');
+  });
+
+  it('isNonVegetarian comprehensively detects non-veg meats, seafood, poultry plurals, and animal broths', () => {
+    // Plurals and compound terms
+    expect(isNonVegetarian('prawns')).toBe(true);
+    expect(isNonVegetarian('shrimps')).toBe(true);
+    expect(isNonVegetarian('clams')).toBe(true);
+    expect(isNonVegetarian('oysters')).toBe(true);
+    expect(isNonVegetarian('anchovies')).toBe(true);
+    expect(isNonVegetarian('turkey')).toBe(true);
+    expect(isNonVegetarian('duck breast')).toBe(true);
+    expect(isNonVegetarian('crab meat')).toBe(true);
+    expect(isNonVegetarian('fish sauce')).toBe(true);
+    expect(isNonVegetarian('bone broth')).toBe(true);
+    expect(isNonVegetarian('pork belly')).toBe(true);
+    expect(isNonVegetarian('prosciutto')).toBe(true);
+
+    // Vegetarian broths must safely pass
+    expect(isNonVegetarian('vegetable broth')).toBe(false);
+    expect(isNonVegetarian('mushroom stock')).toBe(false);
+    expect(isNonVegetarian('vegan broth')).toBe(false);
+    expect(isNonVegetarian('herb broth')).toBe(false);
+    expect(isNonVegetarian('veggie broth')).toBe(false);
+    expect(isNonVegetarian('veggie stock')).toBe(false);
+    expect(isNonVegetarian('miso broth')).toBe(false);
+    expect(isNonVegetarian('vegetable bouillon')).toBe(false);
+    expect(isNonVegetarian('kelp broth')).toBe(false);
+  });
+
+  it('getRecommendations strictly deduplicates recipes by ID and normalized title across curated and additional feeds', () => {
+    const duplicateLiveFeed: RawRecipe[] = [
+      {
+        id: 'r_poached_chicken_congee', // Duplicate ID of curated
+        title: 'Poached Chicken Breast & Golden Rice Congee',
+        cuisine: 'Asian',
+        prep_time: 35,
+        ingredients: ['150g chicken breast', '1/2 cup rice', '4 cups water'],
+      },
+      {
+        id: 'live_dup_title_1',
+        title: 'poached chicken breast  & golden rice  congee', // Duplicate normalized title
+        cuisine: 'Asian',
+        prep_time: 35,
+        ingredients: ['150g chicken breast', '1/2 cup rice', '4 cups water'],
+      },
+      {
+        id: 'live_dup_title_2',
+        title: 'Moong Dal Khichdi (Clinical Gold Standard)', // Duplicate of curated #1
+        cuisine: 'Indian',
+        prep_time: 25,
+        ingredients: ['moong dal', 'rice'],
+      },
+    ];
+
+    const result = getRecommendations(['cisplatin'], defaultCtx, duplicateLiveFeed);
+
+    const poachedMatches = result.scoredRecipes.filter(
+      r => r.title.toLowerCase().replace(/[^a-z0-9]/g, '') === 'poachedchickenbreastgoldenricecongee'
+    );
+    expect(poachedMatches).toHaveLength(1);
+
+    const khichdiMatches = result.scoredRecipes.filter(
+      r => r.title.toLowerCase().replace(/[^a-z0-9]/g, '') === 'moongdalkhichdiclinicalgoldstandard'
+    );
+    expect(khichdiMatches).toHaveLength(1);
+  });
+
+  it('normalizeTitle defensively handles null, undefined, empty strings, and special characters', () => {
+    expect(normalizeTitle(null)).toBe('');
+    expect(normalizeTitle(undefined)).toBe('');
+    expect(normalizeTitle('')).toBe('');
+    expect(normalizeTitle('   ')).toBe('');
+    expect(normalizeTitle('Soup & Stew! #1 (Hot)')).toBe('soupstew1hot');
+  });
+
+  it('deduplicateRecipes handles recipes with empty or undefined IDs without dropping distinct recipes', () => {
+    const list: RawRecipe[] = [
+      { id: '', title: 'Carrot Soup', cuisine: 'Global', prep_time: 10, ingredients: ['carrot'] },
+      { id: '', title: 'Potato Stew', cuisine: 'Global', prep_time: 15, ingredients: ['potato'] },
+      { id: 'item_1', title: 'Carrot Soup', cuisine: 'Global', prep_time: 10, ingredients: ['carrot'] }, // Dup title of #1
+    ];
+
+    const unique = deduplicateRecipes(list);
+    expect(unique).toHaveLength(2);
+    expect(unique.map(u => u.title)).toEqual(['Carrot Soup', 'Potato Stew']);
+  });
+
+  it('scoreRecipe does not exclude vegetarian recipes whose instructions contain negative mentions of meat (e.g. without meat)', () => {
+    const kbMap = new Map<string, KBEntry>(Object.entries(rawKB as Record<string, KBEntry>));
+    const scoredMap = new Map<string, number>();
+    const constraints = buildConstraints(DRUG_PROFILES['cisplatin'], defaultCtx);
+
+    const vegRecipeWithNegativeMeatMention: RawRecipe = {
+      id: 'veg_soup_negative_meat',
+      title: 'Comforting Golden Vegetable Stew',
+      cuisine: 'Global',
+      prep_time: 25,
+      ingredients: ['3 cups cauliflower', '3 cups vegetable broth', '1/2 tsp salt'],
+      instructions: [
+        'Simmer cauliflower in vegetable broth until tender.',
+        'Rich velvety soup prepared without meat or poultry, gentle on chemotherapy recovery days.',
+      ],
+      protein_g: 14,
+    };
+
+    const scored = scoreRecipe(vegRecipeWithNegativeMeatMention, kbMap, scoredMap, DRUG_PROFILES['cisplatin'], constraints, { ...defaultCtx, vegetarian: true });
+    expect(scored.excluded).toBe(false);
+    expect(scored.taste_safe_score).toBeGreaterThan(0);
   });
 });

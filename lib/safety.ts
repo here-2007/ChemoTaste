@@ -31,16 +31,26 @@ export const RAW_RISK_PATTERNS = [
 ];
 
 export const NON_VEG_PATTERNS = [
-  /\b(beef|pork|chicken|mutton|lamb|veal|bacon|lard|gelatin|fish|salmon|tuna|shrimp|prawn|anchovy|clam|oyster|meat|poultry|seafood|broth|stock)\b/i,
+  /\b(beef|pork|chicken|chickens|mutton|lamb|lambs|veal|bacon|lard|tallow|suet|gelatin|gelatine|rennet|collagen)\b/i,
+  /\b(turkey|turkeys|duck|ducks|goose|geese|quail|quails|poultry|fowl|venison|rabbit)\b/i,
+  /\b(ham|hams|prosciutto|pancetta|salami|pepperoni|sausage|sausages|steak|steaks|ribs|pork\s+belly)\b/i,
+  /\b(meat|meats|bone\s+broth|bouillon|broth|broths|stock|stocks)\b/i,
+  /\b(fish|fishes|salmon|tuna|cod|trout|tilapia|sea\s+bass|mackerel|sardine|sardines|anchovy|anchovies|herring|halibut)\b/i,
+  /\b(seafood|seafoods|shrimp|shrimps|prawn|prawns|crab|crabs|lobster|lobsters|clam|clams|oyster|oysters|mussel|mussels|scallop|scallops|squid|calamari|octopus|caviar|roe)\b/i,
+  /\b(fish\s+sauce|oyster\s+sauce|anchovy\s+paste|dashi|bonito|bonito\s+flakes)\b/i,
 ];
 
 export function isVegetarianBrothOrStock(str: string): boolean {
-  return /\b(vegetable|vegan|mushroom|herb|plant)\s+(broth|stock)\b/i.test(str);
+  return /\b(vegetable|veggie|vegan|mushroom|herb|plant(?:-based)?|miso|seaweed|kelp|tomato)\s+(broth|stock|bouillon)\b/i.test(str);
 }
 
 export function isNonVegetarian(str: string): boolean {
+  if (!str || typeof str !== 'string') return false;
   if (isVegetarianBrothOrStock(str)) {
-    const stripped = str.replace(/\b(vegetable|vegan|mushroom|herb|plant)\s+(broth|stock)\b/gi, ' ');
+    const stripped = str.replace(
+      /\b(vegetable|veggie|vegan|mushroom|herb|plant(?:-based)?|miso|seaweed|kelp|tomato)\s+(broth|stock|bouillon)\b/gi,
+      ' '
+    );
     return NON_VEG_PATTERNS.some(rx => rx.test(stripped));
   }
   return NON_VEG_PATTERNS.some(rx => rx.test(str));
